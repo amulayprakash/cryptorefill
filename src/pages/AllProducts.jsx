@@ -5,7 +5,21 @@ import { products } from '../data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
+const baseCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
+const vietnamCategories = [
+  "Beauty & Skincare", 
+  "Electronics & Smartphones", 
+  "Audio & Earbuds", 
+  "Smart Wearables", 
+  "Home & Kitchen", 
+  "Fashion & Apparel", 
+  "Fitness & Wellness", 
+  "Health Supplements", 
+  "Smart Home", 
+  "Pet Care", 
+  "Eco-Friendly Living"
+];
+const categories = Array.from(new Set([...baseCategories, ...vietnamCategories]));
 
 export default function AllProducts() {
   const navigate = useNavigate();

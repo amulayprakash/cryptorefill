@@ -1,3 +1,4 @@
+import { vietnamProducts } from './vietnamProducts.js';
 export const products = [
   // ── Popular ──────────────────────────────────────────────────────────────
   {
@@ -933,6 +934,9 @@ export const products = [
     terms: "This card is issued by Sportsman's Warehouse and is redeemable for merchandise only.",
     faq: [{ q: "Can this be used for hunting licenses?", a: "No, gift cards cannot be used to purchase hunting or fishing licenses." }]
   },
+  
+  // ── Vietnam Market ──
+  ...vietnamProducts
 ];
 
 export const getProductById = (id) => {
