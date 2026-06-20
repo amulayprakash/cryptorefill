@@ -80,7 +80,7 @@ export default function ProductDetails() {
             <div className="w-full bg-gray-50 dark:bg-gray-800/40 rounded-3xl p-6 sm:p-12 lg:p-16 flex items-center justify-center aspect-[4/3] relative border border-gray-100 dark:border-gray-850 shadow-xs">
               <div className="w-full max-w-[280px] rounded-2xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg border border-gray-100 dark:border-gray-800 transform hover:scale-103 transition-transform duration-350">
                 <img 
-                  src={`/${product.imageUrl}`} 
+                  src={product.imageUrl} 
                   alt={product.name} 
                   className="w-full h-auto object-cover"
                   onError={(e) => {

@@ -185,7 +185,7 @@ function ProductCard({ product, navigate }) {
         style={{ aspectRatio: '16/10', background: '#f3f4f6' }}
       >
         <img
-          src={`/${product.imageUrl}`}
+          src={product.imageUrl}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500"
           style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
