@@ -1,1 +1,5 @@
 /* Cleared default Vite styles to prevent conflicts with the downloaded site's CSS */
+
+.overflow-x-auto {
+  scroll-behavior: smooth !important;
+}

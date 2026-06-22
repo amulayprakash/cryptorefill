@@ -1,7 +1,222 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "../components/Header";
+import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
+import { vietnamProducts } from "../data/vietnamProducts";
+
+const vietnamTabs = [
+  { name: "Beauty & Skincare", icon: "🧴" },
+  { name: "Electronics & Smartphones", icon: "📱" },
+  { name: "Audio & Earbuds", icon: "🎧" },
+  { name: "Smart Wearables", icon: "⌚" },
+  { name: "Home & Kitchen", icon: "🍳" },
+  { name: "Fashion & Apparel", icon: "👗" },
+  { name: "Fitness & Wellness", icon: "💪" },
+  { name: "Health Supplements", icon: "💊" },
+  { name: "Smart Home", icon: "🏠" },
+  { name: "Pet Care", icon: "🐾" },
+  { name: "Eco-Friendly Living", icon: "🌱" }
+];
+
+function TrendingProductsShowcase() {
+  const [activeCategory, setActiveCategory] = useState("Beauty & Skincare");
+  const tabsRef = React.useRef(null);
+
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let draggedThisPress = false;
+
+    const handleMouseDown = (e) => {
+      isDown = true;
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+      draggedThisPress = false;
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+    };
+
+    const handleMouseUp = () => {
+      isDown = false;
+      // draggedThisPress remains true until the upcoming click fires and resets it
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDown) return;
+      const x = e.pageX - el.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      if (Math.abs(x - startX) > 5) {
+        draggedThisPress = true;
+      }
+      el.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleWheel = (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    // Capture-phase click: only suppress the single click that immediately
+    // follows a drag. Reset immediately so the next click is never blocked.
+    const handleCaptureClick = (e) => {
+      if (draggedThisPress) {
+        draggedThisPress = false; // reset so next click works
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    el.addEventListener("mousedown", handleMouseDown);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("mouseup", handleMouseUp);
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    el.addEventListener("click", handleCaptureClick, true);
+
+    return () => {
+      el.removeEventListener("mousedown", handleMouseDown);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("mouseup", handleMouseUp);
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("wheel", handleWheel);
+      el.removeEventListener("click", handleCaptureClick, true);
+    };
+  }, []);
+
+  const filteredProducts = vietnamProducts.filter(
+    (product) => product.category === activeCategory
+  );
+
+  return (
+    <div className="mt-8 mx-auto max-w-(--breakpoint-2xl) mb-12">
+      {/* Header & Tabs */}
+      <div className="px-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col">
+            <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
+              🔥 Hot Deals &amp; Offers
+            </span>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
+              Top trending items in the Vietnam Market. Buy instantly with crypto.
+            </p>
+          </div>
+        </div>
+
+        {/* Custom Tabs (using div with role="button" to avoid scroll button match conflicts) */}
+        <div
+          ref={tabsRef}
+          className="mt-6 no-scrollbar flex w-full gap-2 overflow-x-auto pb-2 scroll-smooth border-b border-gray-200/60 dark:border-gray-800/60"
+        >
+          {vietnamTabs.map((tab) => {
+            const isActive = tab.name === activeCategory;
+            return (
+              <div
+                key={tab.name}
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveCategory(tab.name)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setActiveCategory(tab.name);
+                  }
+                }}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer shrink-0 border select-none ${
+                  isActive
+                    ? "bg-blue-600 text-white border-transparent shadow-md transform scale-102 hover:bg-blue-700"
+                    : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                }`}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+
+
+      {/* Horizontal Scrollable Slider */}
+      <div className="relative w-full">
+        <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-4">
+          {filteredProducts.map((product) => {
+            const hasDiscount = product.discount && product.discount !== "0% OFF";
+            return (
+              <div
+                key={product.id}
+                className="relative flex w-[154px] shrink-0 cursor-pointer flex-col last:mr-32 sm:w-[210px] lg:w-[245px] xl:w-[280px] group bg-white dark:bg-gray-850 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+              >
+                <Link to={`/product/${product.id}`} className="flex flex-col w-full">
+                  {/* Image container */}
+                  <div className="relative h-[98px] w-full flex-none overflow-hidden bg-gray-50 dark:bg-gray-900 sm:h-[133px] lg:h-[155px] xl:h-[178px] border-b border-gray-100 dark:border-gray-800">
+                    <img
+                      alt={product.name}
+                      src={product.imageUrl}
+                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/placeholder_mockup.png';
+                      }}
+                    />
+                    
+                    {/* Discount badge */}
+                    {hasDiscount && (
+                      <span className="absolute top-2 right-2 bg-red-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-sm">
+                        {product.discount}
+                      </span>
+                    )}
+
+                    {/* Points Multiplier badge */}
+                    {product.pointsMultiplier && (
+                      <span className="absolute bottom-2 left-2 bg-green-600/90 backdrop-blur-xs text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-sm">
+                        {product.pointsMultiplier}x Points
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Info details */}
+                  <div className="p-3 flex flex-col flex-1">
+                    {/* Product Name */}
+                    <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {product.name}
+                    </span>
+
+                    {/* Pricing */}
+                    <div className="flex items-baseline gap-1.5 mt-1 sm:mt-1.5">
+                      <span className="text-xs sm:text-sm font-extrabold text-blue-600 dark:text-blue-400">
+                        {product.promoPrice || product.priceRange}
+                      </span>
+                      {product.promoPrice && product.promoPrice !== product.priceRange && (
+                        <span className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 line-through">
+                          {product.priceRange}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Delivery / Footer info */}
+                    <div className="flex items-center gap-1 mt-2 text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 font-bold border-t border-gray-50 dark:border-gray-800 pt-2">
+                      <span className="text-green-500">⚡</span>
+                      <span>Instant Email Delivery</span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const navigate = useNavigate();
@@ -130,6 +345,137 @@ export default function Home() {
     return () => document.removeEventListener("click", handleProductClick);
   }, [navigate]);
 
+  useEffect(() => {
+    const disableButton = (btn) => {
+      if (!btn) return;
+      btn.disabled = true;
+      btn.classList.add('pointer-events-none', 'cursor-auto', 'opacity-0');
+      btn.classList.remove('cursor-pointer', 'opacity-100', 'pointer-events-auto');
+    };
+
+    const enableButton = (btn) => {
+      if (!btn) return;
+      btn.disabled = false;
+      btn.classList.add('cursor-pointer', 'opacity-100', 'pointer-events-auto');
+      btn.classList.remove('pointer-events-none', 'cursor-auto', 'opacity-0');
+    };
+
+    const findScrollContainer = (button) => {
+      let parent = button.parentElement;
+      while (parent) {
+        const container = parent.querySelector('.overflow-x-auto');
+        if (container) return container;
+        
+        let sibling = parent.nextElementSibling;
+        while (sibling) {
+          const sibContainer = sibling.querySelector('.overflow-x-auto') || (sibling.classList.contains('overflow-x-auto') ? sibling : null);
+          if (sibContainer) return sibContainer;
+          sibling = sibling.nextElementSibling;
+        }
+        parent = parent.parentElement;
+      }
+      return null;
+    };
+
+    const findScrollButtons = (container) => {
+      const parent = container.parentElement;
+      if (!parent) return [];
+      
+      let sibling = parent.previousElementSibling;
+      while (sibling) {
+        const buttons = Array.from(sibling.querySelectorAll('button'));
+        if (buttons.length >= 2) return buttons;
+        sibling = sibling.previousElementSibling;
+      }
+      return [];
+    };
+
+    const updateScrollButtons = (container) => {
+      const buttons = findScrollButtons(container);
+      if (buttons.length < 2) return;
+      const [leftBtn, rightBtn] = buttons;
+      const scrollLeft = container.scrollLeft;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      if (maxScroll <= 0) {
+        disableButton(leftBtn);
+        disableButton(rightBtn);
+        return;
+      }
+
+      if (scrollLeft <= 5) {
+        disableButton(leftBtn);
+      } else {
+        enableButton(leftBtn);
+      }
+
+      if (scrollLeft >= maxScroll - 5) {
+        disableButton(rightBtn);
+      } else {
+        enableButton(rightBtn);
+      }
+    };
+
+    const updateAllScrollButtons = () => {
+      const containers = document.querySelectorAll('.overflow-x-auto');
+      containers.forEach(updateScrollButtons);
+    };
+
+    const handleDocumentClick = (e) => {
+      const button = e.target.closest('button');
+      if (!button) return;
+
+      const container = findScrollContainer(button);
+      if (!container) return;
+
+      const buttons = findScrollButtons(container);
+      if (buttons.length < 2) return;
+
+      const [leftBtn, rightBtn] = buttons;
+      const isLeft = button === leftBtn || leftBtn.contains(button);
+      const isRight = button === rightBtn || rightBtn.contains(button);
+
+      if (!isLeft && !isRight) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const scrollAmount = container.clientWidth * 0.75;
+      if (isLeft) {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else if (isRight) {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    };
+
+    const handleScroll = (e) => {
+      const container = e.target;
+      if (container && container.classList && container.classList.contains('overflow-x-auto')) {
+        updateScrollButtons(container);
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('click', handleDocumentClick, true);
+    document.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('resize', updateAllScrollButtons);
+
+    // Initial check (with multiple timeouts to ensure items & layout are fully rendered)
+    const timers = [
+      setTimeout(updateAllScrollButtons, 100),
+      setTimeout(updateAllScrollButtons, 500),
+      setTimeout(updateAllScrollButtons, 1000),
+      setTimeout(updateAllScrollButtons, 2000),
+    ];
+
+    return () => {
+      document.removeEventListener('click', handleDocumentClick, true);
+      document.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('resize', updateAllScrollButtons);
+      timers.forEach(clearTimeout);
+    };
+  }, []);
+
   return (
     <div>
       <style
@@ -151,6 +497,8 @@ export default function Home() {
             }}
           />
           <Header />
+          {/* ── Ice Jewellery Crypto Hero — appears FIRST ── */}
+          <IceJewelleryCryptoHero />
           <div className="wrapper grow sm:pb-32">
             <main className="max-w-8xl mx-auto">
 
@@ -248,7 +596,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -4019,6 +4367,10 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              
+              {/* Trending Vietnam Products tabbed showcase */}
+              <TrendingProductsShowcase />
+
               <section>
                 <div className="mx-auto max-w-(--breakpoint-2xl)">
                   <div className="mt-7 px-3 sm:mt-9">
@@ -4027,7 +4379,7 @@ export default function Home() {
                     </h2>
                   </div>
                 </div>
-                <div className="scroll-pl-2xl scroll-pr-2xl mt-6 no-scrollbar flex w-full gap-4 overflow-x-auto sm:gap-6">
+                <div className="scroll-pl-2xl scroll-pr-2xl mt-6 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth sm:gap-6">
                   <div className="flex w-80 shrink-0 flex-col overflow-hidden rounded-2xl bg-gray-100 lg:min-w-0 lg:flex-1 dark:bg-gray-800">
                     <div className="relative h-40 w-full sm:h-50">
                       <img
@@ -5587,7 +5939,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -5870,7 +6222,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -6155,7 +6507,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -6444,7 +6796,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -6727,7 +7079,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -7010,7 +7362,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -7293,7 +7645,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -7578,7 +7930,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -7861,7 +8213,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"
@@ -8146,7 +8498,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0">
+                  <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
                     <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
                       <svg
                         aria-hidden="true"

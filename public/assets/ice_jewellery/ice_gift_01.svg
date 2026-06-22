@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <!-- Background studio glow -->
+    <radialGradient id="studioGlow" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="100%" stop-color="#E5DDD0" />
+    </radialGradient>
+
+    <!-- Card Background Gradient: Premium Luxury Navy Blue -->
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />  <!-- slate-800 -->
+      <stop offset="40%" stop-color="#0F172A" /> <!-- slate-900 -->
+      <stop offset="100%" stop-color="#020617" /> <!-- slate-950 -->
+    </linearGradient>
+
+    <!-- Gold Gradients -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF0CD" />
+      <stop offset="35%" stop-color="#D4AF37" />
+      <stop offset="70%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#6A4E0B" />
+    </linearGradient>
+
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0D0" />
+      <stop offset="100%" stop-color="#D4AF37" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="15" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.22" />
+    </filter>
+    
+    <!-- Chip Gradient -->
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCEBB6" />
+      <stop offset="50%" stop-color="#B8860B" />
+      <stop offset="100%" stop-color="#7C5A0B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Studio Background -->
+  <rect width="400" height="250" fill="url(#studioGlow)" />
+
+  <!-- Shadow under card -->
+  <rect x="52" y="42" width="296" height="176" rx="14" fill="#000000" opacity="0.08" filter="blur(6px)" />
+
+  <!-- Card Body -->
+  <rect x="50" y="40" width="300" height="170" rx="14" fill="url(#cardBg)" stroke="url(#goldGrad)" stroke-width="1.5" filter="url(#cardShadow)" />
+
+  <!-- Decorative Abstract Golden Line Waves on Card -->
+  <path d="M 50,150 Q 120,110 200,160 T 350,130" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.15" />
+  <path d="M 50,165 Q 130,125 210,175 T 350,145" fill="none" stroke="url(#goldGrad)" stroke-width="0.75" opacity="0.1" />
+  <path d="M 50,80 Q 180,180 350,90" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.12" />
+
+  <!-- Diamond Logo Icon (Top-Left) -->
+  <g transform="translate(72, 58)">
+    <polygon points="12,0 24,10 12,24 0,10" fill="url(#goldGrad)" />
+    <!-- Highlight facets -->
+    <polygon points="12,0 12,24 24,10" fill="rgba(255, 255, 255, 0.15)" />
+    <polygon points="12,0 0,10 12,10" fill="rgba(255, 255, 255, 0.25)" />
+    <polygon points="12,24 12,10 24,10" fill="rgba(0, 0, 0, 0.15)" />
+  </g>
+
+  <!-- Brand Name (Top-Left, beside logo) -->
+  <text x="106" y="70" font-family="'Cormorant Garamond', 'Playfair Display', serif" font-size="11" font-weight="700" fill="url(#goldText)" letter-spacing="2">ICE JEWELLERY</text>
+  <text x="106" y="80" font-family="'Inter', sans-serif" font-size="5.5" font-weight="800" fill="#94A3B8" letter-spacing="1">PREMIUM GIFT CARD</text>
+
+  <!-- Chip (Left-Middle) -->
+  <rect x="72" y="105" width="28" height="20" rx="4" fill="url(#chipGrad)" />
+  <line x1="72" y1="115" x2="100" y2="115" stroke="#3D2B03" stroke-width="0.5" opacity="0.5" />
+  <line x1="86" y1="105" x2="86" y2="125" stroke="#3D2B03" stroke-width="0.5" opacity="0.5" />
+  <rect x="79" y="109" width="14" height="12" rx="2" fill="none" stroke="#3D2B03" stroke-width="0.5" opacity="0.5" />
+
+  <!-- Card Details / Text (Bottom-Left) -->
+  <text x="72" y="180" font-family="'Inter', sans-serif" font-size="6" font-weight="700" fill="#94A3B8" letter-spacing="1">CARD NUMBER</text>
+  <text x="72" y="192" font-family="'Courier New', monospace" font-size="9" font-weight="700" fill="#F8FAFC" letter-spacing="1.5">ICE-8840-100D-7729</text>
+
+  <!-- Price / Value Display (Bottom-Right/Middle-Right) -->
+  <text x="325" y="185" font-family="'Cormorant Garamond', 'Playfair Display', serif" font-size="34" font-weight="300" fill="url(#goldText)" text-anchor="end">$100</text>
+  <text x="325" y="197" font-family="'Inter', sans-serif" font-size="6" font-weight="800" fill="url(#goldGrad)" letter-spacing="1.5" text-anchor="end">USD VALUE</text>
+
+  <!-- Secure Hologram Circle (Top-Right) -->
+  <circle cx="318" cy="72" r="12" fill="url(#goldGrad)" opacity="0.15" />
+  <circle cx="318" cy="72" r="8" fill="url(#goldGrad)" opacity="0.25" />
+  <path d="M 312,72 L 324,72 M 318,66 L 318,78" stroke="url(#goldGrad)" stroke-width="0.75" opacity="0.4" />
+
+  <!-- Diagonal Gloss Reflection / Glass effect -->
+  <path d="M 120,40 L 190,40 L 50,180 L 50,110 Z" fill="#FFFFFF" opacity="0.04" />
+  <path d="M 230,40 L 290,40 L 120,210 L 60,210 Z" fill="#FFFFFF" opacity="0.06" />
+</svg>

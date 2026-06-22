@@ -4,6 +4,7 @@ import { ReactLenis } from 'lenis/react';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import AllProducts from './pages/AllProducts';
+import IceJewellery from './pages/IceJewellery';
 import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
@@ -16,6 +17,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/products" element={<AllProducts />} />
+          <Route path="/ice-jewellery" element={<IceJewellery />} />
+          <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
         </Routes>
       </Router>
     </ReactLenis>
