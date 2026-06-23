@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#78350f" />
+      <stop offset="30%" stop-color="#b45309" />
+      <stop offset="70%" stop-color="#92400e" />
+      <stop offset="100%" stop-color="#451a03" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0ea5e9" />
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Turquoise glow for Probiotics / Bacteria vibe -->
+  <circle cx="250" cy="200" r="130" fill="#0ea5e9" opacity="0.12" filter="url(#glow)" />
+  
+  <!-- DNA / Gut Health Silhouette waves -->
+  <path d="M 100 250 Q 150 180 200 250 T 300 250" fill="none" stroke="rgba(56, 189, 248, 0.05)" stroke-width="3" />
+  <path d="M 100 230 Q 150 300 200 230 T 300 230" fill="none" stroke="rgba(56, 189, 248, 0.03)" stroke-width="2" />
+  
+  <!-- Bottle Shadow -->
+  <ellipse cx="250" cy="335" rx="60" ry="10" fill="rgba(0,0,0,0.6)" />
+  
+  <!-- Bottle Body (Amber Apothecary Glass) -->
+  <rect x="200" y="110" width="100" height="200" rx="14" fill="url(#bottleGrad)" opacity="0.95" />
+  <path d="M 208 120 Q 218 126 218 290 Q 208 296 208 290 Z" fill="rgba(255,255,255,0.08)" />
+  
+  <!-- Cap (White Ribbed Cap) -->
+  <rect x="210" y="80" width="80" height="30" rx="4" fill="#f8fafc" />
+  <line x1="220" y1="80" x2="220" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="230" y1="80" x2="230" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="240" y1="80" x2="240" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="250" y1="80" x2="250" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="260" y1="80" x2="260" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="270" y1="80" x2="270" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="280" y1="80" x2="280" y2="110" stroke="#cbd5e1" stroke-width="2" />
+  
+  <!-- Label -->
+  <rect x="204" y="145" width="92" height="135" fill="#ffffff" rx="2" />
+  <rect x="204" y="145" width="92" height="25" fill="#047857" />
+  
+  <!-- Brand Heading -->
+  <text x="250" y="161" font-family="'Inter', sans-serif" font-size="8.5" font-weight="900" fill="#ffffff" letter-spacing="1" text-anchor="middle">BLACKMORES</text>
+  
+  <!-- Product Label Details -->
+  <text x="250" y="186" font-family="'Inter', sans-serif" font-size="7" font-weight="800" fill="#1e293b" text-anchor="middle">PROBIOTICS+</text>
+  <text x="250" y="196" font-family="'Inter', sans-serif" font-size="6" font-weight="700" fill="#0f766e" text-anchor="middle">DAILY HEALTH</text>
+  
+  <!-- Shield Icon representing Protection/Digestive Health -->
+  <g transform="translate(235, 206)">
+    <path d="M 15 0 C 25 0 30 5 30 15 C 30 25 15 32 15 32 C 15 32 0 25 0 15 C 0 5 5 0 15 0 Z" fill="url(#glowGrad)" />
+    <path d="M 15 5 L 18 12 L 25 12 L 20 16 L 22 23 L 15 19 L 8 23 L 10 16 L 5 12 L 12 12 Z" fill="#ffffff" transform="scale(0.8) translate(3, 4)" />
+  </g>
+  
+  <!-- Subtext -->
+  <text x="250" y="255" font-family="'Inter', sans-serif" font-size="5" font-weight="700" fill="#64748b" text-anchor="middle">30 BILLION ACTIVE</text>
+  <text x="250" y="265" font-family="'Inter', sans-serif" font-size="4.5" font-weight="600" fill="#94a3b8" text-anchor="middle">30 CAPSULES</text>
+  
+  <!-- Floating healthy glowing cells -->
+  <circle cx="340" cy="140" r="5" fill="#38bdf8" opacity="0.6" filter="url(#glow)" />
+  <circle cx="150" cy="270" r="6" fill="#38bdf8" opacity="0.4" filter="url(#glow)" />
+</svg>

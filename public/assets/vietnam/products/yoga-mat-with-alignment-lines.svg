@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ddd6fe" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+    <linearGradient id="matSurface" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="matRoll" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa" />
+      <stop offset="50%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#5b21b6" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Zen background lotus icon silhouette -->
+  <path d="M 400 100 C 420 80 440 100 440 120 C 440 140 400 150 400 100 Z" fill="rgba(255,255,255,0.12)" />
+  <path d="M 400 100 C 380 80 360 100 360 120 C 360 140 400 150 400 100 Z" fill="rgba(255,255,255,0.12)" />
+  
+  <!-- Shadow of Mat -->
+  <path d="M 80 320 L 320 180 L 440 220 L 200 350 Z" fill="rgba(0,0,0,0.1)" />
+  
+  <!-- Rolled out Yoga Mat Surface -->
+  <path d="M 120 320 L 300 190 L 420 220 L 220 350 Z" fill="url(#matSurface)" stroke="#7c3aed" stroke-width="1" />
+  
+  <!-- Alignment Lines (Gold/Light Violet Lines) -->
+  <!-- Center Line -->
+  <line x1="210" y1="255" x2="330" y2="205" stroke="rgba(255,255,255,0.4)" stroke-width="3" />
+  <!-- Horizontal Lines -->
+  <line x1="170" y1="285" x2="220" y2="250" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+  <line x1="310" y1="210" x2="360" y2="195" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+  <!-- Lotus center logo on mat -->
+  <g transform="translate(250, 235) rotate(-22) scale(0.6)">
+    <path d="M 15 0 Q 30 15 15 30 Q 0 15 15 0" fill="rgba(255,255,255,0.6)" />
+    <path d="M 15 5 Q 25 15 15 25 Q 5 15 15 5" fill="#7c3aed" />
+  </g>
+  
+  <!-- Rolled Mat part at left side -->
+  <g transform="translate(100, 270) rotate(-20)">
+    <!-- Roll cylinder -->
+    <rect x="0" y="0" width="60" height="90" rx="10" fill="url(#matRoll)" stroke="#5b21b6" stroke-width="1.5" />
+    <!-- Spiral pattern on side of roll -->
+    <ellipse cx="30" cy="0" rx="30" ry="10" fill="#6d28d9" stroke="#c084fc" stroke-width="1" />
+    <ellipse cx="30" cy="0" rx="20" ry="7" fill="#8b5cf6" stroke="#c084fc" stroke-width="1" />
+    <ellipse cx="30" cy="0" rx="10" ry="3.5" fill="#c084fc" />
+  </g>
+  
+  <!-- Title / Product text inside card overlay style -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#ffffff" letter-spacing="2" text-anchor="middle">YOGA MAT WITH ALIGNMENT LINES</text>
+</svg>

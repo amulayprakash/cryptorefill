@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e5e7eb" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+    <linearGradient id="blazerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="goldButton" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Minimalist circle accent -->
+  <circle cx="250" cy="200" r="130" fill="#ffffff" opacity="0.5" />
+  
+  <!-- Wooden Hanger -->
+  <g transform="translate(195, 60)" filter="url(#shadow)">
+    <!-- Hook -->
+    <path d="M 55 20 C 55 0 75 0 75 15 C 75 25 55 25 55 40" fill="none" stroke="#78716c" stroke-width="3" stroke-linecap="round" />
+    <!-- Hanger wood -->
+    <path d="M 10 45 Q 55 35 100 45 Q 55 52 10 45 Z" fill="#d97706" stroke="#b45309" stroke-width="1" />
+  </g>
+  
+  <!-- Blazer Dress Graphic -->
+  <g transform="translate(155, 102)" filter="url(#shadow)">
+    <!-- Shoulders / Neckline -->
+    <path d="M 10 30 L 50 15 L 140 15 L 180 30 L 165 90 L 25 90 Z" fill="url(#blazerGrad)" />
+    
+    <!-- Lapels (V-Neck Blazer lapels) -->
+    <!-- Left Lapel -->
+    <path d="M 50 15 L 95 90 L 80 90 L 40 30 Z" fill="#334155" />
+    <!-- Right Lapel -->
+    <path d="M 140 15 L 95 90 L 110 90 L 150 30 Z" fill="#334155" />
+    
+    <!-- Waist belt / sash -->
+    <rect x="25" y="90" width="140" height="15" fill="#0f172a" rx="2" />
+    <rect x="80" y="87" width="30" height="21" rx="4" fill="url(#goldButton)" stroke="#b45309" stroke-width="1" />
+    
+    <!-- Skirt (Bottom part of Blazer Dress) -->
+    <path d="M 27 105 L 163 105 L 175 230 L 15 230 Z" fill="url(#blazerGrad)" />
+    
+    <!-- Double-Breasted Gold Buttons -->
+    <g transform="translate(70, 125)">
+      <!-- Row 1 -->
+      <circle cx="15" cy="15" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+      <circle cx="35" cy="15" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+      <!-- Row 2 -->
+      <circle cx="15" cy="45" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+      <circle cx="35" cy="45" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+      <!-- Row 3 -->
+      <circle cx="15" cy="75" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+      <circle cx="35" cy="75" r="5" fill="url(#goldButton)" stroke="#92400e" stroke-width="0.5" />
+    </g>
+    
+    <!-- Sleeves silhouette -->
+    <path d="M 10 30 L -10 140 L 15 140 L 25 90 Z" fill="#0f172a" />
+    <path d="M 180 30 L 200 140 L 175 140 L 165 90 Z" fill="#0f172a" />
+  </g>
+  
+  <!-- Overlay Title -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#1e293b" letter-spacing="2" text-anchor="middle">KOREAN OFFICE BLAZER DRESS</text>
+</svg>

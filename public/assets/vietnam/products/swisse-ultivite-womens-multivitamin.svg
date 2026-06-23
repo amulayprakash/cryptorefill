@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#065f46" />
+    </linearGradient>
+    <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f3f4f6" />
+      <stop offset="40%" stop-color="#ffffff" />
+      <stop offset="80%" stop-color="#f3f4f6" />
+      <stop offset="100%" stop-color="#e5e7eb" />
+    </linearGradient>
+    <linearGradient id="labelGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ca8a04" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#a16207" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Light burst / aura -->
+  <circle cx="250" cy="200" r="140" fill="#34d399" opacity="0.1" filter="url(#glow)" />
+  
+  <!-- Botanical leaves background silhouettes -->
+  <path d="M 50 350 C 80 300 130 320 160 300 C 140 330 100 350 50 350 Z" fill="rgba(255,255,255,0.03)" />
+  <path d="M 450 100 C 400 120 420 180 390 220 C 430 190 450 140 450 100 Z" fill="rgba(255,255,255,0.03)" />
+  
+  <!-- Bottle Shadow -->
+  <ellipse cx="250" cy="335" rx="65" ry="10" fill="rgba(0,0,0,0.5)" />
+  
+  <!-- Bottle Body -->
+  <rect x="195" y="100" width="110" height="215" rx="16" fill="url(#bottleGrad)" />
+  
+  <!-- Cap (Green Swisse style cap) -->
+  <rect x="205" y="70" width="90" height="30" rx="6" fill="#047857" />
+  <rect x="205" y="82" width="90" height="4" fill="#065f46" />
+  
+  <!-- Label Outer -->
+  <rect x="199" y="130" width="102" height="155" rx="2" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" />
+  
+  <!-- Brand Header -->
+  <rect x="199" y="130" width="102" height="25" fill="#b91c1c" />
+  <text x="250" y="147" font-family="'Inter', sans-serif" font-size="12" font-weight="900" fill="#ffffff" letter-spacing="1.5" text-anchor="middle">Swisse</text>
+  
+  <!-- Brand Content -->
+  <text x="250" y="172" font-family="'Inter', sans-serif" font-size="7" font-weight="700" fill="#374151" text-anchor="middle">ULTIVITE</text>
+  
+  <!-- Label Gold Accent Strip -->
+  <rect x="199" y="180" width="102" height="30" fill="url(#labelGold)" />
+  <text x="250" y="193" font-family="'Inter', sans-serif" font-size="7" font-weight="900" fill="#ffffff" text-anchor="middle">WOMEN'S</text>
+  <text x="250" y="204" font-family="'Inter', sans-serif" font-size="8" font-weight="900" fill="#ffffff" text-anchor="middle">MULTIVITAMIN</text>
+  
+  <!-- Leaf Icon -->
+  <path d="M 250 220 Q 260 230 250 240 Q 240 230 250 220 Z" fill="#047857" />
+  
+  <!-- Subtext -->
+  <text x="250" y="258" font-family="'Inter', sans-serif" font-size="5" font-weight="700" fill="#4b5563" text-anchor="middle">50 TABLETS</text>
+  <text x="250" y="268" font-family="'Inter', sans-serif" font-size="4.5" font-weight="600" fill="#6b7280" text-anchor="middle">HEALTH &amp; WELLBEING</text>
+  
+  <!-- Decorative floating vitamins / bubbles -->
+  <circle cx="150" cy="180" r="8" fill="#f59e0b" opacity="0.4" filter="url(#glow)" />
+  <circle cx="160" cy="185" r="4" fill="#ffffff" opacity="0.6" />
+  <circle cx="340" cy="220" r="10" fill="#10b981" opacity="0.3" filter="url(#glow)" />
+  <circle cx="345" cy="225" r="5" fill="#ffffff" opacity="0.5" />
+</svg>

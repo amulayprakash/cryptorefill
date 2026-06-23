@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e9d5ff" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+    <linearGradient id="plaidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#db2777" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Y2K Retro sparkle star graphics in background -->
+  <g transform="translate(100, 80) scale(0.6)">
+    <path d="M 30 0 L 35 20 L 55 25 L 35 30 L 30 50 L 25 30 L 5 25 L 25 20 Z" fill="#ffffff" opacity="0.6" />
+  </g>
+  <g transform="translate(380, 260) scale(0.8)">
+    <path d="M 30 0 L 35 20 L 55 25 L 35 30 L 30 50 L 25 30 L 5 25 L 25 20 Z" fill="#ffffff" opacity="0.6" />
+  </g>
+  
+  <g filter="url(#shadow)">
+    <!-- Y2K Halter Neck Top -->
+    <g transform="translate(180, 70)">
+      <!-- Halter straps -->
+      <path d="M 50 -10 C 60 -25, 80 -25, 90 -10" fill="none" stroke="#db2777" stroke-width="4" stroke-linecap="round" />
+      <!-- Top Bodice -->
+      <path d="M 40 10 L 100 10 L 120 70 L 20 70 Z" fill="url(#plaidGrad)" rx="2" />
+      <!-- Center Graphic detail (Butterfly silhouette or star) -->
+      <path d="M 60 30 Q 70 20 70 35 Q 70 20 80 30 Q 70 40 70 50 Q 70 40 60 30 Z" fill="#ffffff" opacity="0.8" />
+    </g>
+    
+    <!-- Y2K Plaid Pleated Mini Skirt -->
+    <g transform="translate(150, 160)">
+      <!-- Waistband -->
+      <rect x="30" y="0" width="140" height="15" rx="3" fill="#db2777" />
+      <!-- Skirt body -->
+      <path d="M 30 15 L 170 15 L 200 120 L 0 120 Z" fill="url(#plaidGrad)" />
+      
+      <!-- Pleats & Plaid Pattern -->
+      <line x1="20" y1="15" x2="5" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="50" y1="15" x2="40" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="80" y1="15" x2="75" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="100" y1="15" x2="105" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="120" y1="15" x2="130" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="150" y1="15" x2="165" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      <line x1="180" y1="15" x2="195" y2="120" stroke="#fbcfe8" stroke-width="2" />
+      
+      <!-- Horizontal Plaid Lines -->
+      <path d="M 25 35 L 175 35" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-dasharray="8 6" />
+      <path d="M 15 70 L 185 70" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-dasharray="8 6" />
+      <path d="M 5 100 L 195 100" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-dasharray="8 6" />
+    </g>
+  </g>
+  
+  <!-- Overlay Title -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#701a75" letter-spacing="2" text-anchor="middle">Y2K MINI SKIRT CO-ORD SET</text>
+</svg>

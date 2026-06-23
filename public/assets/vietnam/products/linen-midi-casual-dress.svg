@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f5f4" />
+      <stop offset="100%" stop-color="#e7e5e4" />
+    </linearGradient>
+    <linearGradient id="dressGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fafaf9" />
+      <stop offset="100%" stop-color="#d6d3d1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.1" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Minimalist Aesthetic circle background -->
+  <circle cx="250" cy="200" r="130" fill="#fff" opacity="0.6" />
+  
+  <!-- Wooden Hanger -->
+  <g transform="translate(195, 60)" filter="url(#shadow)">
+    <!-- Hook -->
+    <path d="M 55 20 C 55 0 75 0 75 15 C 75 25 55 25 55 40" fill="none" stroke="#78716c" stroke-width="3" stroke-linecap="round" />
+    <!-- Hanger wood -->
+    <path d="M 10 45 Q 55 35 100 45 Q 55 52 10 45 Z" fill="#d97706" stroke="#b45309" stroke-width="1" />
+  </g>
+  
+  <!-- Linen Dress Graphic -->
+  <g transform="translate(160, 102)" filter="url(#shadow)">
+    <!-- Straps -->
+    <rect x="30" y="0" width="6" height="25" rx="2" fill="#e7e5e4" />
+    <rect x="144" y="0" width="6" height="25" rx="2" fill="#e7e5e4" />
+    
+    <!-- Bodice / Top -->
+    <path d="M 25 25 L 155 25 L 145 75 L 35 75 Z" fill="url(#dressGrad)" stroke="#a8a29e" stroke-width="0.5" />
+    
+    <!-- Waist Tie belt -->
+    <rect x="33" y="75" width="114" height="8" fill="#a8a29e" rx="2" />
+    <path d="M 60 78 Q 45 100 50 120" fill="none" stroke="#78716c" stroke-width="3" stroke-linecap="round" />
+    
+    <!-- Skirt (Midi length, flowing) -->
+    <path d="M 35 83 L 145 83 L 175 240 L 5 240 Z" fill="url(#dressGrad)" stroke="#a8a29e" stroke-width="0.5" />
+    
+    <!-- Folds & details on skirt -->
+    <path d="M 55 83 Q 45 160 30 240" fill="none" stroke="#e7e5e4" stroke-width="1.5" />
+    <path d="M 90 83 Q 90 160 90 240" fill="none" stroke="#e7e5e4" stroke-width="1.5" />
+    <path d="M 125 83 Q 135 160 150 240" fill="none" stroke="#e7e5e4" stroke-width="1.5" />
+    
+    <!-- Button details on front -->
+    <circle cx="90" cy="40" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="55" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="110" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="135" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="160" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="185" r="2.5" fill="#78716c" />
+    <circle cx="90" cy="210" r="2.5" fill="#78716c" />
+  </g>
+  
+  <!-- Overlay Title -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="800" fill="#44403c" letter-spacing="2" text-anchor="middle">LINEN MIDI CASUAL DRESS</text>
+</svg>

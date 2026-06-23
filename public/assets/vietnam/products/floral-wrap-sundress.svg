@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fce7f3" />
+      <stop offset="100%" stop-color="#fbcfe8" />
+    </linearGradient>
+    <linearGradient id="dressGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Minimalist Aesthetic floral garden backdrop circles -->
+  <circle cx="250" cy="200" r="130" fill="#fff" opacity="0.4" />
+  
+  <!-- Wooden Hanger -->
+  <g transform="translate(195, 60)" filter="url(#shadow)">
+    <!-- Hook -->
+    <path d="M 55 20 C 55 0 75 0 75 15 C 75 25 55 25 55 40" fill="none" stroke="#78716c" stroke-width="3" stroke-linecap="round" />
+    <!-- Hanger wood -->
+    <path d="M 10 45 Q 55 35 100 45 Q 55 52 10 45 Z" fill="#d97706" stroke="#b45309" stroke-width="1" />
+  </g>
+  
+  <!-- Floral Sundress Graphic -->
+  <g transform="translate(160, 102)" filter="url(#shadow)">
+    <!-- Straps -->
+    <rect x="35" y="0" width="8" height="25" rx="2" fill="#be123c" />
+    <rect x="139" y="0" width="8" height="25" rx="2" fill="#be123c" />
+    
+    <!-- Bodice / V-Neck Wrap Top -->
+    <path d="M 25 25 L 90 75 L 155 25 L 140 75 L 40 75 Z" fill="url(#dressGrad)" />
+    
+    <!-- Wrap overlay detail -->
+    <path d="M 25 25 L 90 75" stroke="#fecdd3" stroke-width="2" />
+    
+    <!-- Waist belt / sash -->
+    <rect x="35" y="75" width="112" height="10" fill="#9f1239" rx="2" />
+    <path d="M 130 80 Q 150 110 145 135" fill="none" stroke="#be123c" stroke-width="3.5" stroke-linecap="round" />
+    
+    <!-- Skirt (Flowing wrap shape) -->
+    <path d="M 40 85 L 140 85 L 180 240 L 2 240 Z" fill="url(#dressGrad)" />
+    
+    <!-- Wrap line on skirt -->
+    <path d="M 40 85 Q 110 160 170 235" fill="none" stroke="#fecdd3" stroke-width="2.5" />
+    
+    <!-- Daisy Flower Prints on Dress -->
+    <!-- Flower 1 -->
+    <g transform="translate(60, 110) scale(0.6)">
+      <circle cx="15" cy="15" r="5" fill="#fef08a" />
+      <circle cx="15" cy="5" r="4" fill="#ffffff" />
+      <circle cx="15" cy="25" r="4" fill="#ffffff" />
+      <circle cx="5" cy="15" r="4" fill="#ffffff" />
+      <circle cx="25" cy="15" r="4" fill="#ffffff" />
+    </g>
+    <!-- Flower 2 -->
+    <g transform="translate(120, 130) scale(0.5)">
+      <circle cx="15" cy="15" r="5" fill="#fef08a" />
+      <circle cx="15" cy="5" r="4" fill="#ffffff" />
+      <circle cx="15" cy="25" r="4" fill="#ffffff" />
+      <circle cx="5" cy="15" r="4" fill="#ffffff" />
+      <circle cx="25" cy="15" r="4" fill="#ffffff" />
+    </g>
+    <!-- Flower 3 -->
+    <g transform="translate(40, 180) scale(0.7)">
+      <circle cx="15" cy="15" r="5" fill="#fef08a" />
+      <circle cx="15" cy="5" r="4" fill="#ffffff" />
+      <circle cx="15" cy="25" r="4" fill="#ffffff" />
+      <circle cx="5" cy="15" r="4" fill="#ffffff" />
+      <circle cx="25" cy="15" r="4" fill="#ffffff" />
+    </g>
+    <!-- Flower 4 -->
+    <g transform="translate(100, 190) scale(0.6)">
+      <circle cx="15" cy="15" r="5" fill="#fef08a" />
+      <circle cx="15" cy="5" r="4" fill="#ffffff" />
+      <circle cx="15" cy="25" r="4" fill="#ffffff" />
+      <circle cx="5" cy="15" r="4" fill="#ffffff" />
+      <circle cx="25" cy="15" r="4" fill="#ffffff" />
+    </g>
+  </g>
+  
+  <!-- Overlay Title -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#9f1239" letter-spacing="2" text-anchor="middle">FLORAL WRAP SUNDRESS</text>
+</svg>

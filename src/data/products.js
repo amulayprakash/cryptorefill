@@ -1,4 +1,5 @@
 import { vietnamProducts } from './vietnamProducts.js';
+import { iceJewelleryProducts } from './iceJewelleryProducts.js';
 export const products = [
   // ── Popular ──────────────────────────────────────────────────────────────
   {
@@ -936,7 +937,10 @@ export const products = [
   },
   
   // ── Vietnam Market ──
-  ...vietnamProducts
+  ...vietnamProducts,
+  
+  // ── Ice Jewellery ──
+  ...iceJewelleryProducts
 ];
 
 export const getProductById = (id) => {

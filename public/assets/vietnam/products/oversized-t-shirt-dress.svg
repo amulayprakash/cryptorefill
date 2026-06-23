@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ccfbf1" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+    <linearGradient id="dressGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Cool background street-grid pattern or circle -->
+  <circle cx="250" cy="200" r="130" fill="#ffffff" opacity="0.6" />
+  
+  <!-- Wooden Hanger -->
+  <g transform="translate(195, 60)" filter="url(#shadow)">
+    <!-- Hook -->
+    <path d="M 55 20 C 55 0 75 0 75 15 C 75 25 55 25 55 40" fill="none" stroke="#78716c" stroke-width="3" stroke-linecap="round" />
+    <!-- Hanger wood -->
+    <path d="M 10 45 Q 55 35 100 45 Q 55 52 10 45 Z" fill="#d97706" stroke="#b45309" stroke-width="1" />
+  </g>
+  
+  <!-- Oversized T-shirt Dress Graphic -->
+  <g transform="translate(145, 102)" filter="url(#shadow)">
+    <!-- Main Body and Sleeves (Loose Fit T-shirt Dress shape) -->
+    <path d="M 50 20 L 75 15 L 135 15 L 160 20 L 210 50 L 190 100 L 165 95 L 165 240 L 45 240 L 45 95 L 20 100 L 0 50 Z" fill="url(#dressGrad)" stroke="#1e40af" stroke-width="0.5" />
+    
+    <!-- Ribbed Neckline -->
+    <path d="M 75 15 C 75 25 135 25 135 15" fill="none" stroke="#1d4ed8" stroke-width="4" stroke-linecap="round" />
+    
+    <!-- Graphic Print on T-shirt (Cool modern abstract art or text) -->
+    <!-- Abstract circle and shapes -->
+    <circle cx="105" cy="90" r="25" fill="#fef08a" opacity="0.9" />
+    <path d="M 85 100 Q 105 70 125 100" fill="none" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" />
+    <text x="105" y="140" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" font-weight="900" fill="#ffffff" letter-spacing="3" text-anchor="middle">STREET</text>
+    <text x="105" y="155" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#f43f5e" letter-spacing="2" text-anchor="middle">STYLE</text>
+    
+    <!-- Folds & loose fit highlights -->
+    <path d="M 45 120 Q 75 140 75 240" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+    <path d="M 165 120 Q 135 140 135 240" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+  </g>
+  
+  <!-- Overlay Title -->
+  <text x="250" y="370" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#1e3a8a" letter-spacing="2" text-anchor="middle">OVERSIZED T-SHIRT DRESS</text>
+</svg>

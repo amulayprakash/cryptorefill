@@ -20,81 +20,12 @@ const vietnamTabs = [
 ];
 
 function TrendingProductsShowcase() {
-  const [activeCategory, setActiveCategory] = useState("Beauty & Skincare");
-  const tabsRef = React.useRef(null);
+  const [mixedProducts, setMixedProducts] = useState([]);
 
   useEffect(() => {
-    const el = tabsRef.current;
-    if (!el) return;
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let draggedThisPress = false;
-
-    const handleMouseDown = (e) => {
-      isDown = true;
-      startX = e.pageX - el.offsetLeft;
-      scrollLeft = el.scrollLeft;
-      draggedThisPress = false;
-    };
-
-    const handleMouseLeave = () => {
-      isDown = false;
-    };
-
-    const handleMouseUp = () => {
-      isDown = false;
-      // draggedThisPress remains true until the upcoming click fires and resets it
-    };
-
-    const handleMouseMove = (e) => {
-      if (!isDown) return;
-      const x = e.pageX - el.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      if (Math.abs(x - startX) > 5) {
-        draggedThisPress = true;
-      }
-      el.scrollLeft = scrollLeft - walk;
-    };
-
-    const handleWheel = (e) => {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        el.scrollLeft += e.deltaY;
-      }
-    };
-
-    // Capture-phase click: only suppress the single click that immediately
-    // follows a drag. Reset immediately so the next click is never blocked.
-    const handleCaptureClick = (e) => {
-      if (draggedThisPress) {
-        draggedThisPress = false; // reset so next click works
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-
-    el.addEventListener("mousedown", handleMouseDown);
-    el.addEventListener("mouseleave", handleMouseLeave);
-    el.addEventListener("mouseup", handleMouseUp);
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    el.addEventListener("click", handleCaptureClick, true);
-
-    return () => {
-      el.removeEventListener("mousedown", handleMouseDown);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-      el.removeEventListener("mouseup", handleMouseUp);
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("wheel", handleWheel);
-      el.removeEventListener("click", handleCaptureClick, true);
-    };
+    // Shuffle the products once on mount for mix and match
+    setMixedProducts([...vietnamProducts].sort(() => 0.5 - Math.random()));
   }, []);
-
-  const filteredProducts = vietnamProducts.filter(
-    (product) => product.category === activeCategory
-  );
 
   return (
     <div className="mt-8 mx-auto max-w-(--breakpoint-2xl) mb-12">
@@ -103,7 +34,7 @@ function TrendingProductsShowcase() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex flex-col">
             <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
-              🔥 Hot Deals &amp; Offers
+              🔥 Trending Products
             </span>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
               Top trending items in the Vietnam Market. Buy instantly with crypto.
@@ -111,44 +42,22 @@ function TrendingProductsShowcase() {
           </div>
         </div>
 
-        {/* Custom Tabs (using div with role="button" to avoid scroll button match conflicts) */}
-        <div
-          ref={tabsRef}
-          className="mt-6 no-scrollbar flex w-full gap-2 overflow-x-auto pb-2 scroll-smooth border-b border-gray-200/60 dark:border-gray-800/60"
-        >
-          {vietnamTabs.map((tab) => {
-            const isActive = tab.name === activeCategory;
-            return (
-              <div
-                key={tab.name}
-                role="button"
-                tabIndex={0}
-                onClick={() => setActiveCategory(tab.name)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setActiveCategory(tab.name);
-                  }
-                }}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer shrink-0 border select-none ${
-                  isActive
-                    ? "bg-blue-600 text-white border-transparent shadow-md transform scale-102 hover:bg-blue-700"
-                    : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                }`}
-              >
-                <span>{tab.icon}</span>
-                <span>{tab.name}</span>
-              </div>
-            );
-          })}
-        </div>
       </div>
 
-
-
       {/* Horizontal Scrollable Slider */}
+      <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
+        <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
+          <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
+            <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" fillRule="evenodd" /></svg>
+          </button>
+          <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 cursor-pointer opacity-100">
+            <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" fillRule="evenodd" /></svg>
+          </button>
+        </div>
+      </div>
       <div className="relative w-full">
-        <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-4">
-          {filteredProducts.map((product) => {
+        <div className="mt-4 no-scrollbar grid grid-rows-2 grid-flow-col w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-4">
+          {mixedProducts.map((product) => {
             const hasDiscount = product.discount && product.discount !== "0% OFF";
             return (
               <div
@@ -502,17 +411,29 @@ export default function Home() {
           <div className="wrapper grow sm:pb-32">
             <main className="max-w-8xl mx-auto">
 
+                <TrendingProductsShowcase />
+
                 {/* Vietnam Market Trending Section */}
                 <div className="mx-auto max-w-(--breakpoint-2xl) mb-10 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
                   <div className="flex flex-col">
                     <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
-                      🔥 Trending Products
+                      🔥 Explore Categories
                     </span>
                     <h1 className="text-gray-700 dark:text-gray-400 mt-2 font-medium">
                       Most Popular Products in Vietnam
                     </h1>
                   </div>
                   
+                  <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
+                    <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" fillRule="evenodd" /></svg>
+                      </button>
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 cursor-pointer opacity-100">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" fillRule="evenodd" /></svg>
+                      </button>
+                    </div>
+                  </div>
                   <div className="relative w-full">
                     <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-2">
                       {[
@@ -939,6 +860,16 @@ export default function Home() {
                   <h2 className="mx-auto max-w-(--breakpoint-2xl) text-gray-700 dark:text-gray-400 text-base px-3">
                     Pay with stablecoins and other crypto
                   </h2>
+                  <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
+                    <div className="flex-end -mt-10 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" fillRule="evenodd" /></svg>
+                      </button>
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 cursor-pointer opacity-100">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" fillRule="evenodd" /></svg>
+                      </button>
+                    </div>
+                  </div>
                   <div className="relative mx-auto flex flex-row justify-between">
                     <div className="no-scrollbar flex w-full gap-3 overflow-x-auto scroll-smooth pt-5 sm:gap-8 scroll-pl-2xl">
                       <div className="mx-auto flex w-64 flex-col items-center justify-center last:mr-20">

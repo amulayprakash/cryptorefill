@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#374151" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="metalPlate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="50%" stop-color="#4b5563" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="chromeHandle" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f3f4f6" />
+      <stop offset="35%" stop-color="#9ca3af" />
+      <stop offset="65%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#4b5563" />
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)" />
+  
+  <!-- Blue sports highlight glow -->
+  <circle cx="250" cy="200" r="140" fill="#3b82f6" opacity="0.1" filter="url(#glow)" />
+  
+  <!-- Dumbbell Shadow -->
+  <ellipse cx="250" cy="300" rx="160" ry="20" fill="rgba(0,0,0,0.5)" />
+  
+  <!-- Dumbbell Assembly -->
+  
+  <!-- Dumbbell Base Tray -->
+  <rect x="70" y="270" width="360" height="25" rx="6" fill="#111827" stroke="#1f2937" stroke-width="2" />
+  <rect x="90" y="275" width="320" height="4" fill="#3b82f6" opacity="0.8" />
+  
+  <!-- Dumbbell Plates Stack - Left Side -->
+  <g transform="translate(100, 110)">
+    <!-- Plate 1 (Large) -->
+    <rect x="0" y="0" width="16" height="150" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 2 -->
+    <rect x="18" y="5" width="16" height="140" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 3 -->
+    <rect x="36" y="10" width="16" height="130" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 4 -->
+    <rect x="54" y="15" width="16" height="120" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+  </g>
+  
+  <!-- Dumbbell Plates Stack - Right Side -->
+  <g transform="translate(310, 110)">
+    <!-- Plate 4 -->
+    <rect x="14" y="15" width="16" height="120" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 3 -->
+    <rect x="32" y="10" width="16" height="130" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 2 -->
+    <rect x="50" y="5" width="16" height="140" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+    <!-- Plate 1 (Large) -->
+    <rect x="68" y="0" width="16" height="150" rx="8" fill="url(#metalPlate)" stroke="#111827" stroke-width="1.5" />
+  </g>
+  
+  <!-- Adjustment Dials -->
+  <rect x="172" y="145" width="16" height="80" rx="4" fill="#1f2937" stroke="#111827" stroke-width="1" />
+  <circle cx="180" cy="185" r="5" fill="#3b82f6" />
+  <rect x="296" y="145" width="16" height="80" rx="4" fill="#1f2937" stroke="#111827" stroke-width="1" />
+  <circle cx="304" cy="185" r="5" fill="#3b82f6" />
+  
+  <!-- Chrome Handle Bar -->
+  <rect x="180" y="173" width="124" height="24" rx="4" fill="url(#chromeHandle)" stroke="#4b5563" stroke-width="1" />
+  <!-- Textured grip lines on handle -->
+  <line x1="200" y1="173" x2="200" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="210" y1="173" x2="210" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="220" y1="173" x2="220" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="230" y1="173" x2="230" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="240" y1="173" x2="240" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="250" y1="173" x2="250" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="260" y1="173" x2="260" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="270" y1="173" x2="270" y2="197" stroke="#374151" stroke-width="2" />
+  <line x1="280" y1="173" x2="280" y2="197" stroke="#374151" stroke-width="2" />
+  
+  <!-- Weight Indicator Digital / Dial Label overlay -->
+  <rect x="220" y="130" width="44" height="20" rx="3" fill="#111827" stroke="#3b82f6" stroke-width="1" />
+  <text x="242" y="144" font-family="monospace" font-size="12" font-weight="bold" fill="#60a5fa" text-anchor="middle">24 KG</text>
+  
+  <!-- Title / Product text inside card overlay style -->
+  <text x="250" y="360" font-family="'Inter', sans-serif" font-size="14" font-weight="900" fill="#ffffff" letter-spacing="2" text-anchor="middle">ADJUSTABLE DUMBBELL SET</text>
+</svg>

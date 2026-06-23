@@ -135,12 +135,14 @@ function JewelVisual({ category }) {
 /* ── Product Card — matches the site's existing card style exactly ── */
 function JewelCard({ item }) {
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
   const priceNum = parseInt(item.price.replace("$",""));
   const origNum  = parseInt(item.originalPrice.replace("$",""));
   const discount = origNum > priceNum ? Math.round((1 - priceNum / origNum) * 100) : null;
 
   return (
     <div
+      onClick={() => navigate(`/product/${item.id}`)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
