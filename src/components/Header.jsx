@@ -201,6 +201,9 @@ export default function Header() {
                 {/* Connect Wallet (Desktop) */}
                 <WalletButton />
 
+                {/* Connect Wallet (Mobile) */}
+                <WalletButton variant="mobile" />
+
                 {/* Mobile Search Button */}
                 <button
                   aria-label="Search product"
