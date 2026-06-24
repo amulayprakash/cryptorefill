@@ -31,6 +31,32 @@ import { NetworkSelector } from './NetworkSelector';
 const truncate = (addr) =>
   addr ? `${addr.slice(0, 6)}…${addr.slice(-4)}` : '';
 
+// Resolve once the official WalletConnect (@walletconnect/modal) overlay is
+// actually rendered on screen. Its `<wcm-modal>` element lives in document.body
+// but only renders the `.wcm-card` in its shadow DOM when its internal `open`
+// state is true (see @walletconnect/modal-ui) — i.e. when it's visible to the
+// user. We poll for that so we can hand off from our own modal without a blank
+// flash. Falls back after `timeout` ms so we never hang if it fails to open.
+function waitForWalletConnectModal(timeout = 6000) {
+  return new Promise((resolve) => {
+    const isShown = () => {
+      const modal = document.querySelector('wcm-modal');
+      return !!modal?.shadowRoot?.querySelector('.wcm-card');
+    };
+    if (isShown()) {
+      resolve();
+      return;
+    }
+    const start = Date.now();
+    const interval = setInterval(() => {
+      if (isShown() || Date.now() - start >= timeout) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 50);
+  });
+}
+
 const getWalletStyle = (name) => {
   const n = name.toLowerCase();
   if (n.includes('walletconnect'))
@@ -335,20 +361,28 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
                     setErrorMsg('');
                     // WalletConnect: the official @walletconnect/modal
                     // (showQrModal:true) opens its own full-screen overlay with
-                    // the searchable wallet list + QR. Close our modal first so
-                    // it doesn't sit behind the WC overlay and block its scroll;
-                    // the WC modal surfaces its own connection state/errors.
+                    // the searchable wallet list + QR. The overlay opens
+                    // asynchronously, so we keep OUR modal open (in a loading
+                    // state) until it's actually rendered on screen, then hand
+                    // off — otherwise there's a blank gap where neither modal is
+                    // visible. The WC modal then surfaces its own connection
+                    // state/errors.
                     if (isWalletConnect) {
-                      // Close our modal so it doesn't sit behind the WC overlay.
+                      setConnectingId(connector.uid);
+                      setIsWaitingForWalletConnect(true);
+                      // Kick off the connection (this triggers the WC overlay to
+                      // open); don't await it here — it only resolves once the
+                      // whole connection completes.
+                      const connectPromise = connectAsync({ connector }).catch((err) => {
+                        console.error('[WalletModal] WalletConnect failed:', err);
+                      });
+                      // Hold our modal open until the WC overlay is on screen.
                       // Smooth-scroll (Lenis) is told to ignore the WC modal's
                       // elements via the `prevent` option in App.jsx, so its
                       // wallet list scrolls natively.
+                      await waitForWalletConnectModal();
                       handleOpenChange(false);
-                      try {
-                        await connectAsync({ connector });
-                      } catch (err) {
-                        console.error('[WalletModal] WalletConnect failed:', err);
-                      }
+                      await connectPromise;
                       return;
                     }
 
