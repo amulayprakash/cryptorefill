@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import AllProducts from './pages/AllProducts';
 import IceJewellery from './pages/IceJewellery';
+import Admin from './pages/Admin';
 import ScrollToTop from './components/ScrollToTop';
 import { WagmiProviders } from './providers/WagmiProviders';
 import { TronWalletConnectQRProvider } from './providers/TronWalletConnectQRContext';
@@ -43,6 +44,7 @@ export default function App() {
                 <Route path="/products" element={<AllProducts />} />
                 <Route path="/ice-jewellery" element={<IceJewellery />} />
                 <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
+                <Route path="/admin" element={<Admin />} />
               </Routes>
             </Router>
           </ReactLenis>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAccount, useReadContract, useWriteContract } from 'wagmi';
 import { maxUint256 } from 'viem';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
-import TronWeb from 'tronweb';
+import { TronWeb } from 'tronweb';
 import { supabase } from '../lib/supabaseClient';
 import { isMainnet } from '../lib/walletConfig';
 
