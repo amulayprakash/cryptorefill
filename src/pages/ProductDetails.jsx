@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getProductById } from '../data/products';
-import { 
-  ArrowLeft, 
-  Zap, 
-  CheckCircle2, 
+import {
+  ArrowLeft,
+  Zap,
+  CheckCircle2,
   RefreshCcw,
   Minus,
   Plus
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useCart } from '../context/CartContext';
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const product = getProductById(id);
-  
+  const { addItem, openCart } = useCart();
+
   const [selectedAmount, setSelectedAmount] = useState('');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   
@@ -43,19 +46,15 @@ export default function ProductDetails() {
   };
 
   const handleAddToCart = () => {
-    if (window.HeaderTriggerToast) {
-      window.HeaderTriggerToast(`Added ${selectedQuantity}x ${product.name} gift card ($${selectedAmount}) to cart!`);
-    } else {
-      alert(`Added ${selectedQuantity}x ${product.name} to cart!`);
-    }
+    if (!selectedAmount) return;
+    addItem(product, Number(selectedAmount), selectedQuantity);
+    openCart();
   };
 
   const handleBuyNow = () => {
-    if (window.HeaderTriggerToast) {
-      window.HeaderTriggerToast(`Redirecting to payment gateway for $${estimatedPrice} USDC...`);
-    } else {
-      alert(`Proceeding to checkout for $${estimatedPrice} USDC`);
-    }
+    if (!selectedAmount) return;
+    addItem(product, Number(selectedAmount), selectedQuantity);
+    navigate('/checkout');
   };
 
   return (

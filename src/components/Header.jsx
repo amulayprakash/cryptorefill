@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle, Wallet, X } from 'lucide-react';
 import { WalletButton } from './wallet/WalletButton';
+import { useCart } from '../context/CartContext';
 
 export default function Header() {
   const navigate = useNavigate();
+  const { itemCount, openCart } = useCart();
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') || 'light';
@@ -225,10 +227,15 @@ export default function Header() {
                 {/* Cart Button */}
                 <button
                   aria-label="Open shopping cart"
-                  onClick={() => triggerToast("Your shopping cart is empty.")}
-                  className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 group flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-xl text-gray-600 dark:text-gray-300 transition-colors"
+                  onClick={openCart}
+                  className="relative bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 group flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-xl text-gray-600 dark:text-gray-300 transition-colors"
                 >
                   <ShoppingCart className="w-4.5 h-4.5" />
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center px-1">
+                      {itemCount > 99 ? '99+' : itemCount}
+                    </span>
+                  )}
                 </button>
               </div>
             </>

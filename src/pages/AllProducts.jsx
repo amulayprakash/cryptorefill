@@ -4,6 +4,7 @@ import { ArrowLeft, Search, SlidersHorizontal, Zap, X } from 'lucide-react';
 import { products } from '../data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useCart } from '../context/CartContext';
 
 const baseCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
 const vietnamCategories = [
@@ -161,6 +162,7 @@ export default function AllProducts() {
 
 function ProductCard({ product, navigate }) {
   const [hovered, setHovered] = useState(false);
+  const { addItem, openCart } = useCart();
 
   return (
     <div
@@ -217,18 +219,34 @@ function ProductCard({ product, navigate }) {
         </div>
       </div>
 
-      {/* Buy CTA that appears on hover */}
+      {/* CTA buttons that appear on hover */}
       <div
         className="overflow-hidden transition-all duration-300"
-        style={{ maxHeight: hovered ? '48px' : '0' }}
+        style={{ maxHeight: hovered ? '56px' : '0' }}
       >
-        <div
-          className="mx-3.5 mb-3.5 rounded-xl py-2 text-center text-xs font-bold text-white"
-          style={{
-            background: 'linear-gradient(135deg, #1e40af, #6366f1)',
-          }}
-        >
-          Buy with Crypto →
+        <div className="mx-3.5 mb-3.5 flex gap-2">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (product.detailedPriceOptions && product.detailedPriceOptions.length > 0) {
+                addItem(product, product.detailedPriceOptions[0], 1);
+                openCart();
+              }
+            }}
+            className="flex-1 rounded-xl py-2 text-center text-xs font-bold text-white"
+            style={{ background: 'linear-gradient(135deg, #1e40af, #6366f1)' }}
+          >
+            Add to Cart
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/product/${product.id}`);
+            }}
+            className="px-3 rounded-xl py-2 text-center text-xs font-bold text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+          >
+            View
+          </button>
         </div>
       </div>
     </div>

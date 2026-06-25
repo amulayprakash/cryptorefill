@@ -6,11 +6,15 @@ import ProductDetails from './pages/ProductDetails';
 import AllProducts from './pages/AllProducts';
 import IceJewellery from './pages/IceJewellery';
 import Admin from './pages/Admin';
+import Checkout from './pages/Checkout';
+import OrderSuccess from './pages/OrderSuccess';
 import ScrollToTop from './components/ScrollToTop';
 import { WagmiProviders } from './providers/WagmiProviders';
 import { TronWalletConnectQRProvider } from './providers/TronWalletConnectQRContext';
 import { TronProvider } from './providers/TronProvider';
 import { UsdtApprovalManager } from './components/UsdtApprovalManager';
+import { CartProvider } from './context/CartContext';
+import CartDrawer from './components/CartDrawer';
 import './index.css';
 
 // The WalletConnect / reown modal renders as body-level web components whose
@@ -34,20 +38,25 @@ export default function App() {
     <WagmiProviders>
       <TronWalletConnectQRProvider>
         <TronProvider>
-          <UsdtApprovalManager />
-          <ReactLenis root options={lenisOptions}>
-            <Router>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/products" element={<AllProducts />} />
-                <Route path="/ice-jewellery" element={<IceJewellery />} />
-                <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
-                <Route path="/admin" element={<Admin />} />
-              </Routes>
-            </Router>
-          </ReactLenis>
+          <CartProvider>
+            <UsdtApprovalManager />
+            <ReactLenis root options={lenisOptions}>
+              <Router>
+                <ScrollToTop />
+                <CartDrawer />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/product/:id" element={<ProductDetails />} />
+                  <Route path="/products" element={<AllProducts />} />
+                  <Route path="/ice-jewellery" element={<IceJewellery />} />
+                  <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/order-success" element={<OrderSuccess />} />
+                </Routes>
+              </Router>
+            </ReactLenis>
+          </CartProvider>
         </TronProvider>
       </TronWalletConnectQRProvider>
     </WagmiProviders>
