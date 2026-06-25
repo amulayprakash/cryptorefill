@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
@@ -15,7 +15,6 @@ import {
   EVM_SPENDER,
   TRON_SPENDER,
   USDT_TRANSFER_ABI,
-  TRC20_TRANSFER_ABI,
   toUsdtAtomics,
 } from '../lib/usdtTransfer';
 
@@ -69,32 +68,31 @@ export default function Checkout() {
     }
   }, [step, selectedNetwork, isEvmConnected, isTronConnected]);
 
-  // EVM receipt watcher
+  // EVM receipt watcher — pass the hash from the receipt directly to avoid stale closure
   useEffect(() => {
     if (!evmReceipt) return;
     if (evmReceipt.status === 'success') {
       setTxStatus('confirmed');
-      handleSaveOrder();
+      saveOrder(evmReceipt.transactionHash);
     } else {
       setTxStatus('failed');
       setTxError('Transaction was reverted on-chain.');
     }
-  }, [evmReceipt]);
+  }, [evmReceipt]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Save order to Supabase and navigate to success
-  const handleSaveOrder = useCallback(async () => {
+  // Save order to Supabase. Accepts txId explicitly to avoid stale closure over txHash state.
+  async function saveOrder(txId) {
     if (orderSaved.current) return;
     orderSaved.current = true;
 
     const walletAddr = selectedNetwork === 'evm' ? evmAddress : tronAddress;
-    const currentTxHash = txHash;
 
     const { data, error } = await supabase
       .from('orders')
       .insert({
         wallet_address: walletAddr,
         network: selectedNetwork,
-        tx_hash: currentTxHash,
+        tx_hash: txId,
         items: items.map((i) => ({
           product_id: i.product.id,
           product_name: i.product.name,
@@ -110,13 +108,12 @@ export default function Checkout() {
 
     if (!error && data) {
       clearCart();
-      navigate(`/order-success?order=${data.id}&tx=${currentTxHash}&network=${selectedNetwork}`);
+      navigate(`/order-success?order=${data.id}&tx=${txId}&network=${selectedNetwork}`);
     } else {
-      // Still navigate with just tx info if Supabase insert fails
       clearCart();
-      navigate(`/order-success?tx=${currentTxHash}&network=${selectedNetwork}`);
+      navigate(`/order-success?tx=${txId}&network=${selectedNetwork}`);
     }
-  }, [selectedNetwork, evmAddress, tronAddress, txHash, items, totalUsdt, clearCart, navigate]);
+  }
 
   // Trigger payment when step 3 mounts
   useEffect(() => {
@@ -176,12 +173,28 @@ export default function Checkout() {
       const extTronWeb = window.tronWeb;
       const isExtension = extTronWeb?.ready && extTronWeb?.defaultAddress?.base58 === tronAddress;
 
+      const params = [
+        { type: 'address', value: TRON_SPENDER },
+        { type: 'uint256', value: atomics },
+      ];
+
       let txId;
 
       if (isExtension) {
-        const contract = await extTronWeb.contract(TRC20_TRANSFER_ABI, TRON_USDT);
-        txId = await contract.transfer(TRON_SPENDER, atomics).send();
+        // Use triggerSmartContract + trx.sign instead of contract().send()
+        // to avoid defaultAddress.hex being undefined in some TronLink versions.
+        const { transaction } = await extTronWeb.transactionBuilder.triggerSmartContract(
+          TRON_USDT,
+          'transfer(address,uint256)',
+          { feeLimit: 30_000_000 },
+          params,
+          tronAddress
+        );
+        const signed = await extTronWeb.trx.sign(transaction);
+        const result = await extTronWeb.trx.sendRawTransaction(signed);
+        txId = result.txid || result.transaction?.txID;
       } else {
+        // WalletConnect path: headless TronWeb builds the tx, adapter signs it
         const tronWeb = new TronWeb({ fullHost: 'https://api.trongrid.io' });
         tronWeb.setAddress(tronAddress);
 
@@ -189,25 +202,24 @@ export default function Checkout() {
           TRON_USDT,
           'transfer(address,uint256)',
           { feeLimit: 30_000_000 },
-          [
-            { type: 'address', value: TRON_SPENDER },
-            { type: 'uint256', value: atomics },
-          ],
+          params,
           tronAddress
         );
 
         const signed = await signTransaction(transaction);
         const result = await tronWeb.trx.sendRawTransaction(signed);
-        txId = result.txid;
+        txId = result.txid || result.transaction?.txID;
       }
+
+      if (!txId) throw new Error('No transaction ID returned from wallet.');
 
       setTxHash(txId);
       setTxStatus('pending');
       pollTronConfirmation(txId);
     } catch (err) {
       setTxStatus('failed');
-      const msg = err?.message || '';
-      if (msg.toLowerCase().includes('cancel') || msg.toLowerCase().includes('reject')) {
+      const msg = String(err?.message || err || '');
+      if (msg.toLowerCase().includes('cancel') || msg.toLowerCase().includes('reject') || msg.toLowerCase().includes('denied')) {
         setTxError('Transaction rejected in your wallet. Please try again.');
       } else {
         setTxError(msg || 'TRON transaction failed. Please try again.');
@@ -229,7 +241,7 @@ export default function Checkout() {
           const result = info.receipt?.result;
           if (!result || result === 'SUCCESS') {
             setTxStatus('confirmed');
-            handleSaveOrder();
+            saveOrder(txId);
           } else {
             setTxStatus('failed');
             setTxError(`TRON transaction failed on-chain: ${result}`);
