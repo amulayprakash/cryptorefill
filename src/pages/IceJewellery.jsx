@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SkeletonImage from "../components/SkeletonImage";
 
 /* ─── Jewelry catalog data ─── */
 const JEWELRY_ITEMS = [
@@ -160,9 +161,11 @@ function JewelCard({ item }) {
       {/* Image */}
       <div style={{ position: "relative", aspectRatio: "16/10", background: "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }} className="dark:bg-gray-900">
         {item.imageUrl ? (
-          <img
+          <SkeletonImage
             src={item.imageUrl}
             alt={item.name}
+            className=""
+            containerStyle={{ width: '100%', height: '100%' }}
             style={{
               width: "100%",
               height: "100%",
@@ -170,7 +173,7 @@ function JewelCard({ item }) {
             }}
             onError={(e) => {
               e.target.style.display = "none";
-              const fb = e.target.parentElement.querySelector(".jewel-fallback-svg");
+              const fb = e.target.parentElement?.parentElement?.querySelector(".jewel-fallback-svg");
               if (fb) fb.style.display = "block";
             }}
           />

@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import { WalletModal } from '../components/wallet/WalletModal';
 import { useCart } from '../context/CartContext';
 import { supabase } from '../lib/supabaseClient';
+import SkeletonImage from '../components/SkeletonImage';
 import {
   EVM_USDT,
   TRON_USDT,
@@ -411,10 +412,11 @@ function StepReview({ items, totalUsdt, onContinue }) {
             className="flex items-center gap-3 p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800"
           >
             <div className="w-12 h-12 rounded-lg overflow-hidden bg-white dark:bg-gray-700 border border-gray-100 dark:border-gray-700 shrink-0">
-              <img
+              <SkeletonImage
                 src={item.product.imageUrl}
                 alt={item.product.name}
                 className="w-full h-full object-cover"
+                containerStyle={{ width: '100%', height: '100%' }}
                 onError={(e) => { e.target.onerror = null; e.target.src = '/assets/placeholder_mockup.png'; }}
               />
             </div>

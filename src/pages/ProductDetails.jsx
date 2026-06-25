@@ -12,6 +12,7 @@ import {
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
+import SkeletonImage from '../components/SkeletonImage';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -78,10 +79,11 @@ export default function ProductDetails() {
           <div className="w-full lg:w-[45%] flex-shrink-0">
             <div className={`w-full ${product.category === 'Jewellery' ? 'bg-[#FAF8F4] dark:bg-amber-900/10 border-[#C5A059]/20' : 'bg-gray-50 dark:bg-gray-800/40 border-gray-100 dark:border-gray-850'} rounded-3xl p-6 sm:p-12 lg:p-16 flex items-center justify-center aspect-[4/3] relative border shadow-xs transition-colors`}>
               <div className="w-full max-w-[280px] rounded-2xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg border border-gray-100 dark:border-gray-800 transform hover:scale-103 transition-transform duration-350">
-                <img 
+                <SkeletonImage 
                   src={product.imageUrl} 
                   alt={product.name} 
                   className="w-full h-auto object-cover"
+                  containerStyle={{ width: '100%' }}
                   onError={(e) => {
                     e.target.onerror = null; 
                     e.target.src = '/assets/placeholder_mockup.png';

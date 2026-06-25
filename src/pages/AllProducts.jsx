@@ -5,6 +5,7 @@ import { products } from '../data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
+import SkeletonImage from '../components/SkeletonImage';
 
 const baseCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
 const vietnamCategories = [
@@ -186,10 +187,11 @@ function ProductCard({ product, navigate }) {
         className="relative overflow-hidden"
         style={{ aspectRatio: '16/10', background: '#f3f4f6' }}
       >
-        <img
+        <SkeletonImage
           src={product.imageUrl}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500"
+          containerStyle={{ width: '100%', height: '100%' }}
           style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
           onError={e => {
             e.target.onerror = null;

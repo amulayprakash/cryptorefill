@@ -3,3 +3,32 @@
 .overflow-x-auto {
   scroll-behavior: smooth !important;
 }
+
+/* ── Skeleton shimmer animation ────────────────────────────── */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 0%,
+    #f3f4f6 40%,
+    #e5e7eb 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-sweep 1.5s ease-in-out infinite;
+  border-radius: inherit;
+}
+
+/* Dark-mode skeleton */
+.dark .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #1f2937 0%,
+    #374151 40%,
+    #1f2937 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeleton-sweep {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

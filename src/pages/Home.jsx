@@ -4,6 +4,7 @@ import "../index.css";
 import Header from "../components/Header";
 import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
 import { vietnamProducts } from "../data/vietnamProducts";
+import SkeletonImage from "../components/SkeletonImage";
 
 const vietnamTabs = [
   { name: "Beauty & Skincare", icon: "🧴" },
@@ -67,10 +68,11 @@ function TrendingProductsShowcase() {
                 <Link to={`/product/${product.id}`} className="flex flex-col w-full">
                   {/* Image container */}
                   <div className="relative h-[98px] w-full flex-none overflow-hidden bg-gray-50 dark:bg-gray-900 sm:h-[133px] lg:h-[155px] xl:h-[178px] border-b border-gray-100 dark:border-gray-800">
-                    <img
+                    <SkeletonImage
                       alt={product.name}
                       src={product.imageUrl}
                       className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                      containerStyle={{ width: '100%', height: '100%' }}
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = '/assets/placeholder_mockup.png';
