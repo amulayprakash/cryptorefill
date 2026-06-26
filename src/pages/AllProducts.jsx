@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Search, SlidersHorizontal, Zap, X } from 'lucide-react';
+import { ArrowLeft, Search, SlidersHorizontal, Shield, X } from 'lucide-react';
 import { products } from '../data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -82,7 +82,7 @@ export default function AllProducts() {
             All Gift Cards
           </h1>
           <p className="text-blue-200 text-base sm:text-lg max-w-xl">
-            {products.length} products available — buy instantly with Bitcoin, Ethereum & more crypto.
+            {products.length} products available — buy safely with Bitcoin, Ethereum & more crypto.
           </p>
 
           {/* Search Bar */}
@@ -216,8 +216,8 @@ function ProductCard({ product, navigate }) {
           className="flex items-center gap-1 text-[10px] font-bold transition-all duration-200"
           style={{ color: hovered ? '#1e40af' : '#9ca3af' }}
         >
-          <Zap className="w-3 h-3" />
-          Instant delivery
+          <Shield className="w-3 h-3" />
+          Safe delivery
         </div>
       </div>
 

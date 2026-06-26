@@ -25,7 +25,7 @@ export default function IceJewelleryCryptoHero() {
 
   const dealBadges = [
     { icon: "💎", label: "Premium Collection" },
-    { icon: "⚡", label: "Instant Delivery" },
+    { icon: "⚡", label: "Safe Delivery" },
     { icon: "₿", label: "Crypto accepted" },
   ];
 
@@ -197,7 +197,7 @@ export default function IceJewelleryCryptoHero() {
 
             {/* Premium refined subtext */}
             <p className="text-sm sm:text-base font-normal text-stone-600 leading-relaxed mb-8 max-w-lg">
-              Secure premium iced-out Cuban links, diamond engagement rings, custom pendants, and elite watches instantly. Transact securely using Bitcoin, Ethereum, Solana, and major stablecoins.
+              Secure premium iced-out Cuban links, diamond engagement rings, custom pendants, and elite watches seamlessly. Transact securely using Bitcoin, Ethereum, Solana, and major stablecoins.
             </p>
 
             {/* Deal highlights row */}
@@ -251,7 +251,7 @@ export default function IceJewelleryCryptoHero() {
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] font-bold tracking-wider text-stone-500 uppercase">
               <span className="flex items-center gap-1.5">
-                <span className="text-[#C5A059]">✓</span> Instant Delivery
+                <span className="text-[#C5A059]">✓</span> Safe Delivery
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="text-[#C5A059]">✓</span> 100% Secure

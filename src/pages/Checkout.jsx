@@ -19,11 +19,29 @@ import {
   toUsdtAtomics,
 } from '../lib/usdtTransfer';
 
-const STEPS = ['Review Order', 'Connect Wallet', 'Pay with USDT'];
-
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, totalUsdt, clearCart } = useCart();
+  
+  const PHYSICAL_CATEGORIES = [
+    'Jewellery',
+    'Beauty & Skincare',
+    'Electronics & Smartphones',
+    'Audio & Earbuds',
+    'Smart Wearables',
+    'Home & Kitchen',
+    'Fashion & Apparel',
+    'Fitness & Wellness',
+    'Health Supplements',
+    'Smart Home',
+    'Pet Care',
+    'Eco-Friendly Living'
+  ];
+  const needsAddress = items.some(i => PHYSICAL_CATEGORIES.includes(i.product.category));
+
+  const steps = needsAddress
+    ? ['Review Order', 'Connect Wallet', 'Pay with USDT', 'Shipping']
+    : ['Review Order', 'Connect Wallet', 'Pay with USDT'];
 
   const [step, setStep] = useState(1);
   const [selectedNetwork, setSelectedNetwork] = useState(null); // 'evm' | 'tron'
@@ -74,7 +92,9 @@ export default function Checkout() {
     if (!evmReceipt) return;
     if (evmReceipt.status === 'success') {
       setTxStatus('confirmed');
-      saveOrder(evmReceipt.transactionHash);
+      if (!needsAddress) {
+        saveOrder(evmReceipt.transactionHash);
+      }
     } else {
       setTxStatus('failed');
       setTxError('Transaction was reverted on-chain.');
@@ -82,28 +102,34 @@ export default function Checkout() {
   }, [evmReceipt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Save order to Supabase. Accepts txId explicitly to avoid stale closure over txHash state.
-  async function saveOrder(txId) {
+  async function saveOrder(txId, shippingAddress = null) {
     if (orderSaved.current) return;
     orderSaved.current = true;
 
     const walletAddr = selectedNetwork === 'evm' ? evmAddress : tronAddress;
 
+    const orderPayload = {
+      wallet_address: walletAddr,
+      network: selectedNetwork,
+      tx_hash: txId,
+      items: items.map((i) => ({
+        product_id: i.product.id,
+        product_name: i.product.name,
+        selected_price: i.selectedPrice,
+        quantity: i.quantity,
+        line_total: i.selectedPrice * i.quantity,
+      })),
+      total_usdt: totalUsdt,
+      status: 'confirmed',
+    };
+
+    if (shippingAddress) {
+      orderPayload.shipping_address = shippingAddress;
+    }
+
     const { data, error } = await supabase
       .from('orders')
-      .insert({
-        wallet_address: walletAddr,
-        network: selectedNetwork,
-        tx_hash: txId,
-        items: items.map((i) => ({
-          product_id: i.product.id,
-          product_name: i.product.name,
-          selected_price: i.selectedPrice,
-          quantity: i.quantity,
-          line_total: i.selectedPrice * i.quantity,
-        })),
-        total_usdt: totalUsdt,
-        status: 'confirmed',
-      })
+      .insert(orderPayload)
       .select('id')
       .single();
 
@@ -242,7 +268,9 @@ export default function Checkout() {
           const result = info.receipt?.result;
           if (!result || result === 'SUCCESS') {
             setTxStatus('confirmed');
-            saveOrder(txId);
+            if (!needsAddress) {
+              saveOrder(txId);
+            }
           } else {
             setTxStatus('failed');
             setTxError(`TRON transaction failed on-chain: ${result}`);
@@ -284,7 +312,7 @@ export default function Checkout() {
         </Link>
 
         {/* Step indicator */}
-        <StepIndicator currentStep={step} />
+        <StepIndicator currentStep={step} steps={steps} />
 
         {/* Step content */}
         <div className="mt-8">
@@ -316,6 +344,14 @@ export default function Checkout() {
               selectedNetwork={selectedNetwork}
               totalUsdt={totalUsdt}
               onRetry={handleRetry}
+              needsAddress={needsAddress}
+              onContinueToShipping={() => setStep(4)}
+            />
+          )}
+
+          {step === 4 && (
+            <StepShipping
+              onSubmit={(addressData) => saveOrder(txHash, addressData)}
             />
           )}
         </div>
@@ -335,10 +371,10 @@ export default function Checkout() {
 
 // ── Step indicator ────────────────────────────────────────────────────────────
 
-function StepIndicator({ currentStep }) {
+function StepIndicator({ currentStep, steps }) {
   return (
     <div className="flex items-center gap-0">
-      {STEPS.map((label, idx) => {
+      {steps.map((label, idx) => {
         const num = idx + 1;
         const done = num < currentStep;
         const active = num === currentStep;
@@ -368,7 +404,7 @@ function StepIndicator({ currentStep }) {
                 {label}
               </span>
             </div>
-            {idx < STEPS.length - 1 && (
+            {idx < steps.length - 1 && (
               <div
                 className={`flex-1 h-[2px] mx-2 mb-5 transition-colors ${
                   done ? 'bg-green-400' : 'bg-gray-200 dark:bg-gray-700'
@@ -525,7 +561,7 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
 
 // ── Step 3: Payment execution ─────────────────────────────────────────────────
 
-function StepPay({ txStatus, txHash, txError, selectedNetwork, totalUsdt, onRetry }) {
+function StepPay({ txStatus, txHash, txError, selectedNetwork, totalUsdt, onRetry, needsAddress, onContinueToShipping }) {
   const explorerBase = selectedNetwork === 'evm'
     ? 'https://etherscan.io/tx/'
     : 'https://tronscan.org/#/transaction/';
@@ -562,7 +598,20 @@ function StepPay({ txStatus, txHash, txError, selectedNetwork, totalUsdt, onRetr
         <>
           <CheckCircle2 className="w-12 h-12 text-green-500 mb-4" />
           <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Payment Confirmed!</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Redirecting to your order...</p>
+          {needsAddress ? (
+            <>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Let's get your shipping details.</p>
+              <button
+                onClick={onContinueToShipping}
+                className="px-6 py-3 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all"
+                style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
+              >
+                Continue to Shipping →
+              </button>
+            </>
+          ) : (
+            <p className="text-sm text-gray-500 dark:text-gray-400">Redirecting to your order...</p>
+          )}
         </>
       ) : txStatus === 'failed' ? (
         <>
@@ -579,6 +628,96 @@ function StepPay({ txStatus, txHash, txError, selectedNetwork, totalUsdt, onRetr
           </button>
         </>
       ) : null}
+    </div>
+  );
+}
+
+// ── Step 4: Shipping Address ──────────────────────────────────────────────────
+
+function StepShipping({ onSubmit }) {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  });
+
+  const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-3 mb-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30">
+        <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" />
+        <p className="text-sm text-blue-800 dark:text-blue-300">
+          <strong>Payment Successful!</strong> Please provide your delivery details below so we can ship your item.
+        </p>
+      </div>
+
+      <h2 className="text-xl font-extrabold text-gray-900 dark:text-white mb-6">Shipping Details</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">First Name *</label>
+            <input required name="firstName" value={formData.firstName} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Last Name *</label>
+            <input required name="lastName" value={formData.lastName} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Phone Number *</label>
+          <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Street Address *</label>
+          <input required name="address1" value={formData.address1} onChange={handleChange} placeholder="Street name and number" className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Apartment, suite, etc. (optional)</label>
+          <input name="address2" value={formData.address2} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">City *</label>
+            <input required name="city" value={formData.city} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">State / Province *</label>
+            <input required name="state" value={formData.state} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">ZIP / Postal Code *</label>
+            <input required name="zip" value={formData.zip} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Country *</label>
+            <input required name="country" value={formData.country} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+          </div>
+        </div>
+        
+        <div className="pt-4">
+          <button
+            type="submit"
+            className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all"
+            style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
+          >
+            Complete Order →
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

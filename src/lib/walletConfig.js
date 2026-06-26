@@ -45,7 +45,7 @@ export const walletMetadata = {
   name: 'Mad Deals',
   description: 'Mad Deals - Shop with Crypto',
   url: getAppUrl(),
-  icons: ['https://www.cryptorefills.com/favicon.ico'],
+  icons: ['https://maddeals.com/favicon.png'],
 };
 
 // ============================================

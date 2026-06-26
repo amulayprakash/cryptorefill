@@ -27,7 +27,7 @@ export const iceJewelleryProducts = [
   priceRange: item.price,
   detailedPriceOptions: [parseInt(item.price.replace("$", ""))],
   imageUrl: item.img,
-  features: ["Instant Delivery via Email", "Premium Quality", "Authentic Design"],
+  features: ["Safe Delivery via Email", "Premium Quality", "Authentic Design"],
   region: "Global",
   pointsMultiplier: 1.05,
   redeemInstructions: "After purchase, you will receive an email with redemption instructions for your physical or digital item.",

@@ -313,7 +313,7 @@ export default function BlinkJewelryHero() {
               style={{ color: "rgba(255,255,255,0.5)" }}
             >
               <span className="flex items-center gap-1">
-                <span className="text-green-400">✓</span> Instant Delivery
+                <span className="text-green-400">✓</span> Safe Delivery
               </span>
               <span className="flex items-center gap-1">
                 <span className="text-green-400">✓</span> Pay with Crypto

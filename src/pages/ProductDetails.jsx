@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getProductById } from '../data/products';
 import {
   ArrowLeft,
-  Zap,
+  Shield,
   CheckCircle2,
   RefreshCcw,
   Minus,
@@ -106,8 +106,8 @@ export default function ProductDetails() {
             {/* Badges Box: Styled Card Container */}
             <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-[13px] font-bold text-gray-700 dark:text-gray-300 ${product.category === 'Jewellery' ? 'bg-[#FAF8F4] dark:bg-amber-900/10 border-[#C5A059]/20' : 'bg-gray-50 dark:bg-gray-800/30 border-gray-150/40 dark:border-gray-800/40'} p-4 rounded-2xl border transition-colors`}>
               <div className="flex items-center gap-2">
-                <Zap className={`w-4 h-4 ${product.category === 'Jewellery' ? 'text-[#C5A059]' : 'text-green-500'} fill-current`} />
-                <span>Instant delivery</span>
+                <Shield className={`w-4 h-4 ${product.category === 'Jewellery' ? 'text-[#C5A059]' : 'text-green-500'}`} />
+                <span>Safe delivery</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className={`w-4 h-4 ${product.category === 'Jewellery' ? 'text-[#C5A059]' : 'text-green-500'}`} />

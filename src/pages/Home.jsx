@@ -38,7 +38,7 @@ function TrendingProductsShowcase() {
               🔥 Trending Products
             </span>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
-              Top trending items in the Vietnam Market. Buy instantly with crypto.
+              Top trending items in the Vietnam Market. Buy safely with crypto.
             </p>
           </div>
         </div>
@@ -115,8 +115,8 @@ function TrendingProductsShowcase() {
 
                     {/* Delivery / Footer info */}
                     <div className="flex items-center gap-1 mt-2 text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 font-bold border-t border-gray-50 dark:border-gray-800 pt-2">
-                      <span className="text-green-500">⚡</span>
-                      <span>Instant Email Delivery</span>
+                      <span className="text-green-500">🛡️</span>
+                      <span>Safe Email Delivery</span>
                     </div>
                   </div>
                 </Link>
@@ -4373,13 +4373,13 @@ export default function Home() {
                   <div className="flex w-80 shrink-0 flex-col overflow-hidden rounded-2xl bg-gray-100 lg:min-w-0 lg:flex-1 dark:bg-gray-800">
                     <div className="relative h-40 w-full sm:h-50">
                       <img
-                        alt="Receive instantly"
+                        alt="Receive safely"
                         className="object-cover object-center"
                         data-nimg="fill"
                         decoding="async"
                         loading="lazy"
                         sizes="(max-width: 1024px) 320px, 33vw"
-                        src="/assets/receive_instantly.png"
+                        src="/assets/receive_safely.png"
                         style={{
                           position: "absolute",
                           height: "100%",
@@ -4391,10 +4391,10 @@ export default function Home() {
                     </div>
                     <div className="flex-1 bg-gray-200/70 px-5 pt-4 pb-6 dark:bg-gray-950/70">
                       <p className="mb-1 text-sm font-semibold text-gray-700 dark:text-gray-200">
-                        3. Receive instantly
+                        3. Receive safely
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Your product arrives in seconds, ready to use.
+                        Your product is delivered securely, ready to use.
                       </p>
                     </div>
                   </div>
@@ -9071,20 +9071,11 @@ export default function Home() {
             <div className="mx-auto max-w-(--breakpoint-xl) px-3 pt-14 pb-8">
               <div className="xl:grid xl:grid-cols-3 xl:gap-6">
                 <div>
-                  <svg
-                    viewBox="0 0 500 127"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-auto text-primary-900 sm:h-8 dark:text-primary-50 mb-1"
-                    aria-label="Mad Deals"
-                  >
-                    {/* Logo Icon */}
-                    <path d="M37 90L60 90" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    <path d="M12 58L43 58" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    <path d="M32 25L48 25" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    {/* Logo Text */}
-                    <text x="90" y="85" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="72" fill="currentColor" letterSpacing="-2">Mad Deals</text>
-                  </svg>
+                  <img
+                    src="/logo.png"
+                    alt="Mad Deals Logo"
+                    className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
+                  />
                   <p className="mt-1 text-xs text-gray-400 italic dark:text-gray-500">
                     Trusted since 2018
                   </p>

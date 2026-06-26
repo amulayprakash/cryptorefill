@@ -163,21 +163,11 @@ export default function Header() {
               {/* Logo */}
               <div className="flex flex-none items-center pr-4">
                 <Link to="/" className="flex flex-col group">
-                  {/* Official Mad Deals SVG Logo */}
-                  <svg
-                    viewBox="0 0 500 127"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mt-0 h-6 w-auto text-[#1a1f5e] sm:h-8 dark:text-white"
-                    aria-label="Mad Deals"
-                  >
-                    {/* Logo Icon */}
-                    <path d="M37 90L60 90" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    <path d="M12 58L43 58" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    <path d="M32 25L48 25" stroke="currentColor" strokeWidth="23" strokeLinecap="round" />
-                    {/* Logo Text */}
-                    <text x="90" y="85" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="72" fill="currentColor" letterSpacing="-2">Mad Deals</text>
-                  </svg>
+                  <img
+                    src="/logo.png"
+                    alt="Mad Deals Logo"
+                    className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
+                  />
                 </Link>
               </div>
 

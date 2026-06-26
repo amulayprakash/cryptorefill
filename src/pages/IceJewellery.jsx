@@ -252,7 +252,7 @@ function JewelCard({ item }) {
         >
           <span style={{ color: "#C5A059" }}>₿</span>
           {item.crypto}
-          <span style={{ marginLeft: "auto", color: "#16a34a" }}>⚡ Instant</span>
+          <span style={{ marginLeft: "auto", color: "#16a34a" }}>🛡️ Safe</span>
         </div>
       </div>
 
@@ -485,7 +485,7 @@ export default function IceJewellery() {
               fontSize: "15px", color: "#57534e",
               maxWidth: "500px", lineHeight: 1.65, marginBottom: "24px",
             }}>
-              {JEWELRY_ITEMS.length} premium pieces available — buy instantly with Bitcoin, Ethereum &amp; more crypto.
+              {JEWELRY_ITEMS.length} premium pieces available — buy safely with Bitcoin, Ethereum &amp; more crypto.
             </p>
 
             {/* Stats */}
@@ -493,7 +493,7 @@ export default function IceJewellery() {
               {[
                 { label: "Products",       value: `${JEWELRY_ITEMS.length}+`, icon: "💎" },
                 { label: "Crypto Accepted",value: "BTC · ETH · SOL",         icon: "₿"  },
-                { label: "Avg. Delivery",  value: "Instant",                  icon: "⚡" },
+                { label: "Avg. Delivery",  value: "Safe & Fast",              icon: "🛡️" },
                 { label: "Rated",          value: "★ 4.9 / 5",               icon: "👑" },
               ].map(s => (
                 <div key={s.label} className="ijp-stat">
