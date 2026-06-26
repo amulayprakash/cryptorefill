@@ -8,7 +8,7 @@ https.get(url, (res) => {
   if (res.statusCode === 200 || res.statusCode === 302) {
     const targetUrl = res.headers.location || url;
     https.get(targetUrl, (imageRes) => {
-      const file = fs.createWriteStream('public/assets/vietnam/products/test.png');
+      const file = fs.createWriteStream('public/assets/global/products/test.png');
       imageRes.pipe(file);
       file.on('finish', () => {
         file.close();

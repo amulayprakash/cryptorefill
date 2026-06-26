@@ -8,7 +8,7 @@ import { useCart } from '../context/CartContext';
 import SkeletonImage from '../components/SkeletonImage';
 
 const baseCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
-const vietnamCategories = [
+const globalCategories = [
   "Beauty & Skincare", 
   "Electronics & Smartphones", 
   "Audio & Earbuds", 
@@ -21,7 +21,7 @@ const vietnamCategories = [
   "Pet Care", 
   "Eco-Friendly Living"
 ];
-const categories = Array.from(new Set([...baseCategories, ...vietnamCategories]));
+const categories = Array.from(new Set([...baseCategories, ...globalCategories]));
 
 export default function AllProducts() {
   const navigate = useNavigate();

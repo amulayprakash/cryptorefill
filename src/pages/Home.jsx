@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "../components/Header";
 import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
-import { vietnamProducts } from "../data/vietnamProducts";
+import { globalProducts } from "../data/globalProducts";
 import SkeletonImage from "../components/SkeletonImage";
 
-const vietnamTabs = [
+const globalTabs = [
   { name: "Beauty & Skincare", icon: "🧴" },
   { name: "Electronics & Smartphones", icon: "📱" },
   { name: "Audio & Earbuds", icon: "🎧" },
@@ -25,7 +25,7 @@ function TrendingProductsShowcase() {
 
   useEffect(() => {
     // Shuffle the products once on mount for mix and match
-    setMixedProducts([...vietnamProducts].sort(() => 0.5 - Math.random()));
+    setMixedProducts([...globalProducts].sort(() => 0.5 - Math.random()));
   }, []);
 
   return (
@@ -38,7 +38,7 @@ function TrendingProductsShowcase() {
               🔥 Trending Products
             </span>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
-              Top trending items in the Vietnam Market. Buy safely with crypto.
+              Top trending items in the Global Market. Buy safely with crypto.
             </p>
           </div>
         </div>
@@ -215,28 +215,28 @@ export default function Home() {
             "Victoria's Secret": "victorias-secret",
             "CVS pharmacy": "cvs-pharmacy",
             "Chevron and Texaco": "chevron-and-texaco",
-            // Vietnam Market
-            "K-Beauty Skincare Serums": "vn-kbeauty-serums",
-            "Mid-Range Smartphones": "vn-mid-range-smartphones",
-            "TWS Bluetooth Earbuds": "vn-tws-earbuds",
-            "Smartwatches & Fitness Bands": "vn-smartwatches",
-            "Air Fryers & Smart Gadgets": "vn-air-fryers",
-            "Women's Casual Dresses": "vn-casual-dresses",
-            "Sunscreen & UV Protection": "vn-sunscreen",
-            "Resistance Bands & Home Fitness": "vn-resistance-bands",
-            "Lip Gloss, Tints & Lip Care": "vn-lip-gloss",
-            "Phone Cases & Accessories": "vn-phone-cases",
-            "Collagen & Health Supplements": "vn-collagen",
-            "Smart Home Devices": "vn-smart-home",
-            "Portable Blenders": "vn-portable-blenders",
-            "Pet Products & Accessories": "vn-pet-products",
-            "Eco-Friendly & Sustainable": "vn-eco-friendly",
+            // Global Market
+            "K-Beauty Skincare Serums": "global-kbeauty-serums",
+            "Mid-Range Smartphones": "global-mid-range-smartphones",
+            "TWS Bluetooth Earbuds": "global-tws-earbuds",
+            "Smartwatches & Fitness Bands": "global-smartwatches",
+            "Air Fryers & Smart Gadgets": "global-air-fryers",
+            "Women's Casual Dresses": "global-casual-dresses",
+            "Sunscreen & UV Protection": "global-sunscreen",
+            "Resistance Bands & Home Fitness": "global-resistance-bands",
+            "Lip Gloss, Tints & Lip Care": "global-lip-gloss",
+            "Phone Cases & Accessories": "global-phone-cases",
+            "Collagen & Health Supplements": "global-collagen",
+            "Smart Home Devices": "global-smart-home",
+            "Portable Blenders": "global-portable-blenders",
+            "Pet Products & Accessories": "global-pet-products",
+            "Eco-Friendly & Sustainable": "global-eco-friendly",
           };
 
           const name = img.alt || img.title || "";
-          const vietnamCategories = ["Beauty & Skincare", "Electronics & Smartphones", "Audio & Earbuds", "Smart Wearables", "Home & Kitchen", "Fashion & Apparel", "Fitness & Wellness", "Health Supplements", "Smart Home", "Pet Care", "Eco-Friendly Living"];
+          const globalCategories = ["Beauty & Skincare", "Electronics & Smartphones", "Audio & Earbuds", "Smart Wearables", "Home & Kitchen", "Fashion & Apparel", "Fitness & Wellness", "Health Supplements", "Smart Home", "Pet Care", "Eco-Friendly Living"];
           
-          if (vietnamCategories.includes(name)) {
+          if (globalCategories.includes(name)) {
             navigate(`/products?category=${encodeURIComponent(name)}`);
             return;
           }
@@ -415,14 +415,14 @@ export default function Home() {
 
                 <TrendingProductsShowcase />
 
-                {/* Vietnam Market Trending Section */}
+                {/* Global Market Trending Section */}
                 <div className="mx-auto max-w-(--breakpoint-2xl) mb-10 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
                   <div className="flex flex-col">
                     <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
                       🔥 Explore Categories
                     </span>
                     <h1 className="text-gray-700 dark:text-gray-400 mt-2 font-medium">
-                      Most Popular Products in Vietnam
+                      Most Popular Products in Global
                     </h1>
                   </div>
                   
@@ -439,17 +439,17 @@ export default function Home() {
                   <div className="relative w-full">
                     <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-2">
                       {[
-                        { name: "Beauty & Skincare", icon: "🧴", img: "/assets/vietnam/kbeauty_serum.png", productsCount: "15 Products", discount: "Up to 20% Off" },
-                        { name: "Electronics & Smartphones", icon: "📱", img: "/assets/vietnam/mid_range_smartphone.png", productsCount: "5 Products", discount: "Up to 15% Off" },
-                        { name: "Audio & Earbuds", icon: "🎧", img: "/assets/vietnam/tws_earbuds.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Smart Wearables", icon: "⌚", img: "/assets/vietnam/smartwatch_fitness.png", productsCount: "5 Products", discount: "Up to 15% Off" },
-                        { name: "Home & Kitchen", icon: "🍳", img: "/assets/vietnam/air_fryer.png", productsCount: "10 Products", discount: "Up to 20% Off" },
-                        { name: "Fashion & Apparel", icon: "👗", img: "/assets/vietnam/casual_dress.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Fitness & Wellness", icon: "💪", img: "/assets/vietnam/resistance_bands.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Health Supplements", icon: "💊", img: "/assets/vietnam/collagen_supplements.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Smart Home", icon: "🏠", img: "/assets/vietnam/smart_home_devices.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Pet Care", icon: "🐾", img: "/assets/vietnam/pet_accessories.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Eco-Friendly Living", icon: "🌱", img: "/assets/vietnam/eco_friendly_products.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Beauty & Skincare", icon: "🧴", img: "/assets/global/kbeauty_serum.png", productsCount: "15 Products", discount: "Up to 20% Off" },
+                        { name: "Electronics & Smartphones", icon: "📱", img: "/assets/global/mid_range_smartphone.png", productsCount: "5 Products", discount: "Up to 15% Off" },
+                        { name: "Audio & Earbuds", icon: "🎧", img: "/assets/global/tws_earbuds.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Smart Wearables", icon: "⌚", img: "/assets/global/smartwatch_fitness.png", productsCount: "5 Products", discount: "Up to 15% Off" },
+                        { name: "Home & Kitchen", icon: "🍳", img: "/assets/global/air_fryer.png", productsCount: "10 Products", discount: "Up to 20% Off" },
+                        { name: "Fashion & Apparel", icon: "👗", img: "/assets/global/casual_dress.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Fitness & Wellness", icon: "💪", img: "/assets/global/resistance_bands.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Health Supplements", icon: "💊", img: "/assets/global/collagen_supplements.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Smart Home", icon: "🏠", img: "/assets/global/smart_home_devices.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Pet Care", icon: "🐾", img: "/assets/global/pet_accessories.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Eco-Friendly Living", icon: "🌱", img: "/assets/global/eco_friendly_products.png", productsCount: "5 Products", discount: "Up to 20% Off" },
                       ].map((item, idx) => (
                         <div
                           key={idx}
@@ -4301,7 +4301,7 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Trending Vietnam Products tabbed showcase */}
+              {/* Trending Global Products tabbed showcase */}
               <TrendingProductsShowcase />
 
               <section>

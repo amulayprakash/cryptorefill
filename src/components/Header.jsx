@@ -77,19 +77,8 @@ export default function Header() {
                   onClick={() => triggerToast("Region selection is coming soon!")}
                   className="cursor-pointer flex items-center hover:text-gray-900 dark:hover:text-white transition-colors gap-1"
                 >
-                  <img
-                    className="rounded-[2px]"
-                    src="/assets/_external/cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/vn.svg"
-                    style={{
-                      display: "inline-block",
-                      width: 18,
-                      height: "13.5px",
-                      verticalAlign: "middle",
-                    }}
-                    title="VN"
-                    alt="Vietnam Flag"
-                  />
-                  <span className="hidden md:inline">Vietnam</span>
+                  <Globe className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
+                  <span className="hidden md:inline">Global</span>
                 </button>
                 
                 <button

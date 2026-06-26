@@ -1,4 +1,4 @@
-import { vietnamProducts } from './vietnamProducts.js';
+import { globalProducts } from './globalProducts.js';
 import { iceJewelleryProducts } from './iceJewelleryProducts.js';
 export const products = [
   // ── Popular ──────────────────────────────────────────────────────────────
@@ -936,8 +936,8 @@ export const products = [
     faq: [{ q: "Can this be used for hunting licenses?", a: "No, gift cards cannot be used to purchase hunting or fishing licenses." }]
   },
   
-  // ── Vietnam Market ──
-  ...vietnamProducts,
+  // ── Global Market ──
+  ...globalProducts,
   
   // ── Ice Jewellery ──
   ...iceJewelleryProducts
