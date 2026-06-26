@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import './Admin.css';
 
@@ -58,6 +58,7 @@ export default function Admin() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
     // Auto-refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);

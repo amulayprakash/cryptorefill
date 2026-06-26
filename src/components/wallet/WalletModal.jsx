@@ -102,6 +102,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
   const [hasInjectedWallet, setHasInjectedWallet] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(isMobileDevice());
     setHasInjectedWallet(isInWalletBrowser());
   }, []);
@@ -156,6 +157,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
   // Sync selectedNetwork when defaultNetwork / open changes
   useEffect(() => {
     if (open && defaultNetwork) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedNetwork(defaultNetwork);
       if (defaultNetwork === 'tron') setIncludeTronWalletConnect(true);
     }
@@ -164,6 +166,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
   // Clear connecting state once a connection succeeds
   useEffect(() => {
     if ((isConnected || isTronConnected) && connectingId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConnectingId(null);
       setIsWaitingForWalletConnect(false);
     }
@@ -171,6 +174,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
 
   useEffect(() => {
     if (wagmiStatus === 'connected' && isWaitingForWalletConnect) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsWaitingForWalletConnect(false);
       setConnectingId(null);
     }
@@ -230,7 +234,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
     try {
       if (isConnected) await disconnectEvmWallet();
       if (isTronConnected) await disconnectTronWallet();
-    } catch (e) {
+    } catch (_) {
       // ignore
     }
     setSelectedNetwork(defaultNetwork);

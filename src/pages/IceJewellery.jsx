@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -281,7 +281,6 @@ function JewelCard({ item }) {
 
 /* ── Main Page ── */
 export default function IceJewellery() {
-  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
 

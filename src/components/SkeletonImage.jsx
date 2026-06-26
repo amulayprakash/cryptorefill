@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 /**
  * SkeletonImage — drops in place of a plain <img> and shows
@@ -22,12 +22,12 @@ export default function SkeletonImage({
   ...rest
 }) {
   const [loaded, setLoaded] = useState(false);
-  const [errored, setErrored] = useState(false);
+
 
   const handleLoad = () => setLoaded(true);
 
   const handleError = (e) => {
-    setErrored(true);
+    // do nothing
     setLoaded(true); // hide skeleton even on error (fallback img will show)
     if (onError) onError(e);
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "../components/Header";
@@ -6,27 +6,12 @@ import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
 import { globalProducts } from "../data/globalProducts";
 import SkeletonImage from "../components/SkeletonImage";
 
-const globalTabs = [
-  { name: "Beauty & Skincare", icon: "🧴" },
-  { name: "Electronics & Smartphones", icon: "📱" },
-  { name: "Audio & Earbuds", icon: "🎧" },
-  { name: "Smart Wearables", icon: "⌚" },
-  { name: "Home & Kitchen", icon: "🍳" },
-  { name: "Fashion & Apparel", icon: "👗" },
-  { name: "Fitness & Wellness", icon: "💪" },
-  { name: "Health Supplements", icon: "💊" },
-  { name: "Smart Home", icon: "🏠" },
-  { name: "Pet Care", icon: "🐾" },
-  { name: "Eco-Friendly Living", icon: "🌱" }
-];
 
 function TrendingProductsShowcase() {
-  const [mixedProducts, setMixedProducts] = useState([]);
+  const [mixedProducts] = useState(() => 
+    [...globalProducts].sort(() => 0.5 - Math.random())
+  );
 
-  useEffect(() => {
-    // Shuffle the products once on mount for mix and match
-    setMixedProducts([...globalProducts].sort(() => 0.5 - Math.random()));
-  }, []);
 
   return (
     <div className="mt-8 mx-auto max-w-(--breakpoint-2xl) mb-12">
@@ -198,7 +183,6 @@ export default function Home() {
             "AMC Theaters": "amc-theaters",
             "Deezer": "deezer",
             "Paramount plus": "paramount-plus",
-            "Nintendo Switch Online": "nintendo-switch-online",
             "SiriusXM": "siriusxm",
             // Groceries
             "Kroger": "kroger",

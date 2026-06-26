@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle, Wallet, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle } from 'lucide-react';
 import { WalletButton } from './wallet/WalletButton';
 import { useCart } from '../context/CartContext';
 
 export default function Header() {
-  const navigate = useNavigate();
   const { itemCount, openCart } = useCart();
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {

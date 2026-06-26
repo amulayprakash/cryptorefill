@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Floating sparkle particle
@@ -16,12 +16,7 @@ function Sparkle({ style }) {
 
 export default function IceJewelleryCryptoHero() {
   const navigate = useNavigate();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   const dealBadges = [
     { icon: "💎", label: "Premium Collection" },

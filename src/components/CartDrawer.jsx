@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';

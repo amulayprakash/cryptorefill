@@ -80,9 +80,11 @@ export default function Checkout() {
   useEffect(() => {
     if (step !== 2) return;
     if (selectedNetwork === 'evm' && isEvmConnected) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(3);
     }
     if (selectedNetwork === 'tron' && isTronConnected) {
+
       setStep(3);
     }
   }, [step, selectedNetwork, isEvmConnected, isTronConnected]);
@@ -91,6 +93,7 @@ export default function Checkout() {
   useEffect(() => {
     if (!evmReceipt) return;
     if (evmReceipt.status === 'success') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTxStatus('confirmed');
       if (!needsAddress) {
         saveOrder(evmReceipt.transactionHash);
@@ -156,6 +159,7 @@ export default function Checkout() {
       (selectedNetwork === 'tron' && isTronConnected);
 
     if (!walletReady) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(2);
       return;
     }
@@ -167,6 +171,7 @@ export default function Checkout() {
     } else {
       executeTronTransfer();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
 
   async function executeEvmTransfer() {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Search, SlidersHorizontal, Shield, X } from 'lucide-react';
 import { products } from '../data/products';

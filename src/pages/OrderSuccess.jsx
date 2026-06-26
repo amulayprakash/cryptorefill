@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, ExternalLink, Package, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
