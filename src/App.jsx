@@ -50,7 +50,7 @@ export default function App() {
                   <Route path="/products" element={<AllProducts />} />
                   <Route path="/ice-jewellery" element={<IceJewellery />} />
                   <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/vadmin" element={<Admin />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/order-success" element={<OrderSuccess />} />
                 </Routes>

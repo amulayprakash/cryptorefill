@@ -432,6 +432,48 @@
   50% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
 }
 
+/* Balance column */
+.admin-td--balance {
+  white-space: nowrap;
+}
+
+.admin-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-balance__usdt {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4ade80;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.admin-balance__native {
+  font-size: 11px;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.admin-balance__loading {
+  color: #475569;
+  font-size: 16px;
+  letter-spacing: 2px;
+  animation: pulse-dots 1.2s ease-in-out infinite;
+}
+
+.admin-balance__empty,
+.admin-balance__error {
+  color: #475569;
+  font-size: 13px;
+}
+
+@keyframes pulse-dots {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
 /* Time column */
 .admin-td--time {
   color: #64748b;

