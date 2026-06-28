@@ -5,8 +5,8 @@ export const globalProducts = [
     name: "Some By Mi AHA BHA PHA 30 Days Miracle Serum",
     category: "Beauty & Skincare",
     description: "A powerful soothing and exfoliating serum for clear and blemish-free skin.",
-    priceRange: "$18.00",
-    detailedPriceOptions: [18],
+    priceRange: "$14",
+    detailedPriceOptions: [14],
     imageUrl: "/assets/global/products/some-by-mi-aha-bha-pha-30-days-miracle-serum.png",
     features: ["Safe Delivery via Email", "Korean Bestseller", "Anti-acne"],
     region: "Global",
@@ -16,15 +16,15 @@ export const globalProducts = [
     faq: [{ q: "Are these authentic products?", a: "Yes, 100% authentic imported from Korea." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$14.40"
+    promoPrice: "$11"
   },
   {
     id: "some-by-mi-yuja-niacin-anti-blemish-serum",
     name: "Some By Mi Yuja Niacin Anti-Blemish Serum",
     category: "Beauty & Skincare",
     description: "Brightening serum with Yuja extract and Niacinamide to fade blemishes and dark spots.",
-    priceRange: "$18.00",
-    detailedPriceOptions: [18],
+    priceRange: "$14",
+    detailedPriceOptions: [14],
     imageUrl: "/assets/global/products/some-by-mi-yuja-niacin-anti-blemish-serum.png",
     features: ["Safe Delivery via Email", "Brightening", "Fades dark spots"],
     region: "Global",
@@ -34,15 +34,15 @@ export const globalProducts = [
     faq: [{ q: "Are these authentic products?", a: "Yes, 100% authentic imported from Korea." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$14.40"
+    promoPrice: "$11"
   },
   {
     id: "cosrx-snail-mucin-96-power-repairing-essence",
     name: "Cosrx Snail Mucin 96% Power Repairing Essence",
     category: "Beauty & Skincare",
     description: "Hydrating and repairing essence formulated with 96% snail mucin extract.",
-    priceRange: "$15.00",
-    detailedPriceOptions: [15],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/cosrx-snail-mucin-96-power-repairing-essence.png",
     features: ["Safe Delivery via Email", "Hydration", "Skin repairing"],
     region: "Global",
@@ -52,15 +52,15 @@ export const globalProducts = [
     faq: [{ q: "Are these authentic products?", a: "Yes, 100% authentic imported from Korea." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$12.75"
+    promoPrice: "$10"
   },
   {
     id: "medicube-age-r-booster-serum",
     name: "Medicube Age-R Booster Serum",
     category: "Beauty & Skincare",
     description: "Advanced booster serum to improve skin elasticity and deeply hydrate.",
-    priceRange: "$28.00",
-    detailedPriceOptions: [28],
+    priceRange: "$21",
+    detailedPriceOptions: [21],
     imageUrl: "/assets/global/products/medicube-age-r-booster-serum.png",
     features: ["Safe Delivery via Email", "Anti-aging", "Elasticity"],
     region: "Global",
@@ -70,15 +70,15 @@ export const globalProducts = [
     faq: [{ q: "Are these authentic products?", a: "Yes, 100% authentic imported from Korea." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$23.80"
+    promoPrice: "$18"
   },
   {
     id: "rohto-hadalabo-gokujyun-hyaluronic-acid-lotion",
     name: "Rohto Hadalabo Gokujyun Hyaluronic Acid Lotion",
     category: "Beauty & Skincare",
     description: "Intensely hydrating lotion packed with multiple types of hyaluronic acid.",
-    priceRange: "$12.00",
-    detailedPriceOptions: [12],
+    priceRange: "$9",
+    detailedPriceOptions: [9],
     imageUrl: "/assets/global/products/rohto-hadalabo-gokujyun-hyaluronic-acid-lotion.png",
     features: ["Safe Delivery via Email", "Hydration", "Hyaluronic Acid"],
     region: "Global",
@@ -88,15 +88,15 @@ export const globalProducts = [
     faq: [{ q: "Are these authentic products?", a: "Yes, 100% authentic imported from Japan." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$10.20"
+    promoPrice: "$8"
   },
   {
     id: "anessa-perfect-uv-sunscreen-spf50",
     name: "Anessa Perfect UV Sunscreen SPF50+",
     category: "Beauty & Skincare",
     description: "High-protection, lightweight, and water-resistant sunscreen for everyday use.",
-    priceRange: "$25.00",
-    detailedPriceOptions: [25],
+    priceRange: "$19",
+    detailedPriceOptions: [19],
     imageUrl: "/assets/global/products/anessa-perfect-uv-sunscreen-spf50.png",
     features: ["Safe Delivery via Email", "SPF 50+", "Water resistant"],
     region: "Global",
@@ -106,15 +106,15 @@ export const globalProducts = [
     faq: [{ q: "Is it suitable for oily skin?", a: "Yes, lightweight for humid climates." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$22.50"
+    promoPrice: "$17"
   },
   {
     id: "round-lab-birch-juice-moisturizing-sunscreen",
     name: "Round Lab Birch Juice Moisturizing Sunscreen",
     category: "Beauty & Skincare",
     description: "Moisturizing daily sunscreen infused with birch juice for sensitive skin.",
-    priceRange: "$22.00",
-    detailedPriceOptions: [22],
+    priceRange: "$17",
+    detailedPriceOptions: [17],
     imageUrl: "/assets/global/products/round-lab-birch-juice-moisturizing-sunscreen.png",
     features: ["Safe Delivery via Email", "SPF 50+", "Moisturizing"],
     region: "Global",
@@ -124,15 +124,15 @@ export const globalProducts = [
     faq: [{ q: "Is it suitable for oily skin?", a: "Yes, lightweight for humid climates." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$19.80"
+    promoPrice: "$15"
   },
   {
     id: "bioderma-photoderm-max-spf50",
     name: "Bioderma Photoderm MAX SPF50+",
     category: "Beauty & Skincare",
     description: "Maximum photoprotection sunscreen suitable for face and body.",
-    priceRange: "$20.00",
-    detailedPriceOptions: [20],
+    priceRange: "$15",
+    detailedPriceOptions: [15],
     imageUrl: "/assets/global/products/bioderma-photoderm-max-spf50.png",
     features: ["Safe Delivery via Email", "SPF 50+", "Maximum protection"],
     region: "Global",
@@ -142,15 +142,15 @@ export const globalProducts = [
     faq: [{ q: "Is it suitable for oily skin?", a: "Yes, lightweight for humid climates." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$17.00"
+    promoPrice: "$13"
   },
   {
     id: "some-by-mi-truecica-mineral-calming-suncream",
     name: "Some By Mi Truecica Mineral Calming Suncream",
     category: "Beauty & Skincare",
     description: "Mineral sunscreen that calms irritated skin while protecting against UV rays.",
-    priceRange: "$16.00",
-    detailedPriceOptions: [16],
+    priceRange: "$12",
+    detailedPriceOptions: [12],
     imageUrl: "/assets/global/products/some-by-mi-truecica-mineral-calming-suncream.png",
     features: ["Safe Delivery via Email", "Mineral Sunscreen", "Calming"],
     region: "Global",
@@ -160,15 +160,15 @@ export const globalProducts = [
     faq: [{ q: "Is it suitable for oily skin?", a: "Yes, lightweight for humid climates." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$12.80"
+    promoPrice: "$10"
   },
   {
     id: "neutrogena-ultra-sheer-sunscreen-spf70",
     name: "Neutrogena Ultra Sheer Sunscreen SPF70",
     category: "Beauty & Skincare",
     description: "Ultra-light, non-greasy sunscreen offering superior SPF 70 protection.",
-    priceRange: "$14.00",
-    detailedPriceOptions: [14],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/neutrogena-ultra-sheer-sunscreen-spf70.png",
     features: ["Safe Delivery via Email", "SPF 70", "Non-greasy"],
     region: "Global",
@@ -178,15 +178,15 @@ export const globalProducts = [
     faq: [{ q: "Is it suitable for oily skin?", a: "Yes, lightweight for humid climates." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$12.60"
+    promoPrice: "$9"
   },
   {
     id: "romand-juicy-lasting-tint",
     name: "Romand Juicy Lasting Tint",
     category: "Beauty & Skincare",
     description: "Fruit-inspired lip tint providing a glossy, long-lasting color payoff.",
-    priceRange: "$10.00",
-    detailedPriceOptions: [10],
+    priceRange: "$8",
+    detailedPriceOptions: [8],
     imageUrl: "/assets/global/products/romand-juicy-lasting-tint.png",
     features: ["Safe Delivery via Email", "Long-lasting Color", "Glossy Finish"],
     region: "Global",
@@ -196,15 +196,15 @@ export const globalProducts = [
     faq: [{ q: "Are they waterproof?", a: "Most tints are highly transfer-resistant." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$9.50"
+    promoPrice: "$7"
   },
   {
     id: "3ce-soft-lip-lacquer",
     name: "3CE Soft Lip Lacquer",
     category: "Beauty & Skincare",
     description: "A soft, matte lip lacquer with intense pigmentation and a smooth finish.",
-    priceRange: "$15.00",
-    detailedPriceOptions: [15],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/3ce-soft-lip-lacquer.png",
     features: ["Safe Delivery via Email", "Matte Finish", "High Pigment"],
     region: "Global",
@@ -214,15 +214,15 @@ export const globalProducts = [
     faq: [{ q: "Are they waterproof?", a: "Most tints are highly transfer-resistant." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$13.50"
+    promoPrice: "$10"
   },
   {
     id: "laneige-lip-sleeping-mask",
     name: "Laneige Lip Sleeping Mask",
     category: "Beauty & Skincare",
     description: "Overnight lip mask that delivers intense moisture and antioxidants.",
-    priceRange: "$22.00",
-    detailedPriceOptions: [22],
+    priceRange: "$17",
+    detailedPriceOptions: [17],
     imageUrl: "/assets/global/products/laneige-lip-sleeping-mask.png",
     features: ["Safe Delivery via Email", "Overnight Mask", "Intense Moisture"],
     region: "Global",
@@ -232,15 +232,15 @@ export const globalProducts = [
     faq: [{ q: "Are they waterproof?", a: "Most tints are highly transfer-resistant." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$18.70"
+    promoPrice: "$14"
   },
   {
     id: "etude-house-dear-darling-tint",
     name: "Etude House Dear Darling Tint",
     category: "Beauty & Skincare",
     description: "Water-gel tint with fruity shades for a vibrant and adorable lip look.",
-    priceRange: "$8.00",
-    detailedPriceOptions: [8],
+    priceRange: "$6",
+    detailedPriceOptions: [6],
     imageUrl: "/assets/global/products/etude-house-dear-darling-tint.png",
     features: ["Safe Delivery via Email", "Water-gel", "Vibrant Shades"],
     region: "Global",
@@ -250,15 +250,15 @@ export const globalProducts = [
     faq: [{ q: "Are they waterproof?", a: "Most tints are highly transfer-resistant." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$7.20"
+    promoPrice: "$5"
   },
   {
     id: "nars-afterglow-lip-balm",
     name: "NARS Afterglow Lip Balm",
     category: "Beauty & Skincare",
     description: "Hydrating lip balm infused with a subtle hint of color and radiant finish.",
-    priceRange: "$28.00",
-    detailedPriceOptions: [28],
+    priceRange: "$21",
+    detailedPriceOptions: [21],
     imageUrl: "/assets/global/products/nars-afterglow-lip-balm.png",
     features: ["Safe Delivery via Email", "Hydrating", "Subtle Color"],
     region: "Global",
@@ -268,7 +268,7 @@ export const globalProducts = [
     faq: [{ q: "Are they waterproof?", a: "Most tints are highly transfer-resistant." }],
     badge: "🌐 Trending",
     discount: "0% OFF",
-    promoPrice: "$28.00"
+    promoPrice: "$21"
   },
 
   // Electronics & Smartphones
@@ -277,8 +277,8 @@ export const globalProducts = [
     name: "Samsung Galaxy A55 5G",
     category: "Electronics & Smartphones",
     description: "Powerful 5G smartphone with an immersive display and advanced camera features.",
-    priceRange: "$450.00",
-    detailedPriceOptions: [450],
+    priceRange: "$338",
+    detailedPriceOptions: [338],
     imageUrl: "/assets/global/products/samsung-galaxy-a55-5g.png",
     features: ["Safe Delivery via Email", "5G Ready", "Premium Specs"],
     region: "Global",
@@ -288,15 +288,15 @@ export const globalProducts = [
     faq: [{ q: "Do they come with warranty?", a: "Yes, full manufacturer warranty in Global." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$405.00"
+    promoPrice: "$304"
   },
   {
     id: "xiaomi-redmi-note-13-pro-plus",
     name: "Xiaomi Redmi Note 13 Pro+",
     category: "Electronics & Smartphones",
     description: "Flagship-level performance with a stunning curved display and fast charging.",
-    priceRange: "$400.00",
-    detailedPriceOptions: [400],
+    priceRange: "$300",
+    detailedPriceOptions: [300],
     imageUrl: "/assets/global/products/xiaomi-redmi-note-13-pro-plus.png",
     features: ["Safe Delivery via Email", "Fast Charging", "Curved Display"],
     region: "Global",
@@ -306,15 +306,15 @@ export const globalProducts = [
     faq: [{ q: "Do they come with warranty?", a: "Yes, full manufacturer warranty in Global." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$340.00"
+    promoPrice: "$255"
   },
   {
     id: "oppo-reno-11-5g",
     name: "OPPO Reno 11 5G",
     category: "Electronics & Smartphones",
     description: "Sleek and stylish 5G phone offering exceptional portrait photography.",
-    priceRange: "$420.00",
-    detailedPriceOptions: [420],
+    priceRange: "$315",
+    detailedPriceOptions: [315],
     imageUrl: "/assets/global/products/oppo-reno-11-5g.png",
     features: ["Safe Delivery via Email", "Portrait Camera", "Sleek Design"],
     region: "Global",
@@ -324,15 +324,15 @@ export const globalProducts = [
     faq: [{ q: "Do they come with warranty?", a: "Yes, full manufacturer warranty in Global." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$399.00"
+    promoPrice: "$299"
   },
   {
     id: "realme-12-pro-plus",
     name: "Realme 12 Pro+",
     category: "Electronics & Smartphones",
     description: "Premium mid-range smartphone with a dedicated periscope telephoto lens.",
-    priceRange: "$380.00",
-    detailedPriceOptions: [380],
+    priceRange: "$285",
+    detailedPriceOptions: [285],
     imageUrl: "/assets/global/products/realme-12-pro-plus.png",
     features: ["Safe Delivery via Email", "Telephoto Lens", "Premium Build"],
     region: "Global",
@@ -342,15 +342,15 @@ export const globalProducts = [
     faq: [{ q: "Do they come with warranty?", a: "Yes, full manufacturer warranty in Global." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$342.00"
+    promoPrice: "$257"
   },
   {
     id: "samsung-galaxy-a35-5g",
     name: "Samsung Galaxy A35 5G",
     category: "Electronics & Smartphones",
     description: "Reliable 5G smartphone delivering a smooth experience and great battery life.",
-    priceRange: "$350.00",
-    detailedPriceOptions: [350],
+    priceRange: "$263",
+    detailedPriceOptions: [263],
     imageUrl: "/assets/global/products/samsung-galaxy-a35-5g.png",
     features: ["Safe Delivery via Email", "Great Battery Life", "Smooth Experience"],
     region: "Global",
@@ -360,7 +360,7 @@ export const globalProducts = [
     faq: [{ q: "Do they come with warranty?", a: "Yes, full manufacturer warranty in Global." }],
     badge: "🌐 Trending",
     discount: "8% OFF",
-    promoPrice: "$322.00"
+    promoPrice: "$242"
   },
 
   // Audio & Earbuds
@@ -369,8 +369,8 @@ export const globalProducts = [
     name: "QCY T13 TWS Earbuds",
     category: "Audio & Earbuds",
     description: "True wireless earbuds with clear calls, fast charging, and long battery life.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/qcy-t13-tws-earbuds.png",
     features: ["Safe Delivery via Email", "Clear Calls", "Fast Charging"],
     region: "Global",
@@ -380,15 +380,15 @@ export const globalProducts = [
     faq: [{ q: "Are these compatible with iPhone?", a: "Yes, they work with both iOS and Android." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$24.00"
+    promoPrice: "$18"
   },
   {
     id: "xiaomi-redmi-buds-5-pro",
     name: "Xiaomi Redmi Buds 5 Pro",
     category: "Audio & Earbuds",
     description: "High-fidelity wireless earbuds with advanced active noise cancellation.",
-    priceRange: "$75.00",
-    detailedPriceOptions: [75],
+    priceRange: "$56",
+    detailedPriceOptions: [56],
     imageUrl: "/assets/global/products/xiaomi-redmi-buds-5-pro.png",
     features: ["Safe Delivery via Email", "Active Noise Cancellation", "High-fidelity"],
     region: "Global",
@@ -398,15 +398,15 @@ export const globalProducts = [
     faq: [{ q: "Are these compatible with iPhone?", a: "Yes, they work with both iOS and Android." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$63.75"
+    promoPrice: "$48"
   },
   {
     id: "jbl-tune-buds",
     name: "JBL Tune Buds",
     category: "Audio & Earbuds",
     description: "Ergonomic true wireless earbuds delivering legendary JBL Pure Bass sound.",
-    priceRange: "$60.00",
-    detailedPriceOptions: [60],
+    priceRange: "$45",
+    detailedPriceOptions: [45],
     imageUrl: "/assets/global/products/jbl-tune-buds.png",
     features: ["Safe Delivery via Email", "Pure Bass", "Ergonomic"],
     region: "Global",
@@ -416,15 +416,15 @@ export const globalProducts = [
     faq: [{ q: "Are these compatible with iPhone?", a: "Yes, they work with both iOS and Android." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$54.00"
+    promoPrice: "$41"
   },
   {
     id: "soundpeats-air4-pro",
     name: "Soundpeats Air4 Pro",
     category: "Audio & Earbuds",
     description: "Premium wireless earbuds featuring adaptive ANC and aptX Lossless audio.",
-    priceRange: "$80.00",
-    detailedPriceOptions: [80],
+    priceRange: "$60",
+    detailedPriceOptions: [60],
     imageUrl: "/assets/global/products/soundpeats-air4-pro.png",
     features: ["Safe Delivery via Email", "Adaptive ANC", "aptX Lossless"],
     region: "Global",
@@ -434,15 +434,15 @@ export const globalProducts = [
     faq: [{ q: "Are these compatible with iPhone?", a: "Yes, they work with both iOS and Android." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$68.00"
+    promoPrice: "$51"
   },
   {
     id: "anker-soundcore-p40i",
     name: "Anker Soundcore P40i",
     category: "Audio & Earbuds",
     description: "Smart noise-canceling earbuds with deep bass and an innovative charging case.",
-    priceRange: "$65.00",
-    detailedPriceOptions: [65],
+    priceRange: "$49",
+    detailedPriceOptions: [49],
     imageUrl: "/assets/global/products/anker-soundcore-p40i.png",
     features: ["Safe Delivery via Email", "Smart ANC", "Deep Bass"],
     region: "Global",
@@ -452,7 +452,7 @@ export const globalProducts = [
     faq: [{ q: "Are these compatible with iPhone?", a: "Yes, they work with both iOS and Android." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$58.50"
+    promoPrice: "$44"
   },
 
   // Smart Wearables
@@ -461,8 +461,8 @@ export const globalProducts = [
     name: "Xiaomi Smart Band 9",
     category: "Smart Wearables",
     description: "Next-generation fitness band with a vibrant AMOLED display and advanced tracking.",
-    priceRange: "$50.00",
-    detailedPriceOptions: [50],
+    priceRange: "$38",
+    detailedPriceOptions: [38],
     imageUrl: "/assets/global/products/xiaomi-smart-band-9.png",
     features: ["Safe Delivery via Email", "AMOLED Display", "Fitness Tracking"],
     region: "Global",
@@ -472,15 +472,15 @@ export const globalProducts = [
     faq: [{ q: "Does it have a Globalese language option?", a: "Yes, standard models support Globalese." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$45.00"
+    promoPrice: "$34"
   },
   {
     id: "huawei-band-9",
     name: "Huawei Band 9",
     category: "Smart Wearables",
     description: "Ultra-thin fitness tracker featuring comprehensive health and sleep monitoring.",
-    priceRange: "$55.00",
-    detailedPriceOptions: [55],
+    priceRange: "$41",
+    detailedPriceOptions: [41],
     imageUrl: "/assets/global/products/huawei-band-9.png",
     features: ["Safe Delivery via Email", "Ultra-thin", "Sleep Monitoring"],
     region: "Global",
@@ -490,15 +490,15 @@ export const globalProducts = [
     faq: [{ q: "Does it have a Globalese language option?", a: "Yes, standard models support Globalese." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$52.25"
+    promoPrice: "$39"
   },
   {
     id: "samsung-galaxy-watch-fe",
     name: "Samsung Galaxy Watch FE",
     category: "Smart Wearables",
     description: "Stylish and accessible smartwatch with essential fitness and connectivity features.",
-    priceRange: "$199.00",
-    detailedPriceOptions: [199],
+    priceRange: "$149",
+    detailedPriceOptions: [149],
     imageUrl: "/assets/global/products/samsung-galaxy-watch-fe.png",
     features: ["Safe Delivery via Email", "Stylish Design", "Connectivity"],
     region: "Global",
@@ -508,15 +508,15 @@ export const globalProducts = [
     faq: [{ q: "Does it have a Globalese language option?", a: "Yes, standard models support Globalese." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$169.15"
+    promoPrice: "$127"
   },
   {
     id: "amazfit-gtr-4",
     name: "Amazfit GTR 4",
     category: "Smart Wearables",
     description: "Premium smartwatch with dual-band GPS, long battery life, and classic design.",
-    priceRange: "$180.00",
-    detailedPriceOptions: [180],
+    priceRange: "$135",
+    detailedPriceOptions: [135],
     imageUrl: "/assets/global/products/amazfit-gtr-4.png",
     features: ["Safe Delivery via Email", "Dual-band GPS", "Long Battery Life"],
     region: "Global",
@@ -526,15 +526,15 @@ export const globalProducts = [
     faq: [{ q: "Does it have a Globalese language option?", a: "Yes, standard models support Globalese." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$162.00"
+    promoPrice: "$122"
   },
   {
     id: "garmin-forerunner-165",
     name: "Garmin Forerunner 165",
     category: "Smart Wearables",
     description: "Purpose-built GPS running smartwatch designed to help you reach your goals.",
-    priceRange: "$250.00",
-    detailedPriceOptions: [250],
+    priceRange: "$188",
+    detailedPriceOptions: [188],
     imageUrl: "/assets/global/products/garmin-forerunner-165.png",
     features: ["Safe Delivery via Email", "GPS Running", "Purpose-built"],
     region: "Global",
@@ -544,7 +544,7 @@ export const globalProducts = [
     faq: [{ q: "Does it have a Globalese language option?", a: "Yes, standard models support Globalese." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$237.50"
+    promoPrice: "$178"
   },
 
   // Home & Kitchen
@@ -553,8 +553,8 @@ export const globalProducts = [
     name: "Xiaomi Smart Air Fryer 4L",
     category: "Home & Kitchen",
     description: "App-controlled smart air fryer with a 4L capacity for healthy, oil-free cooking.",
-    priceRange: "$90.00",
-    detailedPriceOptions: [90],
+    priceRange: "$68",
+    detailedPriceOptions: [68],
     imageUrl: "/assets/global/products/xiaomi-smart-air-fryer-4l.png",
     features: ["Safe Delivery via Email", "Oil-Free Cooking", "App Controlled"],
     region: "Global",
@@ -564,15 +564,15 @@ export const globalProducts = [
     faq: [{ q: "What is the capacity?", a: "4L capacity." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$72.00"
+    promoPrice: "$54"
   },
   {
     id: "philips-viva-air-fryer-hd9252",
     name: "Philips Viva Air Fryer HD9252",
     category: "Home & Kitchen",
     description: "Compact air fryer with Rapid Air technology for crispy, delicious results.",
-    priceRange: "$120.00",
-    detailedPriceOptions: [120],
+    priceRange: "$90",
+    detailedPriceOptions: [90],
     imageUrl: "/assets/global/products/philips-viva-air-fryer-hd9252.png",
     features: ["Safe Delivery via Email", "Rapid Air Technology", "Compact"],
     region: "Global",
@@ -582,15 +582,15 @@ export const globalProducts = [
     faq: [{ q: "What is the capacity?", a: "Compact size suitable for small families." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$102.00"
+    promoPrice: "$77"
   },
   {
     id: "midea-air-fryer-mf-cn35a",
     name: "Midea Air Fryer MF-CN35A",
     category: "Home & Kitchen",
     description: "Versatile multi-function air fryer designed for quick and convenient meals.",
-    priceRange: "$80.00",
-    detailedPriceOptions: [80],
+    priceRange: "$60",
+    detailedPriceOptions: [60],
     imageUrl: "/assets/global/products/midea-air-fryer-mf-cn35a.png",
     features: ["Safe Delivery via Email", "Multi-function", "Quick Meals"],
     region: "Global",
@@ -600,15 +600,15 @@ export const globalProducts = [
     faq: [{ q: "What is the capacity?", a: "Available in versatile capacities." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$72.00"
+    promoPrice: "$54"
   },
   {
     id: "cosori-pro-air-fryer-5-8l",
     name: "Cosori Pro Air Fryer 5.8L",
     category: "Home & Kitchen",
     description: "Large capacity pro air fryer, perfect for feeding the whole family.",
-    priceRange: "$130.00",
-    detailedPriceOptions: [130],
+    priceRange: "$98",
+    detailedPriceOptions: [98],
     imageUrl: "/assets/global/products/cosori-pro-air-fryer-5-8l.png",
     features: ["Safe Delivery via Email", "Large Capacity", "Pro Features"],
     region: "Global",
@@ -618,15 +618,15 @@ export const globalProducts = [
     faq: [{ q: "What is the capacity?", a: "5.8L capacity." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$110.50"
+    promoPrice: "$83"
   },
   {
     id: "instant-vortex-plus-air-fryer-6l",
     name: "Instant Vortex Plus Air Fryer 6L",
     category: "Home & Kitchen",
     description: "6-in-1 multi-use air fryer with a spacious 6L basket and ClearCook window.",
-    priceRange: "$140.00",
-    detailedPriceOptions: [140],
+    priceRange: "$105",
+    detailedPriceOptions: [105],
     imageUrl: "/assets/global/products/instant-vortex-plus-air-fryer-6l.png",
     features: ["Safe Delivery via Email", "6-in-1 Multi-use", "ClearCook Window"],
     region: "Global",
@@ -636,15 +636,15 @@ export const globalProducts = [
     faq: [{ q: "What is the capacity?", a: "6L capacity." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$112.00"
+    promoPrice: "$84"
   },
   {
     id: "xiaomi-mijia-portable-blender-350ml",
     name: "Xiaomi Mijia Portable Blender 350ml",
     category: "Home & Kitchen",
     description: "Compact and powerful portable blender, ideal for smoothies on the go.",
-    priceRange: "$35.00",
-    detailedPriceOptions: [35],
+    priceRange: "$26",
+    detailedPriceOptions: [26],
     imageUrl: "/assets/global/products/xiaomi-mijia-portable-blender-350ml.png",
     features: ["Safe Delivery via Email", "Portable", "USB Charging"],
     region: "Global",
@@ -654,15 +654,15 @@ export const globalProducts = [
     faq: [{ q: "Can it crush ice?", a: "Yes, capable of crushing small ice cubes." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$31.50"
+    promoPrice: "$24"
   },
   {
     id: "nutribullet-go-cordless-blender",
     name: "Nutribullet Go Cordless Blender",
     category: "Home & Kitchen",
     description: "Lightweight cordless blender perfect for quick protein shakes and smoothies.",
-    priceRange: "$45.00",
-    detailedPriceOptions: [45],
+    priceRange: "$34",
+    detailedPriceOptions: [34],
     imageUrl: "/assets/global/products/nutribullet-go-cordless-blender.png",
     features: ["Safe Delivery via Email", "Cordless", "Lightweight"],
     region: "Global",
@@ -672,15 +672,15 @@ export const globalProducts = [
     faq: [{ q: "Can it crush ice?", a: "Yes, capable of crushing small ice cubes." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$38.25"
+    promoPrice: "$29"
   },
   {
     id: "bear-bje-z16r-mini-blender",
     name: "BEAR BJE-Z16R Mini Blender",
     category: "Home & Kitchen",
     description: "Stylish and efficient mini blender for single-serve blending tasks.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/bear-bje-z16r-mini-blender.png",
     features: ["Safe Delivery via Email", "Mini Size", "Efficient"],
     region: "Global",
@@ -690,15 +690,15 @@ export const globalProducts = [
     faq: [{ q: "Can it crush ice?", a: "Yes, capable of crushing small ice cubes." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$28.50"
+    promoPrice: "$21"
   },
   {
     id: "generic-usb-mini-blender-cup-380ml",
     name: "Generic USB Mini Blender Cup 380ml",
     category: "Home & Kitchen",
     description: "Affordable USB-rechargeable mini blender cup for travel and office use.",
-    priceRange: "$15.00",
-    detailedPriceOptions: [15],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/generic-usb-mini-blender-cup-380ml.png",
     features: ["Safe Delivery via Email", "Affordable", "USB Rechargeable"],
     region: "Global",
@@ -708,15 +708,15 @@ export const globalProducts = [
     faq: [{ q: "Can it crush ice?", a: "Yes, capable of crushing small ice cubes." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$12.00"
+    promoPrice: "$9"
   },
   {
     id: "blendjet-2-portable-blender",
     name: "BlendJet 2 Portable Blender",
     category: "Home & Kitchen",
     description: "The ultimate portable blender offering powerful performance in a compact design.",
-    priceRange: "$50.00",
-    detailedPriceOptions: [50],
+    priceRange: "$38",
+    detailedPriceOptions: [38],
     imageUrl: "/assets/global/products/blendjet-2-portable-blender.png",
     features: ["Safe Delivery via Email", "Powerful Performance", "Compact Design"],
     region: "Global",
@@ -726,7 +726,7 @@ export const globalProducts = [
     faq: [{ q: "Can it crush ice?", a: "Yes, capable of crushing small ice cubes." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$45.00"
+    promoPrice: "$34"
   },
 
   // Fashion & Apparel
@@ -735,8 +735,8 @@ export const globalProducts = [
     name: "Linen Midi Casual Dress",
     category: "Fashion & Apparel",
     description: "Breathable and comfortable linen midi dress perfect for warm weather and casual outings.",
-    priceRange: "$45.00",
-    detailedPriceOptions: [45],
+    priceRange: "$34",
+    detailedPriceOptions: [34],
     imageUrl: "/assets/global/products/linen-midi-casual-dress.svg",
     features: ["Safe Delivery via Email", "Breathable Fabrics", "Trendy Designs"],
     region: "Global",
@@ -746,15 +746,15 @@ export const globalProducts = [
     faq: [{ q: "Are sizes Asian standard?", a: "Yes, they follow standard Asian sizing charts." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$38.25"
+    promoPrice: "$29"
   },
   {
     id: "floral-wrap-sundress",
     name: "Floral Wrap Sundress",
     category: "Fashion & Apparel",
     description: "Beautiful floral wrap sundress offering a flattering fit and feminine silhouette.",
-    priceRange: "$35.00",
-    detailedPriceOptions: [35],
+    priceRange: "$26",
+    detailedPriceOptions: [26],
     imageUrl: "/assets/global/products/floral-wrap-sundress.svg",
     features: ["Safe Delivery via Email", "Breathable Fabrics", "Trendy Designs"],
     region: "Global",
@@ -764,15 +764,15 @@ export const globalProducts = [
     faq: [{ q: "Are sizes Asian standard?", a: "Yes, they follow standard Asian sizing charts." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$31.50"
+    promoPrice: "$24"
   },
   {
     id: "y2k-mini-skirt-co-ord-set",
     name: "Y2K Mini Skirt Co-ord Set",
     category: "Fashion & Apparel",
     description: "Trendy Y2K-inspired matching mini skirt and top co-ord set.",
-    priceRange: "$40.00",
-    detailedPriceOptions: [40],
+    priceRange: "$30",
+    detailedPriceOptions: [30],
     imageUrl: "/assets/global/products/y2k-mini-skirt-co-ord-set.svg",
     features: ["Safe Delivery via Email", "Breathable Fabrics", "Trendy Designs"],
     region: "Global",
@@ -782,15 +782,15 @@ export const globalProducts = [
     faq: [{ q: "Are sizes Asian standard?", a: "Yes, they follow standard Asian sizing charts." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$32.00"
+    promoPrice: "$24"
   },
   {
     id: "korean-office-blazer-dress",
     name: "Korean Office Blazer Dress",
     category: "Fashion & Apparel",
     description: "Sophisticated Korean-style blazer dress designed for modern office wear.",
-    priceRange: "$55.00",
-    detailedPriceOptions: [55],
+    priceRange: "$41",
+    detailedPriceOptions: [41],
     imageUrl: "/assets/global/products/korean-office-blazer-dress.svg",
     features: ["Safe Delivery via Email", "Breathable Fabrics", "Trendy Designs"],
     region: "Global",
@@ -800,15 +800,15 @@ export const globalProducts = [
     faq: [{ q: "Are sizes Asian standard?", a: "Yes, they follow standard Asian sizing charts." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$49.50"
+    promoPrice: "$37"
   },
   {
     id: "oversized-t-shirt-dress",
     name: "Oversized T-shirt Dress",
     category: "Fashion & Apparel",
     description: "Ultra-comfortable oversized t-shirt dress for an effortless everyday look.",
-    priceRange: "$25.00",
-    detailedPriceOptions: [25],
+    priceRange: "$19",
+    detailedPriceOptions: [19],
     imageUrl: "/assets/global/products/oversized-t-shirt-dress.svg",
     features: ["Safe Delivery via Email", "Breathable Fabrics", "Trendy Designs"],
     region: "Global",
@@ -818,7 +818,7 @@ export const globalProducts = [
     faq: [{ q: "Are sizes Asian standard?", a: "Yes, they follow standard Asian sizing charts." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$23.75"
+    promoPrice: "$18"
   },
 
   // Fitness & Wellness
@@ -827,8 +827,8 @@ export const globalProducts = [
     name: "11-Piece Resistance Band Set",
     category: "Fitness & Wellness",
     description: "Comprehensive resistance band set for full-body home workouts.",
-    priceRange: "$25.00",
-    detailedPriceOptions: [25],
+    priceRange: "$19",
+    detailedPriceOptions: [19],
     imageUrl: "/assets/global/products/11-piece-resistance-band-set.svg",
     features: ["Safe Delivery via Email", "Durable Material", "Full Body Workout"],
     region: "Global",
@@ -838,15 +838,15 @@ export const globalProducts = [
     faq: [{ q: "Does it come with a workout guide?", a: "Most sets include a beginner workout manual." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$21.25"
+    promoPrice: "$16"
   },
   {
     id: "fabric-hip-resistance-band-set",
     name: "Fabric Hip Resistance Band Set",
     category: "Fitness & Wellness",
     description: "Durable, non-slip fabric resistance bands specifically designed for glute and hip exercises.",
-    priceRange: "$18.00",
-    detailedPriceOptions: [18],
+    priceRange: "$14",
+    detailedPriceOptions: [14],
     imageUrl: "/assets/global/products/fabric-hip-resistance-band-set.svg",
     features: ["Safe Delivery via Email", "Durable Material", "Full Body Workout"],
     region: "Global",
@@ -856,15 +856,15 @@ export const globalProducts = [
     faq: [{ q: "Does it come with a workout guide?", a: "Most sets include a beginner workout manual." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$16.20"
+    promoPrice: "$12"
   },
   {
     id: "pull-up-assist-band-set",
     name: "Pull-Up Assist Band Set",
     category: "Fitness & Wellness",
     description: "Heavy-duty assist bands to help you master pull-ups and increase strength.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/pull-up-assist-band-set.svg",
     features: ["Safe Delivery via Email", "Durable Material", "Full Body Workout"],
     region: "Global",
@@ -874,15 +874,15 @@ export const globalProducts = [
     faq: [{ q: "Does it come with a workout guide?", a: "Most sets include a beginner workout manual." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$24.00"
+    promoPrice: "$18"
   },
   {
     id: "adjustable-dumbbell-set",
     name: "Adjustable Dumbbell Set",
     category: "Fitness & Wellness",
     description: "Space-saving adjustable dumbbells allowing customizable weights for various exercises.",
-    priceRange: "$80.00",
-    detailedPriceOptions: [80],
+    priceRange: "$60",
+    detailedPriceOptions: [60],
     imageUrl: "/assets/global/products/adjustable-dumbbell-set.svg",
     features: ["Safe Delivery via Email", "Durable Material", "Full Body Workout"],
     region: "Global",
@@ -892,15 +892,15 @@ export const globalProducts = [
     faq: [{ q: "Does it come with a workout guide?", a: "Most sets include a beginner workout manual." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$68.00"
+    promoPrice: "$51"
   },
   {
     id: "yoga-mat-with-alignment-lines",
     name: "Yoga Mat with Alignment Lines",
     category: "Fitness & Wellness",
     description: "Premium non-slip yoga mat featuring alignment lines to perfect your poses.",
-    priceRange: "$35.00",
-    detailedPriceOptions: [35],
+    priceRange: "$26",
+    detailedPriceOptions: [26],
     imageUrl: "/assets/global/products/yoga-mat-with-alignment-lines.svg",
     features: ["Safe Delivery via Email", "Durable Material", "Full Body Workout"],
     region: "Global",
@@ -910,7 +910,7 @@ export const globalProducts = [
     faq: [{ q: "Does it come with a workout guide?", a: "Most sets include a beginner workout manual." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$31.50"
+    promoPrice: "$24"
   },
 
   // Health Supplements
@@ -919,8 +919,8 @@ export const globalProducts = [
     name: "Meiji Amino Collagen Powder",
     category: "Health Supplements",
     description: "High-quality marine collagen powder to support youthful skin, hair, and nails.",
-    priceRange: "$35.00",
-    detailedPriceOptions: [35],
+    priceRange: "$26",
+    detailedPriceOptions: [26],
     imageUrl: "/assets/global/products/meiji-amino-collagen-powder.png",
     features: ["Safe Delivery via Email", "Imported Brands", "Skin Health"],
     region: "Global",
@@ -930,15 +930,15 @@ export const globalProducts = [
     faq: [{ q: "Are these genuine imports?", a: "Yes, genuine products from Japan and Korea." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$31.50"
+    promoPrice: "$24"
   },
   {
     id: "shiseido-the-collagen-exr-tablet",
     name: "Shiseido The Collagen EXR Tablet",
     category: "Health Supplements",
     description: "Advanced collagen tablets formulated with exclusive beauty ingredients for radiant skin.",
-    priceRange: "$45.00",
-    detailedPriceOptions: [45],
+    priceRange: "$34",
+    detailedPriceOptions: [34],
     imageUrl: "/assets/global/products/shiseido-the-collagen-exr-tablet.svg",
     features: ["Safe Delivery via Email", "Imported Brands", "Skin Health"],
     region: "Global",
@@ -948,15 +948,15 @@ export const globalProducts = [
     faq: [{ q: "Are these genuine imports?", a: "Yes, genuine products from Japan and Korea." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$38.25"
+    promoPrice: "$29"
   },
   {
     id: "swisse-ultivite-womens-multivitamin",
     name: "Swisse Ultivite Women's Multivitamin",
     category: "Health Supplements",
     description: "Comprehensive daily multivitamin tailored to support women's energy and stamina.",
-    priceRange: "$28.00",
-    detailedPriceOptions: [28],
+    priceRange: "$21",
+    detailedPriceOptions: [21],
     imageUrl: "/assets/global/products/swisse-ultivite-womens-multivitamin.svg",
     features: ["Safe Delivery via Email", "Imported Brands", "Skin Health"],
     region: "Global",
@@ -966,15 +966,15 @@ export const globalProducts = [
     faq: [{ q: "Are these genuine imports?", a: "Yes, genuine products from Japan and Korea." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$22.40"
+    promoPrice: "$17"
   },
   {
     id: "blackmores-probiotics-daily-health",
     name: "Blackmores Probiotics+ Daily Health",
     category: "Health Supplements",
     description: "Multi-strain probiotic formula designed to maintain digestive and intestinal health.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/blackmores-probiotics-daily-health.svg",
     features: ["Safe Delivery via Email", "Imported Brands", "Skin Health"],
     region: "Global",
@@ -984,15 +984,15 @@ export const globalProducts = [
     faq: [{ q: "Are these genuine imports?", a: "Yes, genuine products from Japan and Korea." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$27.00"
+    promoPrice: "$20"
   },
   {
     id: "natures-way-vitamin-c-1000mg",
     name: "Nature's Way Vitamin C 1000mg",
     category: "Health Supplements",
     description: "High-potency Vitamin C to help boost immune system function and reduce severity of colds.",
-    priceRange: "$20.00",
-    detailedPriceOptions: [20],
+    priceRange: "$15",
+    detailedPriceOptions: [15],
     imageUrl: "/assets/global/products/natures-way-vitamin-c-1000mg.svg",
     features: ["Safe Delivery via Email", "Imported Brands", "Skin Health"],
     region: "Global",
@@ -1002,7 +1002,7 @@ export const globalProducts = [
     faq: [{ q: "Are these genuine imports?", a: "Yes, genuine products from Japan and Korea." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$19.00"
+    promoPrice: "$14"
   },
 
   // Smart Home
@@ -1011,8 +1011,8 @@ export const globalProducts = [
     name: "Xiaomi Smart Plug WiFi",
     category: "Smart Home",
     description: "WiFi-enabled smart plug allowing you to remotely control your home appliances.",
-    priceRange: "$15.00",
-    detailedPriceOptions: [15],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/xiaomi-smart-plug-wifi.png",
     features: ["Safe Delivery via Email", "App & Voice Control", "Easy Setup"],
     region: "Global",
@@ -1022,15 +1022,15 @@ export const globalProducts = [
     faq: [{ q: "Do they work with Google Home?", a: "Yes, compatible with Google Home and Alexa." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$13.50"
+    promoPrice: "$10"
   },
   {
     id: "govee-rgbic-led-strip-lights",
     name: "Govee RGBIC LED Strip Lights",
     category: "Smart Home",
     description: "Customizable RGBIC LED strip lights to create immersive lighting effects in any room.",
-    priceRange: "$35.00",
-    detailedPriceOptions: [35],
+    priceRange: "$26",
+    detailedPriceOptions: [26],
     imageUrl: "/assets/global/products/govee-rgbic-led-strip-lights.png",
     features: ["Safe Delivery via Email", "App & Voice Control", "Easy Setup"],
     region: "Global",
@@ -1040,15 +1040,15 @@ export const globalProducts = [
     faq: [{ q: "Do they work with Google Home?", a: "Yes, compatible with Google Home and Alexa." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$29.75"
+    promoPrice: "$22"
   },
   {
     id: "tp-link-tapo-c200-security-camera",
     name: "TP-Link Tapo C200 Security Camera",
     category: "Smart Home",
     description: "Pan/tilt home security Wi-Fi camera with high-definition video and night vision.",
-    priceRange: "$40.00",
-    detailedPriceOptions: [40],
+    priceRange: "$30",
+    detailedPriceOptions: [30],
     imageUrl: "/assets/global/products/tp-link-tapo-c200-security-camera.png",
     features: ["Safe Delivery via Email", "App & Voice Control", "Easy Setup"],
     region: "Global",
@@ -1058,15 +1058,15 @@ export const globalProducts = [
     faq: [{ q: "Do they work with Google Home?", a: "Yes, compatible with Google Home and Alexa." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$32.00"
+    promoPrice: "$24"
   },
   {
     id: "xiaomi-smart-bulb-color-e27",
     name: "Xiaomi Smart Bulb Color E27",
     category: "Smart Home",
     description: "Voice-controllable smart LED bulb offering a wide range of colors and dimming options.",
-    priceRange: "$20.00",
-    detailedPriceOptions: [20],
+    priceRange: "$15",
+    detailedPriceOptions: [15],
     imageUrl: "/assets/global/products/xiaomi-smart-bulb-color-e27.png",
     features: ["Safe Delivery via Email", "App & Voice Control", "Easy Setup"],
     region: "Global",
@@ -1076,15 +1076,15 @@ export const globalProducts = [
     faq: [{ q: "Do they work with Google Home?", a: "Yes, compatible with Google Home and Alexa." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$19.00"
+    promoPrice: "$14"
   },
   {
     id: "tuya-wifi-smart-power-strip",
     name: "Tuya WiFi Smart Power Strip",
     category: "Smart Home",
     description: "Smart power strip featuring multiple individually controllable outlets and USB ports.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/tuya-wifi-smart-power-strip.png",
     features: ["Safe Delivery via Email", "App & Voice Control", "Easy Setup"],
     region: "Global",
@@ -1094,7 +1094,7 @@ export const globalProducts = [
     faq: [{ q: "Do they work with Google Home?", a: "Yes, compatible with Google Home and Alexa." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$27.00"
+    promoPrice: "$20"
   },
 
   // Pet Care
@@ -1103,8 +1103,8 @@ export const globalProducts = [
     name: "Automatic Pet Water Fountain 2.5L",
     category: "Pet Care",
     description: "Quiet and efficient 2.5L water fountain to keep your pets hydrated all day.",
-    priceRange: "$30.00",
-    detailedPriceOptions: [30],
+    priceRange: "$23",
+    detailedPriceOptions: [23],
     imageUrl: "/assets/global/products/automatic-pet-water-fountain-2-5l.png",
     features: ["Safe Delivery via Email", "Smart App Control Options", "Safe Materials"],
     region: "Global",
@@ -1114,15 +1114,15 @@ export const globalProducts = [
     faq: [{ q: "Are filters included with the fountain?", a: "Yes, comes with a starting filter." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$25.50"
+    promoPrice: "$19"
   },
   {
     id: "cat-scratcher-cardboard-house",
     name: "Cat Scratcher Cardboard House",
     category: "Pet Care",
     description: "Eco-friendly cardboard scratcher house designed to satisfy your cat's natural instincts.",
-    priceRange: "$25.00",
-    detailedPriceOptions: [25],
+    priceRange: "$19",
+    detailedPriceOptions: [19],
     imageUrl: "/assets/global/products/cat-scratcher-cardboard-house.png",
     features: ["Safe Delivery via Email", "Smart App Control Options", "Safe Materials"],
     region: "Global",
@@ -1132,15 +1132,15 @@ export const globalProducts = [
     faq: [{ q: "Are filters included with the fountain?", a: "Yes, comes with a starting filter." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$22.50"
+    promoPrice: "$17"
   },
   {
     id: "dog-harness-no-pull-adjustable",
     name: "Dog Harness No-Pull Adjustable",
     category: "Pet Care",
     description: "Comfortable, adjustable no-pull harness for safer and more enjoyable dog walks.",
-    priceRange: "$20.00",
-    detailedPriceOptions: [20],
+    priceRange: "$15",
+    detailedPriceOptions: [15],
     imageUrl: "/assets/global/products/dog-harness-no-pull-adjustable.png",
     features: ["Safe Delivery via Email", "Smart App Control Options", "Safe Materials"],
     region: "Global",
@@ -1150,15 +1150,15 @@ export const globalProducts = [
     faq: [{ q: "Are filters included with the fountain?", a: "Yes, comes with a starting filter." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$19.00"
+    promoPrice: "$14"
   },
   {
     id: "pet-grooming-glove-brush",
     name: "Pet Grooming Glove Brush",
     category: "Pet Care",
     description: "Gentle deshedding glove brush that easily removes loose pet hair while massaging.",
-    priceRange: "$10.00",
-    detailedPriceOptions: [10],
+    priceRange: "$8",
+    detailedPriceOptions: [8],
     imageUrl: "/assets/global/products/pet-grooming-glove-brush.png",
     features: ["Safe Delivery via Email", "Smart App Control Options", "Safe Materials"],
     region: "Global",
@@ -1168,15 +1168,15 @@ export const globalProducts = [
     faq: [{ q: "Are filters included with the fountain?", a: "Yes, comes with a starting filter." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$8.00"
+    promoPrice: "$6"
   },
   {
     id: "automatic-pet-feeder-wifi-app-controlled",
     name: "Automatic Pet Feeder WiFi App-Controlled",
     category: "Pet Care",
     description: "Smart pet feeder with WiFi connectivity, allowing remote scheduling and portion control.",
-    priceRange: "$60.00",
-    detailedPriceOptions: [60],
+    priceRange: "$45",
+    detailedPriceOptions: [45],
     imageUrl: "/assets/global/products/automatic-pet-feeder-wifi-app-controlled.png",
     features: ["Safe Delivery via Email", "Smart App Control Options", "Safe Materials"],
     region: "Global",
@@ -1186,7 +1186,7 @@ export const globalProducts = [
     faq: [{ q: "Are filters included with the fountain?", a: "Yes, comes with a starting filter." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$51.00"
+    promoPrice: "$38"
   },
 
   // Eco-Friendly Living
@@ -1195,8 +1195,8 @@ export const globalProducts = [
     name: "Stainless Steel Insulated Tumbler 500ml",
     category: "Eco-Friendly Living",
     description: "Durable 500ml insulated tumbler to keep beverages hot or cold while reducing plastic waste.",
-    priceRange: "$20.00",
-    detailedPriceOptions: [20],
+    priceRange: "$15",
+    detailedPriceOptions: [15],
     imageUrl: "/assets/global/products/stainless-steel-insulated-tumbler-500ml.png",
     features: ["Safe Delivery via Email", "Sustainable Materials", "Plastic-Free Packaging"],
     region: "Global",
@@ -1206,15 +1206,15 @@ export const globalProducts = [
     faq: [{ q: "Is the tumbler dishwasher safe?", a: "Hand washing is recommended to preserve insulation." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$18.00"
+    promoPrice: "$14"
   },
   {
     id: "beeswax-food-wrap-set",
     name: "Beeswax Food Wrap Set",
     category: "Eco-Friendly Living",
     description: "Natural, reusable beeswax food wraps as a sustainable alternative to plastic cling film.",
-    priceRange: "$18.00",
-    detailedPriceOptions: [18],
+    priceRange: "$14",
+    detailedPriceOptions: [14],
     imageUrl: "/assets/global/products/beeswax-food-wrap-set.png",
     features: ["Safe Delivery via Email", "Sustainable Materials", "Plastic-Free Packaging"],
     region: "Global",
@@ -1224,15 +1224,15 @@ export const globalProducts = [
     faq: [{ q: "Is the tumbler dishwasher safe?", a: "Hand washing is recommended to preserve insulation." }],
     badge: "🌐 Trending",
     discount: "5% OFF",
-    promoPrice: "$17.10"
+    promoPrice: "$13"
   },
   {
     id: "bamboo-toothbrush-set-of-4",
     name: "Bamboo Toothbrush Set of 4",
     category: "Eco-Friendly Living",
     description: "Biodegradable bamboo toothbrushes featuring soft bristles for eco-conscious oral care.",
-    priceRange: "$12.00",
-    detailedPriceOptions: [12],
+    priceRange: "$9",
+    detailedPriceOptions: [9],
     imageUrl: "/assets/global/products/bamboo-toothbrush-set-of-4.png",
     features: ["Safe Delivery via Email", "Sustainable Materials", "Plastic-Free Packaging"],
     region: "Global",
@@ -1242,15 +1242,15 @@ export const globalProducts = [
     faq: [{ q: "Is the tumbler dishwasher safe?", a: "Hand washing is recommended to preserve insulation." }],
     badge: "🌐 Trending",
     discount: "15% OFF",
-    promoPrice: "$10.20"
+    promoPrice: "$8"
   },
   {
     id: "reusable-grocery-tote-bags",
     name: "Reusable Grocery Tote Bags",
     category: "Eco-Friendly Living",
     description: "Sturdy, washable, and foldable grocery tote bags designed to eliminate single-use plastics.",
-    priceRange: "$15.00",
-    detailedPriceOptions: [15],
+    priceRange: "$11",
+    detailedPriceOptions: [11],
     imageUrl: "/assets/global/products/reusable-grocery-tote-bags.png",
     features: ["Safe Delivery via Email", "Sustainable Materials", "Plastic-Free Packaging"],
     region: "Global",
@@ -1260,15 +1260,15 @@ export const globalProducts = [
     faq: [{ q: "Is the tumbler dishwasher safe?", a: "Hand washing is recommended to preserve insulation." }],
     badge: "🌐 Trending",
     discount: "20% OFF",
-    promoPrice: "$12.00"
+    promoPrice: "$9"
   },
   {
     id: "solid-shampoo-bar",
     name: "Solid Shampoo Bar",
     category: "Eco-Friendly Living",
     description: "Plastic-free, natural solid shampoo bar that cleanses effectively while nourishing hair.",
-    priceRange: "$10.00",
-    detailedPriceOptions: [10],
+    priceRange: "$8",
+    detailedPriceOptions: [8],
     imageUrl: "/assets/global/products/solid-shampoo-bar.png",
     features: ["Safe Delivery via Email", "Sustainable Materials", "Plastic-Free Packaging"],
     region: "Global",
@@ -1278,6 +1278,6 @@ export const globalProducts = [
     faq: [{ q: "Is the tumbler dishwasher safe?", a: "Hand washing is recommended to preserve insulation." }],
     badge: "🌐 Trending",
     discount: "10% OFF",
-    promoPrice: "$9.00"
+    promoPrice: "$7"
   }
 ];

@@ -25,10 +25,10 @@ export default function IceJewelleryCryptoHero() {
   ];
 
   const categories = [
-    { icon: "⛓️", name: "Chains", price: "From $129" },
-    { icon: "💍", name: "Rings", price: "From $79" },
-    { icon: "📿", name: "Pendants", price: "From $89" },
-    { icon: "⌚", name: "Bracelets", price: "From $99" },
+    { icon: "⛓️", name: "Chains", price: "From $97" },
+    { icon: "💍", name: "Rings", price: "From $59" },
+    { icon: "📿", name: "Pendants", price: "From $67" },
+    { icon: "⌚", name: "Bracelets", price: "From $74" },
   ];
 
   const sparklePositions = [

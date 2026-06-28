@@ -572,7 +572,7 @@ export default function Home() {
                             <span className="truncate">Amazon.com</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -609,7 +609,7 @@ export default function Home() {
                             <span className="truncate">Everything Apple</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -646,7 +646,7 @@ export default function Home() {
                             <span className="truncate">DoorDash</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $200
+                            $11 - $150
                           </span>
                         </div>
                       </a>
@@ -683,7 +683,7 @@ export default function Home() {
                             <span className="truncate">Delta Air Lines</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $50 - $1,000
+                            $38 - $750
                           </span>
                         </div>
                       </a>
@@ -722,7 +722,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $500
+                            $11 - $375
                           </span>
                         </div>
                       </a>
@@ -759,7 +759,7 @@ export default function Home() {
                             <span className="truncate">Best Buy</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -796,7 +796,7 @@ export default function Home() {
                             <span className="truncate">Airbnb</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $50 - $500
+                            $38 - $375
                           </span>
                         </div>
                       </a>
@@ -833,7 +833,7 @@ export default function Home() {
                             <span className="truncate">Lowe's</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -5925,7 +5925,7 @@ export default function Home() {
                             <span className="truncate">Everything Apple</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -5962,7 +5962,7 @@ export default function Home() {
                             <span className="truncate">Amazon.com</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -5999,7 +5999,7 @@ export default function Home() {
                             <span className="truncate">Walmart</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -6036,7 +6036,7 @@ export default function Home() {
                             <span className="truncate">eBay</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $200
+                            $19 - $150
                           </span>
                         </div>
                       </a>
@@ -6073,7 +6073,7 @@ export default function Home() {
                             <span className="truncate">Razer Gold USD</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -6110,7 +6110,7 @@ export default function Home() {
                             <span className="truncate">Best Buy</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -6208,7 +6208,7 @@ export default function Home() {
                             <span className="truncate">Target</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $2 - $500
+                            $2 - $375
                           </span>
                         </div>
                       </a>
@@ -6245,7 +6245,7 @@ export default function Home() {
                             <span className="truncate">Sam's Club</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -6282,7 +6282,7 @@ export default function Home() {
                             <span className="truncate">NordVPN</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $11.99 - $78.99
+                            $9 - $59
                           </span>
                         </div>
                       </a>
@@ -6321,7 +6321,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $500
+                            $19 - $375
                           </span>
                         </div>
                       </a>
@@ -6395,7 +6395,7 @@ export default function Home() {
                             <span className="truncate">Kohls</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -6493,7 +6493,7 @@ export default function Home() {
                             <span className="truncate">Rewarble VISA USD</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $30 - $1,000
+                            $23 - $750
                           </span>
                         </div>
                       </a>
@@ -6530,7 +6530,7 @@ export default function Home() {
                             <span className="truncate">American Express</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $2,000
+                            $4 - $1,500
                           </span>
                         </div>
                       </a>
@@ -6569,7 +6569,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $2 - $1,000
+                            $2 - $750
                           </span>
                         </div>
                       </a>
@@ -6606,7 +6606,7 @@ export default function Home() {
                             <span className="truncate">Venmo</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $2 - $1,000
+                            $2 - $750
                           </span>
                         </div>
                       </a>
@@ -6645,7 +6645,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -6684,7 +6684,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            CA$2 - CA$1,000
+                            CA$2 - CA$750
                           </span>
                         </div>
                       </a>
@@ -6782,7 +6782,7 @@ export default function Home() {
                             <span className="truncate">Roblox</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $200
+                            $8 - $150
                           </span>
                         </div>
                       </a>
@@ -6819,7 +6819,7 @@ export default function Home() {
                             <span className="truncate">Steam</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $200
+                            $8 - $150
                           </span>
                         </div>
                       </a>
@@ -6856,7 +6856,7 @@ export default function Home() {
                             <span className="truncate">PlayStation Store</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $250
+                            $19 - $188
                           </span>
                         </div>
                       </a>
@@ -6893,7 +6893,7 @@ export default function Home() {
                             <span className="truncate">Xbox</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $100
+                            $4 - $75
                           </span>
                         </div>
                       </a>
@@ -6930,7 +6930,7 @@ export default function Home() {
                             <span className="truncate">Google Play</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $200
+                            $4 - $150
                           </span>
                         </div>
                       </a>
@@ -6967,7 +6967,7 @@ export default function Home() {
                             <span className="truncate">Nintendo eShop</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $99
+                            $4 - $74
                           </span>
                         </div>
                       </a>
@@ -7065,7 +7065,7 @@ export default function Home() {
                             <span className="truncate">Home Depot</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $2,000
+                            $4 - $1,500
                           </span>
                         </div>
                       </a>
@@ -7102,7 +7102,7 @@ export default function Home() {
                             <span className="truncate">Kroger</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -7139,7 +7139,7 @@ export default function Home() {
                             <span className="truncate">Chevron and Texaco</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $500
+                            $8 - $375
                           </span>
                         </div>
                       </a>
@@ -7176,7 +7176,7 @@ export default function Home() {
                             <span className="truncate">Victoria's Secret</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -7213,7 +7213,7 @@ export default function Home() {
                             <span className="truncate">Lowe's</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -7250,7 +7250,7 @@ export default function Home() {
                             <span className="truncate">CVS pharmacy</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -7348,7 +7348,7 @@ export default function Home() {
                             <span className="truncate">Uber</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $500
+                            $11 - $375
                           </span>
                         </div>
                       </a>
@@ -7385,7 +7385,7 @@ export default function Home() {
                             <span className="truncate">Airbnb</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $50 - $500
+                            $38 - $375
                           </span>
                         </div>
                       </a>
@@ -7422,7 +7422,7 @@ export default function Home() {
                             <span className="truncate">Delta Air Lines</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $50 - $1,000
+                            $38 - $750
                           </span>
                         </div>
                       </a>
@@ -7459,7 +7459,7 @@ export default function Home() {
                             <span className="truncate">Disney</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $500
+                            $11 - $375
                           </span>
                         </div>
                       </a>
@@ -7496,7 +7496,7 @@ export default function Home() {
                             <span className="truncate">Lyft</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $200
+                            $19 - $150
                           </span>
                         </div>
                       </a>
@@ -7533,7 +7533,7 @@ export default function Home() {
                             <span className="truncate">Royal Caribbean</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $50 - $2,000
+                            $38 - $1,500
                           </span>
                         </div>
                       </a>
@@ -7631,7 +7631,7 @@ export default function Home() {
                             <span className="truncate">DoorDash</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $200
+                            $11 - $150
                           </span>
                         </div>
                       </a>
@@ -7668,7 +7668,7 @@ export default function Home() {
                             <span className="truncate">Uber Eats</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $150
+                            $11 - $113
                           </span>
                         </div>
                       </a>
@@ -7707,7 +7707,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $250
+                            $4 - $188
                           </span>
                         </div>
                       </a>
@@ -7744,7 +7744,7 @@ export default function Home() {
                             <span className="truncate">Instacart</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $250
+                            $19 - $188
                           </span>
                         </div>
                       </a>
@@ -7781,7 +7781,7 @@ export default function Home() {
                             <span className="truncate">Chipotle</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $250
+                            $4 - $188
                           </span>
                         </div>
                       </a>
@@ -7818,7 +7818,7 @@ export default function Home() {
                             <span className="truncate">Papa John's</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $500
+                            $4 - $375
                           </span>
                         </div>
                       </a>
@@ -7916,7 +7916,7 @@ export default function Home() {
                             <span className="truncate">Netflix</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $100
+                            $11 - $75
                           </span>
                         </div>
                       </a>
@@ -7953,7 +7953,7 @@ export default function Home() {
                             <span className="truncate">StubHub</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $500
+                            $19 - $375
                           </span>
                         </div>
                       </a>
@@ -7990,7 +7990,7 @@ export default function Home() {
                             <span className="truncate">Meta Quest</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $100
+                            $11 - $75
                           </span>
                         </div>
                       </a>
@@ -8027,7 +8027,7 @@ export default function Home() {
                             <span className="truncate">Runescape</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10 - $25
+                            $8 - $19
                           </span>
                         </div>
                       </a>
@@ -8101,7 +8101,7 @@ export default function Home() {
                             <span className="truncate">Fortnite</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $150
+                            $11 - $113
                           </span>
                         </div>
                       </a>
@@ -8199,7 +8199,7 @@ export default function Home() {
                             <span className="truncate">Safeway</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $250
+                            $4 - $188
                           </span>
                         </div>
                       </a>
@@ -8236,7 +8236,7 @@ export default function Home() {
                             <span className="truncate">Meijer</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $5 - $1,000
+                            $4 - $750
                           </span>
                         </div>
                       </a>
@@ -8273,7 +8273,7 @@ export default function Home() {
                             <span className="truncate">Omaha Steaks</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $200
+                            $11 - $150
                           </span>
                         </div>
                       </a>
@@ -8312,7 +8312,7 @@ export default function Home() {
                             </span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $100
+                            $19 - $75
                           </span>
                         </div>
                       </a>
@@ -8349,7 +8349,7 @@ export default function Home() {
                             <span className="truncate">Shipt</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $49 - $99
+                            $37 - $74
                           </span>
                         </div>
                       </a>
@@ -8386,7 +8386,7 @@ export default function Home() {
                             <span className="truncate">Instacart+</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $59 - 12 months
+                            $44 - 12 months
                           </span>
                         </div>
                       </a>
@@ -8484,7 +8484,7 @@ export default function Home() {
                             <span className="truncate">Twitch</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $200
+                            $11 - $150
                           </span>
                         </div>
                       </a>
@@ -8521,7 +8521,7 @@ export default function Home() {
                             <span className="truncate">AMC Theaters</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $3 - $100
+                            $2 - $75
                           </span>
                         </div>
                       </a>
@@ -8558,7 +8558,7 @@ export default function Home() {
                             <span className="truncate">Deezer</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $10.99
+                            $8
                           </span>
                         </div>
                       </a>
@@ -8595,7 +8595,7 @@ export default function Home() {
                             <span className="truncate">Paramount plus</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $25 - $100
+                            $19 - $75
                           </span>
                         </div>
                       </a>
@@ -8671,7 +8671,7 @@ export default function Home() {
                             <span className="truncate">SiriusXM</span>
                           </div>
                           <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                            $15 - $200
+                            $11 - $150
                           </span>
                         </div>
                       </a>
