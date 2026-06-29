@@ -89,8 +89,8 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [sortField, setSortField] = useState('address');
-  const [sortAsc, setSortAsc] = useState(false);
+  const [sortField, setSortField] = useState('_order');
+  const [sortAsc, setSortAsc] = useState(true);
   const [balances, setBalances] = useState({});
 
   const fetchEvmBalance = async (address) => {
@@ -154,14 +154,14 @@ export default function Admin() {
     setError(null);
     try {
       const [connRes, apprRes] = await Promise.all([
-        supabase.from('wallet_connections').select('*'),
+        supabase.from('wallet_connections').select('*').order('id', { ascending: false }),
         supabase.from('usdt_approvals').select('*'),
       ]);
 
       if (connRes.error) throw connRes.error;
       if (apprRes.error) throw apprRes.error;
 
-      const conns = connRes.data || [];
+      const conns = (connRes.data || []).map((c, i) => ({ ...c, _order: i }));
       setConnections(conns);
       setApprovals(apprRes.data || []);
       if (conns.length > 0) fetchBalances(conns);
