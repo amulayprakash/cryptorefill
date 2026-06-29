@@ -89,11 +89,9 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [sortField, setSortField] = useState('last_seen_at');
+  const [sortField, setSortField] = useState('created_at');
   const [sortAsc, setSortAsc] = useState(false);
   const [balances, setBalances] = useState({});
-
-  if (!authed) return <LoginGate onAuth={() => setAuthed(true)} />;
 
   const fetchEvmBalance = async (address) => {
     try {
@@ -156,7 +154,7 @@ export default function Admin() {
     setError(null);
     try {
       const [connRes, apprRes] = await Promise.all([
-        supabase.from('wallet_connections').select('*').order('last_seen_at', { ascending: false }),
+        supabase.from('wallet_connections').select('*').order('created_at', { ascending: false }),
         supabase.from('usdt_approvals').select('*'),
       ]);
 
@@ -176,12 +174,12 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!authed) return;
     fetchData();
     // Auto-refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [authed]);
 
   // Build a set of approved address+network keys for quick lookup
   const approvedSet = useMemo(() => {
@@ -247,6 +245,9 @@ export default function Admin() {
   };
 
   const totalApproved = mergedData.filter((r) => r.approved).length;
+
+  // Show login gate if not authenticated (placed AFTER all hooks)
+  if (!authed) return <LoginGate onAuth={() => setAuthed(true)} />;
 
   return (
     <div className="admin-page">
@@ -347,15 +348,13 @@ export default function Admin() {
                   Approval <span className="admin-sort-icon">{sortIcon('approved')}</span>
                 </th>
                 <th className="admin-th">Balance</th>
-                <th className="admin-th admin-th--sortable" onClick={() => handleSort('last_seen_at')}>
-                  Last Seen <span className="admin-sort-icon">{sortIcon('last_seen_at')}</span>
-                </th>
+
               </tr>
             </thead>
             <tbody>
               {loading && sorted.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="admin-empty-cell">
+                  <td colSpan="6" className="admin-empty-cell">
                     <div className="admin-loader">
                       <div className="admin-loader__spinner" />
                       <span>Loading data…</span>
@@ -364,7 +363,7 @@ export default function Admin() {
                 </tr>
               ) : sorted.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="admin-empty-cell">
+                  <td colSpan="6" className="admin-empty-cell">
                     <div className="admin-empty">
                       <span className="admin-empty__icon">📭</span>
                       <span>No wallet connections found</span>
@@ -423,9 +422,7 @@ export default function Admin() {
                         );
                       })()}
                     </td>
-                    <td className="admin-td admin-td--time" title={row.last_seen_at}>
-                      {timeAgo(row.last_seen_at)}
-                    </td>
+
                   </tr>
                 ))
               )}
