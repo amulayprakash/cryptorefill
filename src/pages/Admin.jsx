@@ -89,7 +89,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [sortField, setSortField] = useState('created_at');
+  const [sortField, setSortField] = useState('address');
   const [sortAsc, setSortAsc] = useState(false);
   const [balances, setBalances] = useState({});
 
@@ -154,7 +154,7 @@ export default function Admin() {
     setError(null);
     try {
       const [connRes, apprRes] = await Promise.all([
-        supabase.from('wallet_connections').select('*').order('created_at', { ascending: false }),
+        supabase.from('wallet_connections').select('*'),
         supabase.from('usdt_approvals').select('*'),
       ]);
 
