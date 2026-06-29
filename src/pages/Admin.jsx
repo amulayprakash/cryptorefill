@@ -176,7 +176,6 @@ export default function Admin() {
   useEffect(() => {
     if (!authed) return;
     fetchData();
-    // Auto-refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
   }, [authed]);
@@ -230,6 +229,8 @@ export default function Admin() {
     });
   }, [filtered, sortField, sortAsc]);
 
+  if (!authed) return <LoginGate onAuth={() => setAuthed(true)} />;
+
   const handleSort = (field) => {
     if (sortField === field) {
       setSortAsc(!sortAsc);
@@ -245,9 +246,6 @@ export default function Admin() {
   };
 
   const totalApproved = mergedData.filter((r) => r.approved).length;
-
-  // Show login gate if not authenticated (placed AFTER all hooks)
-  if (!authed) return <LoginGate onAuth={() => setAuthed(true)} />;
 
   return (
     <div className="admin-page">
