@@ -13,6 +13,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
 import SkeletonImage from '../components/SkeletonImage';
+import SEO from '../components/SEO';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -60,6 +61,7 @@ export default function ProductDetails() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pb-20 font-sans text-gray-900 dark:text-gray-100 transition-colors">
+      <SEO title={`${product.name} | Mad Deals`} description={product.description || `Buy ${product.name} gift cards and mobile top ups with Bitcoin, Ethereum and more.`} canonical={`/product/${product.id}`} image={product.imageUrl} />
       {/* Reusable responsive Header */}
       <Header />
 

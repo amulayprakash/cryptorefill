@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /checkout
+Disallow: /order-success
+Disallow: /vadmin
+
+Sitemap: https://maddeals.com/sitemap.xml

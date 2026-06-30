@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
 import SkeletonImage from '../components/SkeletonImage';
+import SEO from '../components/SEO';
 
 const baseCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
 const globalCategories = [
@@ -44,6 +45,7 @@ export default function AllProducts() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 transition-colors">
+      <SEO title="All Gift Cards | Mad Deals" description="Browse all available gift cards and mobile top ups. Buy safely with Bitcoin, Ethereum & more crypto." canonical="/products" />
       <Header />
 
       {/* Page Hero */}

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SkeletonImage from "../components/SkeletonImage";
+import SEO from "../components/SEO";
 
 /* ─── Jewelry catalog data ─── */
 const JEWELRY_ITEMS = [
@@ -297,6 +298,7 @@ export default function IceJewellery() {
 
   return (
     <>
+      <SEO title="Ice Jewellery Crypto | Luxury Watches & Diamonds" description="Buy luxury iced out jewellery, AP watches, and diamonds using Bitcoin, USDT, Ethereum and more." canonical="/ice-jewellery-crypto" />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,650;1,400&display=swap');
 

@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
 import { globalProducts } from "../data/globalProducts";
 import SkeletonImage from "../components/SkeletonImage";
+import SEO from "../components/SEO";
 
 
 function TrendingProductsShowcase() {
@@ -19,9 +20,9 @@ function TrendingProductsShowcase() {
       <div className="px-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex flex-col">
-            <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
+            <h2 className="text-xl font-bold sm:text-2xl flex items-center gap-2">
               🔥 Trending Products
-            </span>
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
               Top trending items in the Global Market. Buy safely with crypto.
             </p>
@@ -373,6 +374,7 @@ export default function Home() {
 
   return (
     <div>
+      <SEO title="Mad Deals | Buy Gift Cards & Mobile Top Ups with Crypto" description="Spend Bitcoin, USDT, USDC, ETH and 100+ cryptocurrencies at 6,600+ brands. Buy gift cards and mobile top ups with no KYC required." canonical="/" />
       <style
         dangerouslySetInnerHTML={{
           __html:
