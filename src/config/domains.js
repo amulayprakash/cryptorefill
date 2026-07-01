@@ -60,34 +60,38 @@ export const DOMAIN_CONFIGS = {
   // 'localhost': { ...DOMAIN_CONFIGS['maddeals.store'] },
 
   // ── Add more domains below ──────────────────────────────────────────────────
-  // 'example-brand.com': {
-  //   name: 'Example Brand',
-  //   logo: '/logo-example.png',
-  //   logoAlt: 'Example Brand Logo',
-  //   favicon: '/favicon-example.ico',
-  //   tagline: 'Your tagline here',
-  //   version: '1.0.0',
-  //   footerCompany: 'Example Brand Inc.',
-  //   copyrightYear: '2026',
-  //   cssVars: {
-  //     '--brand-primary': '#3B82F6',
-  //     '--brand-accent': '#0f172a',
-  //     '--selection-bg': '#3B82F6',
-  //   },
-  //   socialLinks: {
-  //     facebook: '#',
-  //     twitter: '#',
-  //     instagram: '#',
-  //     telegram: '#',
-  //   },
-  //   companyLinks: [
-  //     'Example Brand labs',
-  //     'Careers',
-  //     'Press and media',
-  //     'Trust and safety',
-  //     'About',
-  //   ],
-  // },
+
+  // ── cryptoperks.netlify.app ────────────────────────────────────────────────
+  'cryptoperks.netlify.app': {
+    name: 'Mad Deals',
+    logo: '/logo.png',
+    logoAlt: 'Mad Deals Logo',
+    favicon: '/favicon.ico',
+    tagline: 'Trusted since 2018',
+    version: '2.0.3180',
+    footerCompany: 'Mad Deals',
+    copyrightYear: '2026',
+    /** Hide the Ice Jewellery Crypto Hero banner on this domain */
+    hideJewelleryBanner: true,
+    cssVars: {
+      '--brand-primary': '#C5A059',
+      '--brand-accent': '#1a1a2e',
+      '--selection-bg': '#C5A059',
+    },
+    socialLinks: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      telegram: '#',
+    },
+    companyLinks: [
+      'Mad Deals labs',
+      'Careers',
+      'Press and media',
+      'Trust and safety',
+      'About',
+    ],
+  },
 
   // ── Fallback (unknown / new domains) ───────────────────────────────────────
   __default__: {
