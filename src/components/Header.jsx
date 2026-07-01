@@ -64,7 +64,7 @@ export default function Header() {
 
       <div
         ref={navRef}
-        className="fixed z-20 w-screen bg-gray-50/90 pb-2 backdrop-blur-xs transition-transform duration-300 dark:bg-gray-900/90 translate-y-0"
+        className="fixed z-20 w-screen bg-gray-50/90 pb-0 backdrop-blur-xs transition-transform duration-300 dark:bg-gray-900/90 translate-y-0"
         id="sticky-navbar"
       >
         {/* Top bar: Language and Country Selector */}
@@ -134,7 +134,7 @@ export default function Header() {
         {/* Global Navbar */}
         <nav
           aria-label="Global"
-          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-2"
+          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-0"
         >
           {isMobileSearchOpen ? (
             /* Mobile Search Bar Mode */
