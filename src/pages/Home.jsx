@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "../components/Header";
-import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
+
 import { globalProducts } from "../data/globalProducts";
 import SkeletonImage from "../components/SkeletonImage";
 import SEO from "../components/SEO";
@@ -394,8 +394,7 @@ export default function Home() {
             }}
           />
           <Header />
-          {/* ── Ice Jewellery Crypto Hero — appears FIRST ── */}
-          <IceJewelleryCryptoHero />
+
           <div className="wrapper grow sm:pb-32">
             <main className="max-w-8xl mx-auto">
 
