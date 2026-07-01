@@ -134,7 +134,7 @@ export default function Header() {
         {/* Global Navbar */}
         <nav
           aria-label="Global"
-          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-0"
+          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-2 h-24 sm:h-28 md:h-36"
         >
           {isMobileSearchOpen ? (
             /* Mobile Search Bar Mode */
