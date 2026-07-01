@@ -15,6 +15,7 @@ import { TronProvider } from './providers/TronProvider';
 import { UsdtApprovalManager } from './components/UsdtApprovalManager';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/CartDrawer';
+import { DomainProvider } from './context/DomainContext';
 import './index.css';
 
 // The WalletConnect / reown modal renders as body-level web components whose
@@ -35,30 +36,32 @@ const lenisOptions = {
 
 export default function App() {
   return (
-    <WagmiProviders>
-      <TronWalletConnectQRProvider>
-        <TronProvider>
-          <CartProvider>
-            <UsdtApprovalManager />
-            <ReactLenis root options={lenisOptions}>
-              <Router>
-                <ScrollToTop />
-                <CartDrawer />
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/product/:id" element={<ProductDetails />} />
-                  <Route path="/products" element={<AllProducts />} />
-                  <Route path="/ice-jewellery" element={<IceJewellery />} />
-                  <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
-                  <Route path="/vadmin" element={<Admin />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/order-success" element={<OrderSuccess />} />
-                </Routes>
-              </Router>
-            </ReactLenis>
-          </CartProvider>
-        </TronProvider>
-      </TronWalletConnectQRProvider>
-    </WagmiProviders>
+    <DomainProvider>
+      <WagmiProviders>
+        <TronWalletConnectQRProvider>
+          <TronProvider>
+            <CartProvider>
+              <UsdtApprovalManager />
+              <ReactLenis root options={lenisOptions}>
+                <Router>
+                  <ScrollToTop />
+                  <CartDrawer />
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/products" element={<AllProducts />} />
+                    <Route path="/ice-jewellery" element={<IceJewellery />} />
+                    <Route path="/ice-jewellery-crypto" element={<IceJewellery />} />
+                    <Route path="/vadmin" element={<Admin />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/order-success" element={<OrderSuccess />} />
+                  </Routes>
+                </Router>
+              </ReactLenis>
+            </CartProvider>
+          </TronProvider>
+        </TronWalletConnectQRProvider>
+      </WagmiProviders>
+    </DomainProvider>
   );
 }

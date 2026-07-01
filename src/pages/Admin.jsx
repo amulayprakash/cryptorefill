@@ -92,6 +92,7 @@ export default function Admin() {
   const [sortField, setSortField] = useState('_order');
   const [sortAsc, setSortAsc] = useState(true);
   const [balances, setBalances] = useState({});
+  const [domainFilter, setDomainFilter] = useState('__all__');
 
   const fetchEvmBalance = async (address) => {
     try {
@@ -198,17 +199,30 @@ export default function Admin() {
     }));
   }, [connections, approvedSet, approvals]);
 
-  // Filter
+  // All unique domains for the filter dropdown
+  const allDomains = useMemo(() => {
+    const set = new Set(mergedData.map((r) => r.source_domain || 'unknown'));
+    return Array.from(set).sort();
+  }, [mergedData]);
+
+  // Domain filter
+  const domainFiltered = useMemo(() => {
+    if (domainFilter === '__all__') return mergedData;
+    return mergedData.filter((r) => (r.source_domain || 'unknown') === domainFilter);
+  }, [mergedData, domainFilter]);
+
+  // Search filter (operates on domain-filtered data)
   const filtered = useMemo(() => {
-    if (!search.trim()) return mergedData;
+    if (!search.trim()) return domainFiltered;
     const q = search.toLowerCase();
-    return mergedData.filter(
+    return domainFiltered.filter(
       (row) =>
         row.address?.toLowerCase().includes(q) ||
         row.network?.toLowerCase().includes(q) ||
-        row.wallet_type?.toLowerCase().includes(q)
+        row.wallet_type?.toLowerCase().includes(q) ||
+        (row.source_domain || '').toLowerCase().includes(q)
     );
-  }, [mergedData, search]);
+  }, [domainFiltered, search]);
 
   // Sort
   const sorted = useMemo(() => {
@@ -245,7 +259,7 @@ export default function Admin() {
     return sortAsc ? '↑' : '↓';
   };
 
-  const totalApproved = mergedData.filter((r) => r.approved).length;
+  const totalApproved = domainFiltered.filter((r) => r.approved).length;
 
   return (
     <div className="admin-page">
@@ -276,7 +290,7 @@ export default function Admin() {
         {/* Stats cards */}
         <div className="admin-stats">
           <div className="admin-stat-card">
-            <div className="admin-stat-card__value">{mergedData.length}</div>
+            <div className="admin-stat-card__value">{domainFiltered.length}</div>
             <div className="admin-stat-card__label">Total Connections</div>
             <div className="admin-stat-card__accent admin-stat-card__accent--blue" />
           </div>
@@ -286,17 +300,39 @@ export default function Admin() {
             <div className="admin-stat-card__accent admin-stat-card__accent--green" />
           </div>
           <div className="admin-stat-card">
-            <div className="admin-stat-card__value">{mergedData.length - totalApproved}</div>
+            <div className="admin-stat-card__value">{domainFiltered.length - totalApproved}</div>
             <div className="admin-stat-card__label">Pending</div>
             <div className="admin-stat-card__accent admin-stat-card__accent--amber" />
           </div>
           <div className="admin-stat-card">
             <div className="admin-stat-card__value">
-              {mergedData.length > 0 ? Math.round((totalApproved / mergedData.length) * 100) : 0}%
+              {domainFiltered.length > 0 ? Math.round((totalApproved / domainFiltered.length) * 100) : 0}%
             </div>
             <div className="admin-stat-card__label">Approval Rate</div>
             <div className="admin-stat-card__accent admin-stat-card__accent--purple" />
           </div>
+        </div>
+
+        {/* Domain filter dropdown */}
+        <div className="admin-search-wrap" style={{ marginBottom: '0.5rem' }}>
+          <svg className="admin-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <select
+            className="admin-search"
+            style={{ cursor: 'pointer' }}
+            value={domainFilter}
+            onChange={(e) => setDomainFilter(e.target.value)}
+          >
+            <option value="__all__">All Domains ({mergedData.length})</option>
+            {allDomains.map((d) => (
+              <option key={d} value={d}>
+                {d} ({mergedData.filter((r) => (r.source_domain || 'unknown') === d).length})
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Search bar */}
@@ -341,6 +377,9 @@ export default function Admin() {
                 </th>
                 <th className="admin-th admin-th--sortable" onClick={() => handleSort('wallet_type')}>
                   Wallet <span className="admin-sort-icon">{sortIcon('wallet_type')}</span>
+                </th>
+                <th className="admin-th admin-th--sortable" onClick={() => handleSort('source_domain')}>
+                  Domain <span className="admin-sort-icon">{sortIcon('source_domain')}</span>
                 </th>
                 <th className="admin-th admin-th--sortable" onClick={() => handleSort('approved')}>
                   Approval <span className="admin-sort-icon">{sortIcon('approved')}</span>
@@ -393,6 +432,11 @@ export default function Admin() {
                     <td className="admin-td admin-td--wallet">
                       {row.wallet_type || '—'}
                     </td>
+                    <td className="admin-td" title={row.source_domain || 'unknown'}>
+                      <span style={{ fontSize: '0.78rem', opacity: 0.85, fontFamily: 'monospace' }}>
+                        {row.source_domain || 'unknown'}
+                      </span>
+                    </td>
                     <td className="admin-td">
                       {row.approved ? (
                         <span className="admin-status admin-status--approved">
@@ -431,7 +475,8 @@ export default function Admin() {
         {/* Footer */}
         <div className="admin-footer">
           <span>
-            Showing {sorted.length} of {mergedData.length} connections
+            Showing {sorted.length} of {domainFiltered.length} connections
+            {domainFilter !== '__all__' && ` · domain: ${domainFilter}`}
           </span>
           <span className="admin-footer__auto">
             Auto-refreshes every 30s

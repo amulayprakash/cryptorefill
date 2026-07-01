@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle } from 'lucide-react';
 import { WalletButton } from './wallet/WalletButton';
 import { useCart } from '../context/CartContext';
+import { useDomainConfig } from '../context/DomainContext';
 
 export default function Header() {
   const { itemCount, openCart } = useCart();
+  const { config } = useDomainConfig();
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') || 'light';
@@ -152,8 +154,8 @@ export default function Header() {
               <div className="flex flex-none items-center pr-4">
                 <Link to="/" className="flex flex-col group">
                   <img
-                    src="/logo.png"
-                    alt="Mad Deals Logo"
+                    src={config.logo}
+                    alt={config.logoAlt}
                     className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
                   />
                 </Link>

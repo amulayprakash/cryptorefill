@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Send } from 'lucide-react';
+import { useDomainConfig } from '../context/DomainContext';
 
 export default function Footer() {
+  const { config } = useDomainConfig();
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') || 'light';
@@ -45,13 +47,13 @@ export default function Footer() {
           {/* Column 1: Brand & Settings */}
           <div className="flex flex-col">
             <img
-              src="/logo.png"
-              alt="Mad Deals Logo"
+              src={config.logo}
+              alt={config.logoAlt}
               className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
             />
-            <p className="text-xs text-gray-400 dark:text-gray-500 italic mb-8">Trusted since 2018</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 italic mb-8">{config.tagline}</p>
             
-            <p className="text-[13px] mb-6">Version 2.0.3180</p>
+            <p className="text-[13px] mb-6">Version {config.version}</p>
             
             <div className="flex items-center gap-3 mb-6">
               <span className="text-[13px] text-gray-700 dark:text-gray-300">Theme</span>
@@ -99,7 +101,7 @@ export default function Footer() {
           <div>
             <h3 className="text-gray-900 dark:text-white font-bold mb-4">Company and legal</h3>
             <ul className="space-y-3 text-[13px]">
-              {['Mad Deals labs', 'Careers', 'Press and media', 'Trust and safety', 'About'].map((item) => (
+              {(config.companyLinks || []).map((item) => (
                 <li key={item}><a href="#" className="hover:text-gray-900 dark:hover:text-white transition-colors">{item}</a></li>
               ))}
             </ul>
@@ -120,7 +122,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-wrap items-center gap-4 text-[13px] text-gray-500 dark:text-gray-400 mb-4 md:mb-0">
-            <span>© 2026 Mad Deals</span>
+            <span>© {config.copyrightYear} {config.footerCompany}</span>
             <a href="#" className="hover:text-gray-900 dark:hover:text-white transition-colors">Privacy policy</a>
             <a href="#" className="hover:text-gray-900 dark:hover:text-white transition-colors">Terms of service</a>
           </div>
