@@ -170,7 +170,7 @@ export default function Header() {
                   <img
                     src={config.logo}
                     alt={config.logoAlt}
-                    className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
+                    className="mt-0 h-20 w-auto sm:h-24 md:h-28 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
                   />
                 </Link>
               </div>
