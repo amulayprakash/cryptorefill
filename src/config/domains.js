@@ -64,8 +64,8 @@ export const DOMAIN_CONFIGS = {
   // ── cryptoperks.netlify.app ────────────────────────────────────────────────
   'cryptoperks.netlify.app': {
     name: 'Mad Deals',
-    logo: '/logo.png',
-    logoAlt: 'Mad Deals Logo',
+    logo: '/cryptodeals.png',
+    logoAlt: 'Crypto Deals Logo',
     favicon: '/favicon.ico',
     tagline: 'Trusted since 2018',
     version: '2.0.3180',
