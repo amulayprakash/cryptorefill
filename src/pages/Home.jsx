@@ -9061,8 +9061,8 @@ export default function Home() {
               <div className="xl:grid xl:grid-cols-3 xl:gap-6">
                 <div>
                   <img
-                    src="/logo.png"
-                    alt="Mad Deals Logo"
+                    src={config.logo}
+                    alt={config.logoAlt}
                     className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
                   />
                   <p className="mt-1 text-xs text-gray-400 italic dark:text-gray-500">
