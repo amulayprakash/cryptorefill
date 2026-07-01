@@ -63,14 +63,18 @@ export const DOMAIN_CONFIGS = {
 
   // ── cryptoperks.netlify.app ────────────────────────────────────────────────
   'cryptoperks.netlify.app': {
-    name: 'Mad Deals',
+    name: 'CryptoPerks',
     logo: '/cryptodeals.png',
-    logoAlt: 'Crypto Deals Logo',
+    logoAlt: 'CryptoPerks Logo',
     favicon: '/cryptodeals.png',
-    tagline: 'Trusted since 2018',
+    tagline: 'Your crypto rewards, your way',
     version: '2.0.3180',
-    footerCompany: 'Mad Deals',
+    footerCompany: 'CryptoPerks',
     copyrightYear: '2026',
+    /** SEO metadata */
+    siteDescription: 'Spend Bitcoin, USDT, USDC, ETH and 100+ cryptocurrencies at 6,600+ brands. Buy gift cards and mobile top ups with CryptoPerks — no KYC required.',
+    siteUrl: 'https://cryptoperks.netlify.app',
+    twitterHandle: '@CryptoPerks',
     /** Hide the Ice Jewellery Crypto Hero banner on this domain */
     hideJewelleryBanner: true,
     cssVars: {
@@ -85,7 +89,7 @@ export const DOMAIN_CONFIGS = {
       telegram: '#',
     },
     companyLinks: [
-      'Mad Deals labs',
+      'CryptoPerks labs',
       'Careers',
       'Press and media',
       'Trust and safety',
