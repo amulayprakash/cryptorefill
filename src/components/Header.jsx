@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle } from 'lucide-react';
 import { WalletButton } from './wallet/WalletButton';
@@ -16,6 +16,19 @@ export default function Header() {
   });
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
+  const navRef = useRef(null);
+  const [navHeight, setNavHeight] = useState(92);
+
+  // Dynamically track sticky navbar height so the spacer always matches
+  useEffect(() => {
+    if (!navRef.current) return;
+    const observer = new ResizeObserver(() => {
+      if (navRef.current) setNavHeight(navRef.current.offsetHeight);
+    });
+    observer.observe(navRef.current);
+    setNavHeight(navRef.current.offsetHeight);
+    return () => observer.disconnect();
+  }, []);
 
   // Handle dynamic class setting for Dark Mode
   useEffect(() => {
@@ -50,6 +63,7 @@ export default function Header() {
       )}
 
       <div
+        ref={navRef}
         className="fixed z-20 w-screen bg-gray-50/90 pb-2 backdrop-blur-xs transition-transform duration-300 dark:bg-gray-900/90 translate-y-0"
         id="sticky-navbar"
       >
@@ -222,8 +236,8 @@ export default function Header() {
           )}
         </nav>
       </div>
-      {/* Spacer to push page content down below the sticky header */}
-      <div className="h-[92px]" />
+      {/* Spacer — height matches the actual sticky navbar so content never overlaps */}
+      <div style={{ height: navHeight }} />
     </div>
   );
 }
