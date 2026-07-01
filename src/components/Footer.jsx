@@ -49,7 +49,7 @@ export default function Footer() {
             <img
               src={config.logo}
               alt={config.logoAlt}
-              className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
+              className="mt-0 h-24 w-auto sm:h-28 md:h-36 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
             />
             <p className="text-xs text-gray-400 dark:text-gray-500 italic mb-8">{config.tagline}</p>
             
