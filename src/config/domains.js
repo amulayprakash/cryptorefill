@@ -66,7 +66,7 @@ export const DOMAIN_CONFIGS = {
     name: 'Mad Deals',
     logo: '/cryptodeals.png',
     logoAlt: 'Crypto Deals Logo',
-    favicon: '/favicon.ico',
+    favicon: '/cryptodeals.png',
     tagline: 'Trusted since 2018',
     version: '2.0.3180',
     footerCompany: 'Mad Deals',
