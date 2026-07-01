@@ -75,6 +75,7 @@ export const DOMAIN_CONFIGS = {
     siteDescription: 'Spend Bitcoin, USDT, USDC, ETH and 100+ cryptocurrencies at 6,600+ brands. Buy gift cards and mobile top ups with CryptoPerks — no KYC required.',
     siteUrl: 'https://cryptoperks.netlify.app',
     twitterHandle: '@CryptoPerks',
+    ogImage: 'https://cryptoperks.netlify.app/cryptodeals.png',
     /** Hide the Ice Jewellery Crypto Hero banner on this domain */
     hideJewelleryBanner: true,
     cssVars: {
