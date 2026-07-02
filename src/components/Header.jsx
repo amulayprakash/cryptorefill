@@ -134,7 +134,7 @@ export default function Header() {
         {/* Global Navbar */}
         <nav
           aria-label="Global"
-          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-2 h-24 sm:h-28 md:h-36"
+          className="mx-auto flex w-full max-w-7xl justify-between items-center px-4 py-2 h-14 sm:h-16 md:h-20"
         >
           {isMobileSearchOpen ? (
             /* Mobile Search Bar Mode */
@@ -170,7 +170,7 @@ export default function Header() {
                   <img
                     src={config.logo}
                     alt={config.logoAlt}
-                    className="mt-0 h-24 w-auto sm:h-28 md:h-36 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
+                    className="mt-0 h-14 w-auto sm:h-16 md:h-20 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-sm hover:drop-shadow-md"
                   />
                 </Link>
               </div>
