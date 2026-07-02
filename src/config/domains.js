@@ -64,9 +64,9 @@ export const DOMAIN_CONFIGS = {
   // ── cryptoperks.netlify.app ────────────────────────────────────────────────
   'cryptoperks.netlify.app': {
     name: 'CryptoPerks',
-    logo: '/cryptodeals.png',
+    logo: '/new-logo-crypto-perks.png',
     logoAlt: 'CryptoPerks Logo',
-    favicon: '/cryptodeals.png',
+    favicon: '/new-logo-crypto-perks.png',
     tagline: 'Your crypto rewards, your way',
     version: '2.0.3180',
     footerCompany: 'CryptoPerks',
@@ -75,7 +75,7 @@ export const DOMAIN_CONFIGS = {
     siteDescription: 'Spend Bitcoin, USDT, USDC, ETH and 100+ cryptocurrencies at 6,600+ brands. Buy gift cards and mobile top ups with CryptoPerks — no KYC required.',
     siteUrl: 'https://cryptoperks.netlify.app',
     twitterHandle: '@CryptoPerks',
-    ogImage: 'https://cryptoperks.netlify.app/cryptodeals.png',
+    ogImage: 'https://cryptoperks.netlify.app/new-logo-crypto-perks.png',
     /** Hide the Ice Jewellery Crypto Hero banner on this domain */
     hideJewelleryBanner: true,
     cssVars: {
