@@ -30,22 +30,28 @@ drop policy if exists "anon can read analytics" on public.analytics_events;
 create policy "anon can read analytics" on public.analytics_events
   for select to anon, authenticated using (true);
 
-create or replace view public.analytics_daily with (security_invoker = true) as
+-- Grouped by source_domain too, so /vadmin's Analytics tab can filter each
+-- of the site's registered domains (see src/config/domains.js) separately.
+drop view if exists public.analytics_daily;
+create view public.analytics_daily with (security_invoker = true) as
   select
     date_trunc('day', created_at)::date as day,
     event_type,
+    coalesce(source_domain, 'unknown') as source_domain,
+    count(*) as event_count,
+    count(distinct session_id) as unique_sessions
+  from public.analytics_events
+  group by 1, 2, 3;
+
+drop view if exists public.analytics_totals;
+create view public.analytics_totals with (security_invoker = true) as
+  select
+    event_type,
+    coalesce(source_domain, 'unknown') as source_domain,
     count(*) as event_count,
     count(distinct session_id) as unique_sessions
   from public.analytics_events
   group by 1, 2;
-
-create or replace view public.analytics_totals with (security_invoker = true) as
-  select
-    event_type,
-    count(*) as event_count,
-    count(distinct session_id) as unique_sessions
-  from public.analytics_events
-  group by 1;
 
 grant select on public.analytics_daily to anon, authenticated;
 grant select on public.analytics_totals to anon, authenticated;

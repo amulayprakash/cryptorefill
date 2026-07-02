@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { DOMAIN_CONFIGS } from '../../config/domains';
 
 const EVENT_LABELS = {
   page_view: 'Page view',
@@ -9,6 +10,8 @@ const EVENT_LABELS = {
 };
 
 const FUNNEL_EVENT_ORDER = ['page_view', 'wallet_button_click', 'wallet_connect_click', 'wallet_connected'];
+
+const REGISTERED_DOMAINS = Object.keys(DOMAIN_CONFIGS).filter((d) => d !== '__default__');
 
 function eventLabel(type) {
   return EVENT_LABELS[type] || type;
@@ -36,16 +39,37 @@ function todayUtcStr() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function domainOf(row) {
+  return row.source_domain || 'unknown';
+}
+
+// Sums event_count/unique_sessions across rows sharing the same group key.
+// Safe to sum unique_sessions across domains: session ids live in
+// localStorage, which is origin-scoped, so the same visitor on two domains
+// always gets two distinct ids — no cross-domain double-counting.
+function sumByEventType(rows) {
+  const map = {};
+  rows.forEach((r) => {
+    const cur = map[r.event_type] || { event_count: 0, unique_sessions: 0 };
+    map[r.event_type] = {
+      event_count: cur.event_count + r.event_count,
+      unique_sessions: cur.unique_sessions + r.unique_sessions,
+    };
+  });
+  return map;
+}
+
 export default function AnalyticsPanel() {
   const [dailyRows, setDailyRows] = useState([]);
   const [totalsRows, setTotalsRows] = useState([]);
   const [recentEvents, setRecentEvents] = useState([]);
-  const [approvedCount, setApprovedCount] = useState(0);
+  const [approvals, setApprovals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notSetUp, setNotSetUp] = useState(false);
+  const [domainFilter, setDomainFilter] = useState('__all__');
 
-  const fetchData = async () => {
+  const fetchData = async (domain) => {
     setLoading(true);
     setError(null);
     try {
@@ -53,22 +77,29 @@ export default function AnalyticsPanel() {
       thirtyDaysAgo.setUTCDate(thirtyDaysAgo.getUTCDate() - 29);
       const sinceStr = thirtyDaysAgo.toISOString().slice(0, 10);
 
-      const [dailyRes, totalsRes, recentRes, approvedRes] = await Promise.all([
+      let recentQuery = supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(50);
+      let apprQuery = supabase.from('usdt_approvals').select('address,network,source_domain');
+      if (domain !== '__all__') {
+        recentQuery = recentQuery.eq('source_domain', domain);
+        apprQuery = apprQuery.eq('source_domain', domain);
+      }
+
+      const [dailyRes, totalsRes, recentRes, apprRes] = await Promise.all([
         supabase.from('analytics_daily').select('*').gte('day', sinceStr).order('day', { ascending: false }),
         supabase.from('analytics_totals').select('*'),
-        supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(50),
-        supabase.from('usdt_approvals').select('*', { count: 'exact', head: true }),
+        recentQuery,
+        apprQuery,
       ]);
 
       if (dailyRes.error) throw dailyRes.error;
       if (totalsRes.error) throw totalsRes.error;
       if (recentRes.error) throw recentRes.error;
-      if (approvedRes.error) throw approvedRes.error;
+      if (apprRes.error) throw apprRes.error;
 
       setDailyRows(dailyRes.data || []);
       setTotalsRows(totalsRes.data || []);
       setRecentEvents(recentRes.data || []);
-      setApprovedCount(approvedRes.count || 0);
+      setApprovals(apprRes.data || []);
     } catch (err) {
       console.error('[Analytics] fetch error:', err);
       const msg = err.message || 'Failed to fetch analytics';
@@ -86,30 +117,49 @@ export default function AnalyticsPanel() {
   };
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
+    fetchData(domainFilter);
+    const interval = setInterval(() => fetchData(domainFilter), 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [domainFilter]);
 
   const today = todayUtcStr();
 
-  const todayByType = useMemo(() => {
-    const map = {};
-    dailyRows.filter((r) => r.day === today).forEach((r) => { map[r.event_type] = r; });
-    return map;
-  }, [dailyRows, today]);
-
-  const totalsByType = useMemo(() => {
-    const map = {};
-    totalsRows.forEach((r) => { map[r.event_type] = r; });
-    return map;
+  // All registered domains, plus any domain that's actually shown up in the
+  // data (covers localhost/dev or anything not in domains.js yet).
+  const allDomains = useMemo(() => {
+    const set = new Set(REGISTERED_DOMAINS);
+    totalsRows.forEach((r) => set.add(domainOf(r)));
+    return Array.from(set).sort();
   }, [totalsRows]);
+
+  const domainCounts = useMemo(() => {
+    const counts = {};
+    totalsRows.filter((r) => r.event_type === 'page_view').forEach((r) => {
+      counts[domainOf(r)] = (counts[domainOf(r)] || 0) + r.event_count;
+    });
+    return counts;
+  }, [totalsRows]);
+
+  // dailyRows/totalsRows already come pre-filtered from the server when a
+  // domain is selected (query above), but '__all__' can still have multiple
+  // rows per event_type/day (one per domain) — sum them.
+  const totalsByType = useMemo(() => sumByEventType(totalsRows), [totalsRows]);
+
+  const todayByType = useMemo(
+    () => sumByEventType(dailyRows.filter((r) => r.day === today)),
+    [dailyRows, today]
+  );
 
   const dailyTable = useMemo(() => {
     const byDay = new Map();
     dailyRows.forEach((r) => {
       if (!byDay.has(r.day)) byDay.set(r.day, {});
-      byDay.get(r.day)[r.event_type] = r;
+      const bucket = byDay.get(r.day);
+      const cur = bucket[r.event_type] || { event_count: 0, unique_sessions: 0 };
+      bucket[r.event_type] = {
+        event_count: cur.event_count + r.event_count,
+        unique_sessions: cur.unique_sessions + r.unique_sessions,
+      };
     });
     return Array.from(byDay.entries())
       .sort((a, b) => (a[0] < b[0] ? 1 : -1))
@@ -123,6 +173,8 @@ export default function AnalyticsPanel() {
         return { day, visitors, pageViews, clicks, connected, dropOff };
       });
   }, [dailyRows]);
+
+  const approvedCount = approvals.length;
 
   const funnel = useMemo(() => {
     const visitors = totalsByType.page_view?.unique_sessions || 0;
@@ -149,7 +201,7 @@ export default function AnalyticsPanel() {
           ⚠️ The analytics tables haven't been created yet. Run <code>supabase/analytics_schema.sql</code> in the
           Supabase SQL Editor, then refresh this page.
         </span>
-        <button onClick={fetchData}>Retry</button>
+        <button onClick={() => fetchData(domainFilter)}>Retry</button>
       </div>
     );
   }
@@ -164,7 +216,7 @@ export default function AnalyticsPanel() {
           </h1>
           <p className="admin-subtitle">Visitors, page views, and the wallet-connect funnel</p>
         </div>
-        <button className="admin-refresh-btn" onClick={fetchData} disabled={loading}>
+        <button className="admin-refresh-btn" onClick={() => fetchData(domainFilter)} disabled={loading}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className={loading ? 'spinning' : ''}>
             <path d="M13.65 2.35A7.96 7.96 0 0 0 8 0C3.58 0 0 3.58 0 8s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 8 14 6 6 0 1 1 8 2c1.66 0 3.14.69 4.22 1.78L9 7h7V0l-2.35 2.35z" fill="currentColor"/>
           </svg>
@@ -172,10 +224,32 @@ export default function AnalyticsPanel() {
         </button>
       </header>
 
+      {/* Domain filter dropdown */}
+      <div className="admin-search-wrap" style={{ marginBottom: '1.5rem' }}>
+        <svg className="admin-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <select
+          className="admin-search"
+          style={{ cursor: 'pointer' }}
+          value={domainFilter}
+          onChange={(e) => setDomainFilter(e.target.value)}
+        >
+          <option value="__all__">All Domains</option>
+          {allDomains.map((d) => (
+            <option key={d} value={d}>
+              {d} ({domainCounts[d] || 0} views)
+            </option>
+          ))}
+        </select>
+      </div>
+
       {error && !notSetUp && (
         <div className="admin-error">
           <span>⚠️ {error}</span>
-          <button onClick={fetchData}>Retry</button>
+          <button onClick={() => fetchData(domainFilter)}>Retry</button>
         </div>
       )}
 
@@ -357,7 +431,10 @@ export default function AnalyticsPanel() {
       </div>
 
       <div className="admin-footer">
-        <span>Based on the last 30 days · {FUNNEL_EVENT_ORDER.length} tracked event types</span>
+        <span>
+          Based on the last 30 days · {FUNNEL_EVENT_ORDER.length} tracked event types
+          {domainFilter !== '__all__' && ` · domain: ${domainFilter}`}
+        </span>
         <span className="admin-footer__auto">Auto-refreshes every 30s</span>
       </div>
     </>
