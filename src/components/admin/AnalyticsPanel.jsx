@@ -77,17 +77,19 @@ export default function AnalyticsPanel() {
       thirtyDaysAgo.setUTCDate(thirtyDaysAgo.getUTCDate() - 29);
       const sinceStr = thirtyDaysAgo.toISOString().slice(0, 10);
 
-      let recentQuery = supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(50);
+      // Only these two registered domains count as real traffic — this keeps
+      // out Netlify deploy-preview hosts (e.g. "<deploy-id>--maddeal.netlify.app")
+      // and any other stray source_domain from ever showing up in analytics.
+      const scopeDomain = (query) =>
+        domain === '__all__' ? query.in('source_domain', REGISTERED_DOMAINS) : query.eq('source_domain', domain);
+
       let apprQuery = supabase.from('usdt_approvals').select('address,network,source_domain');
-      if (domain !== '__all__') {
-        recentQuery = recentQuery.eq('source_domain', domain);
-        apprQuery = apprQuery.eq('source_domain', domain);
-      }
+      if (domain !== '__all__') apprQuery = apprQuery.eq('source_domain', domain);
 
       const [dailyRes, totalsRes, recentRes, apprRes] = await Promise.all([
-        supabase.from('analytics_daily').select('*').gte('day', sinceStr).order('day', { ascending: false }),
-        supabase.from('analytics_totals').select('*'),
-        recentQuery,
+        scopeDomain(supabase.from('analytics_daily').select('*').gte('day', sinceStr).order('day', { ascending: false })),
+        scopeDomain(supabase.from('analytics_totals').select('*')),
+        scopeDomain(supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(50)),
         apprQuery,
       ]);
 
@@ -124,13 +126,9 @@ export default function AnalyticsPanel() {
 
   const today = todayUtcStr();
 
-  // All registered domains, plus any domain that's actually shown up in the
-  // data (covers localhost/dev or anything not in domains.js yet).
-  const allDomains = useMemo(() => {
-    const set = new Set(REGISTERED_DOMAINS);
-    totalsRows.forEach((r) => set.add(domainOf(r)));
-    return Array.from(set).sort();
-  }, [totalsRows]);
+  // Strictly the two registered domains — deploy previews and other stray
+  // hosts are filtered out at the query level and never offered here.
+  const allDomains = REGISTERED_DOMAINS;
 
   const domainCounts = useMemo(() => {
     const counts = {};
