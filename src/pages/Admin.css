@@ -45,6 +45,49 @@
   margin: 0 auto;
 }
 
+/* ─── Tabs ──────────────────────────────────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 4px 12px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.admin-tab:hover {
+  color: #cbd5e1;
+}
+.admin-tab--active {
+  color: #a5b4fc;
+  border-bottom-color: #6366f1;
+}
+
+/* ─── Section titles ────────────────────────────────────────────────────── */
+.admin-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #64748b;
+  margin: 28px 0 12px;
+}
+.admin-section-title:first-of-type {
+  margin-top: 0;
+}
+
 /* ─── Header ────────────────────────────────────────────────────────────── */
 .admin-header {
   display: flex;
@@ -541,6 +584,66 @@
   border-radius: 50%;
   background: #22c55e;
   animation: pulse-green 2s ease-in-out infinite;
+}
+
+/* ─── Funnel ────────────────────────────────────────────────────────────── */
+.admin-funnel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+}
+
+.admin-funnel-step {
+  margin-bottom: 16px;
+}
+.admin-funnel-step:last-of-type {
+  margin-bottom: 0;
+}
+
+.admin-funnel-step__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.admin-funnel-step__value {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.admin-funnel-step__pct {
+  font-weight: 500;
+  color: #64748b;
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-funnel-bar-track {
+  height: 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.admin-funnel-bar {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  transition: width 0.4s ease;
+}
+
+.admin-funnel-dropoff {
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  color: #fbbf24;
 }
 
 /* ─── Responsive ────────────────────────────────────────────────────────── */

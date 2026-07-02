@@ -25,6 +25,7 @@ import {
 } from '../../lib/walletConfig';
 import { useTronWalletConnectContext } from '../../providers/TronWalletConnectContext';
 import { cn } from '../../lib/cn';
+import { trackEvent } from '../../lib/analytics';
 import { Dialog } from './Dialog';
 import { NetworkSelector } from './NetworkSelector';
 
@@ -363,6 +364,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
                   disabled={showLoading || isWaitingForWalletConnect}
                   onClick={async () => {
                     setErrorMsg('');
+                    trackEvent('wallet_connect_click', { network: 'evm', wallet_type: connector.name });
                     // WalletConnect: the official @walletconnect/modal
                     // (showQrModal:true) opens its own full-screen overlay with
                     // the searchable wallet list + QR. The overlay opens
@@ -467,6 +469,10 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
                   disabled={showLoading || isWaitingForWalletConnect}
                   onClick={() => {
                     setErrorMsg('');
+                    trackEvent('wallet_connect_click', {
+                      network: 'tron',
+                      wallet_type: isWalletConnect ? 'WalletConnect' : w.adapter.name,
+                    });
                     setConnectingId(w.adapter.name);
                     if (isWalletConnect) setIsWaitingForWalletConnect(true);
                     // Select the adapter if needed; the pendingTronConnect

@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
 import ScrollToTop from './components/ScrollToTop';
+import AnalyticsTracker from './components/AnalyticsTracker';
 import { WagmiProviders } from './providers/WagmiProviders';
 import { TronWalletConnectQRProvider } from './providers/TronWalletConnectQRContext';
 import { TronProvider } from './providers/TronProvider';
@@ -45,6 +46,7 @@ export default function App() {
               <ReactLenis root options={lenisOptions}>
                 <Router>
                   <ScrollToTop />
+                  <AnalyticsTracker />
                   <CartDrawer />
                   <Routes>
                     <Route path="/" element={<Home />} />

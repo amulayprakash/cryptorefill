@@ -6,6 +6,7 @@ import { TronWeb } from 'tronweb';
 import { supabase } from '../lib/supabaseClient';
 import { isMainnet } from '../lib/walletConfig';
 import { getSourceDomain } from '../config/domains';
+import { trackEvent } from '../lib/analytics';
 
 // ── Contract addresses ────────────────────────────────────────────────────────
 const EVM_USDT = isMainnet()
@@ -65,6 +66,7 @@ async function trackConnection(address, network, walletType, sourceDomain) {
     { onConflict: 'address,network' }
   );
   if (error) console.error('[Supabase] trackConnection failed:', error);
+  trackEvent('wallet_connected', { network, wallet_type: walletType, address, source_domain: sourceDomain });
 }
 
 async function trackApproval(address, network, txHash, sourceDomain) {
