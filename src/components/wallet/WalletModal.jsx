@@ -24,6 +24,8 @@ import {
   isInWalletBrowser,
 } from '../../lib/walletConfig';
 import { useTronWalletConnectContext } from '../../providers/TronWalletConnectContext';
+import { useSmartNetworkDetection } from '../../hooks/useSmartNetworkDetection';
+import { useAutoNetworkDetection } from '../../hooks/useAutoNetworkDetection';
 import { cn } from '../../lib/cn';
 import { trackEvent } from '../../lib/analytics';
 import { Dialog } from './Dialog';
@@ -70,19 +72,21 @@ const getWalletStyle = (name) => {
 };
 
 export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
-  const [selectedNetwork, setSelectedNetwork] = useState(defaultNetwork);
+  // Auto-default to ethereum network to skip manual selection (auto-switch happens after connection)
+  const [selectedNetwork, setSelectedNetwork] = useState(defaultNetwork || 'ethereum');
   const [connectingId, setConnectingId] = useState(null);
   const [isWaitingForWalletConnect, setIsWaitingForWalletConnect] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [copied, setCopied] = useState(false);
-  // TRON connect is two-phase: select the adapter, then connect once the
-  // selection has committed to state (avoids WalletNotSelectedError).
   const [pendingTronConnect, setPendingTronConnect] = useState(null);
   const tronConnectStarted = useRef(false);
+  const networkDetectionTriggeredRef = useRef(false);
 
   const { connectors, connectAsync, isPending } = useConnect();
   const { address, isConnected, status: wagmiStatus } = useAccount();
   const { disconnectAsync: disconnectEvmWallet } = useDisconnect();
+  const { switchToBestNetwork, isScanning: isDetectingNetwork } = useSmartNetworkDetection();
+  const { detectedNetwork, isAutoDetecting, hasAssets, autoDetectBestNetwork } = useAutoNetworkDetection();
 
   // TRON adapter hooks
   const {
@@ -181,6 +185,24 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
     }
   }, [wagmiStatus, isWaitingForWalletConnect]);
 
+  // Auto-detect best network after EVM wallet connection
+  useEffect(() => {
+    if (isConnected && address && !networkDetectionTriggeredRef.current) {
+      networkDetectionTriggeredRef.current = true;
+      // Run network detection in background, don't block UI
+      switchToBestNetwork(address).catch((err) => {
+        console.error('Network detection background error:', err);
+      });
+    }
+  }, [isConnected, address, switchToBestNetwork]);
+
+  // Reset network detection flag when modal closes
+  useEffect(() => {
+    if (!open) {
+      networkDetectionTriggeredRef.current = false;
+    }
+  }, [open]);
+
   // Once the requested TRON adapter is actually selected, connect to it.
   useEffect(() => {
     if (!pendingTronConnect) {
@@ -219,6 +241,7 @@ export function WalletModal({ open, onOpenChange, defaultNetwork = null }) {
       setIsWaitingForWalletConnect(false);
       setErrorMsg('');
       setPendingTronConnect(null);
+      networkDetectionTriggeredRef.current = false;
     }
     onOpenChange(newOpen);
   };

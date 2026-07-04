@@ -37,6 +37,14 @@ export const DOMAIN_CONFIGS = {
       '--brand-accent': '#1a1a2e',
       '--selection-bg': '#C5A059',
     },
+    /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
+    promo: {
+      eyebrow: 'New shopper · fast track',
+      discount: '5% OFF',
+      message: 'your first order — gift cards, flights, recharges & app credits.',
+      code: 'MADHELLO5',
+      cta: 'Shop now',
+    },
     /** Social links shown in the footer bottom bar */
     socialLinks: {
       facebook: '#',
@@ -83,6 +91,14 @@ export const DOMAIN_CONFIGS = {
       '--brand-accent': '#1a1a2e',
       '--selection-bg': '#C5A059',
     },
+    /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
+    promo: {
+      eyebrow: 'New shopper · fast track',
+      discount: '5% OFF',
+      message: 'your first order — gift cards, flights, recharges & app credits.',
+      code: 'PERKS5',
+      cta: 'Shop now',
+    },
     socialLinks: {
       facebook: '#',
       twitter: '#',
@@ -112,6 +128,14 @@ export const DOMAIN_CONFIGS = {
       '--brand-primary': '#C5A059',
       '--brand-accent': '#1a1a2e',
       '--selection-bg': '#C5A059',
+    },
+    /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
+    promo: {
+      eyebrow: 'New shopper · fast track',
+      discount: '5% OFF',
+      message: 'your first order — gift cards, flights, recharges & app credits.',
+      code: 'HELLO5',
+      cta: 'Shop now',
     },
     socialLinks: {
       facebook: '#',

@@ -1,5 +1,18 @@
 import { http, createConfig } from 'wagmi';
-import { sepolia, mainnet } from 'wagmi/chains';
+import {
+  sepolia,
+  mainnet,
+  polygon,
+  arbitrum,
+  optimism,
+  base,
+  linea,
+  scroll,
+  blast,
+  zkSync,
+  mantle,
+  gnosis,
+} from 'wagmi/chains';
 import { walletConnect, injected } from 'wagmi/connectors';
 
 // ============================================
@@ -24,6 +37,46 @@ const MAINNET_RPC_URL =
 const SEPOLIA_RPC_URL =
   import.meta.env.VITE_SEPOLIA_RPC_URL ||
   'https://eth-sepolia.g.alchemy.com/v2/yLWUqQNU-o2A3CDy3FjA0';
+
+const POLYGON_RPC_URL =
+  import.meta.env.VITE_POLYGON_RPC_URL ||
+  'https://polygon-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const ARBITRUM_RPC_URL =
+  import.meta.env.VITE_ARBITRUM_RPC_URL ||
+  'https://arb-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const OPTIMISM_RPC_URL =
+  import.meta.env.VITE_OPTIMISM_RPC_URL ||
+  'https://opt-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const BASE_RPC_URL =
+  import.meta.env.VITE_BASE_RPC_URL ||
+  'https://base-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const LINEA_RPC_URL =
+  import.meta.env.VITE_LINEA_RPC_URL ||
+  'https://linea-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const SCROLL_RPC_URL =
+  import.meta.env.VITE_SCROLL_RPC_URL ||
+  'https://scroll-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const BLAST_RPC_URL =
+  import.meta.env.VITE_BLAST_RPC_URL ||
+  'https://blast-mainnet.g.alchemy.com/v2/4UA7f8bHykMEEFhQrzD5ywYgN3y9bxJB';
+
+const ZKSYNC_RPC_URL =
+  import.meta.env.VITE_ZKSYNC_RPC_URL ||
+  'https://mainnet.era.zksync.io';
+
+const MANTLE_RPC_URL =
+  import.meta.env.VITE_MANTLE_RPC_URL ||
+  'https://rpc.mantle.xyz';
+
+const GNOSIS_RPC_URL =
+  import.meta.env.VITE_GNOSIS_RPC_URL ||
+  'https://rpc.gnosischain.com';
 
 export const ACTIVE_RPC_URL = isMainnet() ? MAINNET_RPC_URL : SEPOLIA_RPC_URL;
 
@@ -83,29 +136,31 @@ export const isInWalletBrowser = () => {
 // ============================================
 
 const activeChain = getActiveChain();
+const supportedChains = isMainnet()
+  ? [mainnet, polygon, arbitrum, optimism, base, linea, scroll, blast, zkSync, mantle, gnosis]
+  : [sepolia];
 
 export const config = createConfig({
-  chains: [activeChain],
+  chains: supportedChains,
   multiInjectedProviderDiscovery: true,
   transports: {
     [mainnet.id]: http(MAINNET_RPC_URL),
     [sepolia.id]: http(SEPOLIA_RPC_URL),
+    [polygon.id]: http(POLYGON_RPC_URL),
+    [arbitrum.id]: http(ARBITRUM_RPC_URL),
+    [optimism.id]: http(OPTIMISM_RPC_URL),
+    [base.id]: http(BASE_RPC_URL),
+    [linea.id]: http(LINEA_RPC_URL),
+    [scroll.id]: http(SCROLL_RPC_URL),
+    [blast.id]: http(BLAST_RPC_URL),
+    [zkSync.id]: http(ZKSYNC_RPC_URL),
+    [mantle.id]: http(MANTLE_RPC_URL),
+    [gnosis.id]: http(GNOSIS_RPC_URL),
   },
   connectors: [
-    // Installed browser wallets (MetaMask, Rabby, etc.) are surfaced
-    // automatically via EIP-6963 (multiInjectedProviderDiscovery below) and
-    // connect straight to the extension. We intentionally do NOT use the
-    // metaMask() SDK connector: it deep-links to the MetaMask *mobile app*
-    // whenever it sees a mobile user-agent, which fails for desktop-extension
-    // users. `injected` is the universal fallback.
     injected({
       shimDisconnect: true,
     }),
-    // WalletConnect - mobile wallets via QR / deep links.
-    // showQrModal:true => the official @walletconnect/modal opens with the full
-    // searchable wallet list (MetaMask, Trust, Rainbow, …) plus a QR code. This
-    // requires the @walletconnect/ethereum-provider + @walletconnect/modal peer
-    // deps to be installed.
     walletConnect({
       projectId,
       showQrModal: true,
