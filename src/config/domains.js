@@ -40,7 +40,7 @@ export const DOMAIN_CONFIGS = {
     /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
     promo: {
       eyebrow: 'New shopper · fast track',
-      discount: '5% OFF',
+      discount: '25% OFF',
       message: 'your first order — gift cards, flights, recharges & app credits.',
       code: 'MADHELLO5',
       cta: 'Shop now',
@@ -94,7 +94,7 @@ export const DOMAIN_CONFIGS = {
     /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
     promo: {
       eyebrow: 'New shopper · fast track',
-      discount: '5% OFF',
+      discount: '25% OFF',
       message: 'your first order — gift cards, flights, recharges & app credits.',
       code: 'PERKS5',
       cta: 'Shop now',
@@ -132,7 +132,7 @@ export const DOMAIN_CONFIGS = {
     /** Welcome-offer copy (see components/WelcomeOfferModal.jsx) */
     promo: {
       eyebrow: 'New shopper · fast track',
-      discount: '5% OFF',
+      discount: '25% OFF',
       message: 'your first order — gift cards, flights, recharges & app credits.',
       code: 'HELLO5',
       cta: 'Shop now',
