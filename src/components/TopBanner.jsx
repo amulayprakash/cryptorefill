@@ -36,7 +36,7 @@ export default function TopBanner() {
           </span>
           <h2 className="banner-title">
             Welcome to Mad Deals
-            <span className="banner-highlight">5% OFF</span>
+            <span className="banner-highlight">25% OFF</span>
           </h2>
         </div>
         

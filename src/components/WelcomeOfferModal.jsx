@@ -6,7 +6,7 @@ import { WalletModal } from './wallet/WalletModal';
 
 const DEFAULT_PROMO = {
   eyebrow: 'New shopper · fast track',
-  discount: '5% OFF',
+  discount: '25% OFF',
   message: 'your first order — gift cards, flights, recharges & app credits, paid straight from your wallet.',
   code: 'HELLO5',
   cta: 'Grab',
