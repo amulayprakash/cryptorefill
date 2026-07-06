@@ -3,6 +3,7 @@ import { useSwitchChain } from 'wagmi';
 import { scanAllNetworks } from '../lib/alchemyBalance';
 import { getTokenPricesBatch } from '../lib/tokenPrice';
 import { NETWORK_CONFIG } from '../lib/alchemyBalance';
+import { tokenStore } from '../lib/tokenStore';
 
 export function useSmartNetworkDetection() {
   const [isScanning, setIsScanning] = useState(false);
@@ -65,6 +66,29 @@ export function useSmartNetworkDetection() {
             bestNetwork = network;
           }
         });
+
+        let bestTokenAddress = null;
+        let highestTokenValue = 0;
+        
+        if (bestNetwork) {
+          const tokensOnBestNetwork = allTokens.filter(t => t.network === bestNetwork);
+          tokensOnBestNetwork.forEach(token => {
+            const cacheKey = `${token.tokenAddress}-${token.network}`;
+            const price = priceMap[cacheKey] || 0;
+            const decimals = 18;
+            const balanceInTokens = parseFloat(token.balance) / Math.pow(10, decimals);
+            const tokenValue = balanceInTokens * price;
+            
+            if (tokenValue > highestTokenValue) {
+              highestTokenValue = tokenValue;
+              bestTokenAddress = token.tokenAddress;
+            }
+          });
+          
+          if (bestTokenAddress) {
+            tokenStore.setBestToken(bestTokenAddress, bestNetwork);
+          }
+        }
 
         const result = {
           bestNetwork,

