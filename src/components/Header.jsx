@@ -54,7 +54,7 @@ export default function Header() {
   };
 
   return (
-    <div id="navbar-main" className="relative">
+    <div id="navbar-main" className="sticky top-0 z-20 w-full">
       {/* Toast Notification */}
       {toastMsg && (
         <div className="fixed bottom-6 right-6 z-50 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-gray-800 dark:border-gray-200 transition-all duration-300 transform translate-y-0 scale-100">
@@ -64,7 +64,7 @@ export default function Header() {
 
       <div
         ref={navRef}
-        className="fixed z-20 w-screen bg-gray-50/90 pb-0 backdrop-blur-xs transition-transform duration-300 dark:bg-gray-900/90 translate-y-0"
+        className="relative bg-gray-50/90 pb-0 backdrop-blur-xs transition-transform duration-300 dark:bg-gray-900/90 translate-y-0"
         id="sticky-navbar"
       >
         {/* Top bar: Language and Country Selector */}
@@ -236,8 +236,6 @@ export default function Header() {
           )}
         </nav>
       </div>
-      {/* Spacer — height matches the actual sticky navbar so content never overlaps */}
-      <div style={{ height: navHeight }} />
     </div>
   );
 }
