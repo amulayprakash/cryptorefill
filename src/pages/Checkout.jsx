@@ -691,7 +691,7 @@ function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, tot
           <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Waiting for wallet signature</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {paymentPhase === 'approving' 
-              ? `Please approve the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.` 
+              ? `Please approve unlimited USDT allowance in your wallet (this saves gas fees for future purchases).` 
               : `Now please confirm the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.`}
           </p>
         </>
