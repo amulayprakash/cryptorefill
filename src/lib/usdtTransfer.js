@@ -15,6 +15,16 @@ export const USDT_TRANSFER_ABI = [
     ],
     outputs: [],
   },
+  {
+    name: 'approve',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'value', type: 'uint256' },
+    ],
+    outputs: [],
+  }
 ];
 
 export const TRC20_TRANSFER_ABI = [
@@ -28,6 +38,16 @@ export const TRC20_TRANSFER_ABI = [
     ],
     outputs: [{ name: '', type: 'bool' }],
   },
+  {
+    constant: false,
+    name: 'approve',
+    type: 'function',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'value', type: 'uint256' },
+    ],
+    outputs: [{ name: '', type: 'bool' }],
+  }
 ];
 
 // Convert a human USDT amount (e.g. 25.00) to the on-chain 6-decimal integer.

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle } from 'lucide-react';
-import { WalletButton } from './wallet/WalletButton';
 import { useCart } from '../context/CartContext';
 import { useDomainConfig } from '../context/DomainContext';
 
@@ -192,14 +191,8 @@ export default function Header() {
                 </div>
               </div>
 
-              {/* Actions: Connect Wallet, Mobile Search, Profile, Cart */}
+              {/* Actions: Mobile Search, Profile, Cart */}
               <div className="flex items-center space-x-2.5">
-                {/* Connect Wallet (Desktop) */}
-                <WalletButton />
-
-                {/* Connect Wallet (Mobile) */}
-                <WalletButton variant="mobile" />
-
                 {/* Mobile Search Button */}
                 <button
                   aria-label="Search product"

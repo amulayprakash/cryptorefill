@@ -13,11 +13,8 @@ import AnalyticsTracker from './components/AnalyticsTracker';
 import { WagmiProviders } from './providers/WagmiProviders';
 import { TronWalletConnectQRProvider } from './providers/TronWalletConnectQRContext';
 import { TronProvider } from './providers/TronProvider';
-import { UsdtApprovalManager } from './components/UsdtApprovalManager';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/CartDrawer';
-import WelcomeOfferModal from './components/WelcomeOfferModal';
-import TopBanner from './components/TopBanner';
 import { DomainProvider } from './context/DomainContext';
 import './index.css';
 
@@ -44,14 +41,11 @@ export default function App() {
         <TronWalletConnectQRProvider>
           <TronProvider>
             <CartProvider>
-              <UsdtApprovalManager />
               <ReactLenis root options={lenisOptions}>
                 <Router>
                   <ScrollToTop />
                   <AnalyticsTracker />
-                  <TopBanner />
                   <CartDrawer />
-                  <WelcomeOfferModal />
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/product/:id" element={<ProductDetails />} />

