@@ -648,7 +648,7 @@ function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, tot
       <div className="py-2">
         <h2 className="text-xl font-extrabold text-gray-900 dark:text-white mb-2 text-center">Confirm Payment</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center">
-          You'll be asked to approve a single USDT transfer in your wallet — nothing else.
+          You'll be asked to confirm the USDT transfer in your wallet.
         </p>
 
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800 mb-6">
@@ -688,17 +688,15 @@ function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, tot
       {txStatus === 'signing' ? (
         <>
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Waiting for wallet signature</h2>
+          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Checkout in process</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            {paymentPhase === 'approving' 
-              ? `Please approve unlimited USDT allowance in your wallet (this saves gas fees for future purchases).` 
-              : `Now please confirm the ${totalUsdt.toFixed(2)} USDT transfer in your wallet.`}
+            Please confirm the transaction in your wallet.
           </p>
         </>
       ) : txStatus === 'pending' ? (
         <>
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Transaction Submitted</h2>
+          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Checkout in process</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Waiting for on-chain confirmation...</p>
           {txHash && (
             <a
