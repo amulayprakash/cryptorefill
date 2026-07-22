@@ -65,7 +65,41 @@ export const DOMAIN_CONFIGS = {
   // ── localhost (development) ─────────────────────────────────────────────────
   // Localhost falls through to __default__ unless you override it here.
   // Uncomment and customise if you want a specific dev experience:
-  // 'localhost': { ...DOMAIN_CONFIGS['maddeals.store'] },
+  'localhost': {
+    name: 'Local Dev',
+    logo: '/logo.png',
+    logoAlt: 'Local Dev Logo',
+    favicon: '/favicon.ico',
+    tagline: 'Local Environment',
+    version: '2.0.3180',
+    footerCompany: 'Local',
+    copyrightYear: '2026',
+    cssVars: {
+      '--brand-primary': '#C5A059',
+      '--brand-accent': '#1a1a2e',
+      '--selection-bg': '#C5A059',
+    },
+    promo: {
+      eyebrow: 'New shopper · fast track',
+      discount: '25% OFF',
+      message: 'your first order — gift cards, flights, recharges & app credits.',
+      code: 'HELLO5',
+      cta: 'Shop now',
+    },
+    socialLinks: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      telegram: '#',
+    },
+    companyLinks: [
+      'Mad Deals labs',
+      'Careers',
+      'Press and media',
+      'Trust and safety',
+      'About',
+    ],
+  },
 
   // ── Add more domains below ──────────────────────────────────────────────────
 

