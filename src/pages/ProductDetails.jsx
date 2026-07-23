@@ -98,7 +98,7 @@ export default function ProductDetails() {
           {/* Right Column: Content Details */}
           <div className="w-full lg:w-[55%] flex flex-col pt-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
-              {product.name} {product.category !== 'Jewellery' && "gift card"}
+              {product.name} {!product.isPhysical && !product.name.toLowerCase().includes('gift card') && "gift card"}
             </h1>
             
             <p className="text-gray-600 dark:text-gray-350 text-[15px] leading-relaxed mb-6">

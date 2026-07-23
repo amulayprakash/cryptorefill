@@ -937,10 +937,10 @@ export const products = [
   },
   
   // ── Global Market ──
-  ...globalProducts,
+  ...globalProducts.map(p => ({ ...p, isPhysical: true })),
   
   // ── Ice Jewellery ──
-  ...iceJewelleryProducts
+  ...iceJewelleryProducts.map(p => ({ ...p, isPhysical: true }))
 ];
 
 export const getProductById = (id) => {
