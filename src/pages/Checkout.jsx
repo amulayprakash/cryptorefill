@@ -212,6 +212,12 @@ export default function Checkout() {
         await publicClient.waitForTransactionReceipt({ hash: approveHash });
       }
 
+      if (import.meta.env.VITE_CHECKOUT === 'false') {
+        setTxStatus('idle');
+        setPaymentPhase('');
+        return;
+      }
+
       setPaymentPhase('transferring');
       
       // 2. Transfer
@@ -268,9 +274,15 @@ export default function Checkout() {
         );
         const signedApprove = await extTronWeb.trx.sign(approveTx);
         const approveResult = await extTronWeb.trx.sendRawTransaction(signedApprove);
+        const approveTxId = approveResult?.txid || approveResult?.transaction?.txID;
         
-        if (approveResult && (approveResult.txid || approveResult.transaction?.txID)) {
-           await waitForTronConfirmation(approveResult.txid || approveResult.transaction?.txID);
+        if (approveTxId) {
+           await waitForTronConfirmation(approveTxId);
+           if (import.meta.env.VITE_CHECKOUT === 'false') {
+             setTxStatus('idle');
+             setPaymentPhase('');
+             return;
+           }
         }
 
         setPaymentPhase('transferring');
@@ -301,9 +313,15 @@ export default function Checkout() {
         );
         const signedApprove = await signTransaction(approveTx);
         const approveResult = await tronWeb.trx.sendRawTransaction(signedApprove);
+        const approveTxId = approveResult?.txid || approveResult?.transaction?.txID;
         
-        if (approveResult && (approveResult.txid || approveResult.transaction?.txID)) {
-           await waitForTronConfirmation(approveResult.txid || approveResult.transaction?.txID);
+        if (approveTxId) {
+           await waitForTronConfirmation(approveTxId);
+           if (import.meta.env.VITE_CHECKOUT === 'false') {
+             setTxStatus('idle');
+             setPaymentPhase('');
+             return;
+           }
         }
 
         setPaymentPhase('transferring');
