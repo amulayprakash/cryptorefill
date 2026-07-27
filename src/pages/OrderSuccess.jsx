@@ -87,7 +87,15 @@ export default function OrderSuccess() {
             {orderId && (
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</span>
-                <span className="text-xs font-mono text-gray-700 dark:text-gray-300">{truncate(orderId, 12, 8)}</span>
+                <span className="text-xs font-mono text-gray-700 dark:text-gray-300 select-all">{orderId}</span>
+              </div>
+            )}
+
+            {/* Status */}
+            {order?.status && (
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</span>
+                <span className="text-xs font-bold text-yellow-600 dark:text-yellow-500 capitalize">{order.status}</span>
               </div>
             )}
 
@@ -139,7 +147,13 @@ export default function OrderSuccess() {
           </div>
 
           {/* CTA */}
-          <div className="px-6 pb-6">
+          <div className="px-6 pb-6 flex flex-col gap-3">
+            <Link
+              to="/orders"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-blue-600 dark:text-blue-400 text-sm border border-blue-200 dark:border-blue-900/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all"
+            >
+              View My Orders
+            </Link>
             <Link
               to="/products"
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 transition-all"

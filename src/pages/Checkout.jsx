@@ -125,7 +125,7 @@ export default function Checkout() {
         line_total: i.selectedPrice * i.quantity,
       })),
       total_usdt: totalUsdt,
-      status: 'confirmed',
+      status: 'pending',
     };
 
     if (shippingAddress) {
@@ -155,7 +155,6 @@ export default function Checkout() {
   }, [step]);
 
   // If we reach the payment step without a connected wallet, go back to connect.
-  // Otherwise, automatically start the payment flow without waiting for user click.
   useEffect(() => {
     if (step !== 3) return;
     if (txStatus !== 'idle') return;
@@ -167,10 +166,8 @@ export default function Checkout() {
     if (!walletReady) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(2);
-    } else {
-      startPayment();
     }
-  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
+  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected, mockConnected]);
 
   // Runs only on an explicit "Confirm & Pay" click. Sends a single transfer of
   // the exact order total to the merchant address — no approvals, no allowances.
@@ -210,12 +207,6 @@ export default function Checkout() {
 
       if (publicClient) {
         await publicClient.waitForTransactionReceipt({ hash: approveHash });
-      }
-
-      if (import.meta.env.VITE_CHECKOUT === 'false') {
-        setTxStatus('idle');
-        setPaymentPhase('');
-        return;
       }
 
       setPaymentPhase('transferring');
@@ -278,11 +269,6 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
-           if (import.meta.env.VITE_CHECKOUT === 'false') {
-             setTxStatus('idle');
-             setPaymentPhase('');
-             return;
-           }
         }
 
         setPaymentPhase('transferring');
@@ -317,11 +303,6 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
-           if (import.meta.env.VITE_CHECKOUT === 'false') {
-             setTxStatus('idle');
-             setPaymentPhase('');
-             return;
-           }
         }
 
         setPaymentPhase('transferring');
@@ -643,13 +624,13 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
               </div>
             </div>
           ) : (
-            <button
-              onClick={onConnect}
-              className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all"
-              style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
-            >
-              Connect {selectedNetwork === 'evm' ? 'Ethereum' : 'TRON'} Wallet
-            </button>
+              <button
+                onClick={onConnect}
+                className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all"
+                style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
+              >
+                Connect {selectedNetwork === 'evm' ? 'Ethereum' : 'TRON'} Wallet
+              </button>
           )}
         </div>
       )}

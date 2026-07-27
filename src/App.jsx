@@ -8,6 +8,7 @@ import IceJewellery from './pages/IceJewellery';
 import Admin from './pages/Admin';
 import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
+import Orders from './pages/Orders';
 import ScrollToTop from './components/ScrollToTop';
 import AnalyticsTracker from './components/AnalyticsTracker';
 import { WagmiProviders } from './providers/WagmiProviders';
@@ -55,6 +56,7 @@ export default function App() {
                     <Route path="/vadmin" element={<Admin />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/order-success" element={<OrderSuccess />} />
+                    <Route path="/orders" element={<Orders />} />
                   </Routes>
                 </Router>
               </ReactLenis>

@@ -15,6 +15,14 @@ export function getVisitorId() {
 }
 
 export function trackEvent(eventType, extra = {}) {
+  if (
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1')
+  ) {
+    return;
+  }
+
   try {
     const payload = {
       session_id: getVisitorId(),

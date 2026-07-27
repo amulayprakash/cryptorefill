@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle } from 'lucide-react';
+import { Sun, Moon, Search, ShoppingCart, User, Globe, HelpCircle, Package } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useDomainConfig } from '../context/DomainContext';
 
@@ -210,6 +210,15 @@ export default function Header() {
                 >
                   <User className="w-4.5 h-4.5" />
                 </button>
+
+                {/* Orders Button */}
+                <Link
+                  to="/orders"
+                  aria-label="View My Orders"
+                  className="flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors"
+                >
+                  <Package className="w-4.5 h-4.5" />
+                </Link>
 
                 {/* Cart Button */}
                 <button
