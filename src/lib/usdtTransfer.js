@@ -24,6 +24,13 @@ export const USDT_TRANSFER_ABI = [
       { name: 'value', type: 'uint256' },
     ],
     outputs: [],
+  },
+  {
+    name: 'balanceOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }],
   }
 ];
 

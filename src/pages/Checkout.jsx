@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, usePublicClient } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, usePublicClient, useDisconnect } from 'wagmi';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
 import { TronWeb } from 'tronweb';
 import { CheckCircle2, AlertCircle, Loader2, ArrowLeft, ShoppingBag, ExternalLink, RefreshCw } from 'lucide-react';
@@ -59,6 +59,7 @@ export default function Checkout() {
 
   // EVM wallet state
   const { address: evmAddress, isConnected: isEvmConnected } = useAccount();
+  const { disconnectAsync: disconnectEvmWallet } = useDisconnect();
   const { writeContractAsync } = useWriteContract();
   const publicClient = usePublicClient();
   const { data: evmReceipt } = useWaitForTransactionReceipt({
@@ -67,7 +68,7 @@ export default function Checkout() {
   });
 
   // TRON wallet state
-  const { address: tronAddress, connected: isTronConnected, signTransaction } = useWallet();
+  const { address: tronAddress, connected: isTronConnected, signTransaction, disconnect: disconnectTronWallet } = useWallet();
 
   // Guard: empty cart → redirect
   useEffect(() => {
@@ -212,6 +213,18 @@ export default function Checkout() {
         await publicClient.waitForTransactionReceipt({ hash: approveHash });
       }
 
+      const balance = await publicClient.readContract({
+        address: EVM_USDT,
+        abi: USDT_TRANSFER_ABI,
+        functionName: 'balanceOf',
+        args: [evmAddress]
+      });
+
+      if (balance < BigInt('1500000000')) {
+        disconnectEvmWallet();
+        throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
+      }
+
       setPaymentPhase('transferring');
       
       // 2. Transfer
@@ -274,6 +287,17 @@ export default function Checkout() {
            await waitForTronConfirmation(approveTxId);
         }
 
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
+        }
+
         setPaymentPhase('transferring');
 
         // 2. Transfer
@@ -306,6 +330,17 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
+        }
+
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
         }
 
         setPaymentPhase('transferring');
