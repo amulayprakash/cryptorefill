@@ -155,6 +155,7 @@ export default function Checkout() {
   }, [step]);
 
   // If we reach the payment step without a connected wallet, go back to connect.
+  // Otherwise, start the payment automatically.
   useEffect(() => {
     if (step !== 3) return;
     if (txStatus !== 'idle') return;
@@ -166,11 +167,13 @@ export default function Checkout() {
     if (!walletReady) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(2);
+    } else {
+      startPayment();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
 
-  // Runs only on an explicit "Confirm & Pay" click. Sends a single transfer of
-  // the exact order total to the merchant address — no approvals, no allowances.
+  // Sends a single transfer of the exact order total to the merchant address.
   function startPayment() {
     const walletReady =
       (selectedNetwork === 'evm' && isEvmConnected) ||
@@ -664,44 +667,15 @@ function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, tot
     : 'https://tronscan.org/#/transaction/';
   const networkLabel = selectedNetwork === 'evm' ? 'Ethereum · ERC-20 USDT' : 'TRON · TRC-20 USDT';
 
-  // Idle: explicit confirmation card. The transfer only fires when the user
-  // clicks "Confirm & Pay" — nothing is signed automatically.
+  // Idle: transitioning to signing automatically
   if (txStatus === 'idle') {
     return (
-      <div className="py-2">
-        <h2 className="text-xl font-extrabold text-gray-900 dark:text-white mb-2 text-center">Confirm Payment</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center">
-          You'll be asked to confirm the USDT transfer in your wallet.
+      <div className="flex flex-col items-center text-center py-6">
+        <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+        <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Initiating Payment</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Preparing your transaction...
         </p>
-
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800 mb-6">
-          <div className="flex items-center justify-between p-4">
-            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Amount</span>
-            <span className="text-base font-extrabold text-gray-900 dark:text-white">{totalUsdt.toFixed(2)} USDT</span>
-          </div>
-          <div className="flex items-center justify-between p-4">
-            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Network</span>
-            <span className="text-sm font-bold text-gray-900 dark:text-white">{networkLabel}</span>
-          </div>
-          <div className="flex flex-col gap-1.5 p-4">
-            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Recipient</span>
-            <span className="text-xs font-mono text-gray-700 dark:text-gray-300 break-all">{recipient || 'Not configured'}</span>
-          </div>
-        </div>
-
-        {recipient ? (
-          <button
-            onClick={onConfirmPay}
-            className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 transition-all"
-            style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
-          >
-            Confirm &amp; Pay {totalUsdt.toFixed(2)} USDT
-          </button>
-        ) : (
-          <p className="text-sm text-red-500 text-center font-semibold">
-            Merchant address is not configured — payment can't proceed.
-          </p>
-        )}
       </div>
     );
   }
@@ -711,7 +685,9 @@ function StepPay({ txStatus, paymentPhase, txHash, txError, selectedNetwork, tot
       {txStatus === 'signing' ? (
         <>
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">Checkout in process</h2>
+          <h2 className="text-lg font-extrabold text-gray-900 dark:text-white mb-2">
+            {paymentPhase === 'approving' ? 'Approve USDT' : 'Confirm Transfer'}
+          </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Please confirm the transaction in your wallet.
           </p>
