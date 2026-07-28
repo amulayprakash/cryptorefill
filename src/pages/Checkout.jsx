@@ -167,7 +167,7 @@ export default function Checkout() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(2);
     }
-  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected, mockConnected]);
+  }, [step, txStatus, selectedNetwork, isEvmConnected, isTronConnected]);
 
   // Runs only on an explicit "Confirm & Pay" click. Sends a single transfer of
   // the exact order total to the merchant address — no approvals, no allowances.
