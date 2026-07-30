@@ -120,8 +120,6 @@ export default function AnalyticsPanel() {
 
   useEffect(() => {
     fetchData(domainFilter);
-    const interval = setInterval(() => fetchData(domainFilter), 30000);
-    return () => clearInterval(interval);
   }, [domainFilter]);
 
   const today = todayUtcStr();
@@ -433,7 +431,6 @@ export default function AnalyticsPanel() {
           Based on the last 30 days · {FUNNEL_EVENT_ORDER.length} tracked event types
           {domainFilter !== '__all__' && ` · domain: ${domainFilter}`}
         </span>
-        <span className="admin-footer__auto">Auto-refreshes every 30s</span>
       </div>
     </>
   );

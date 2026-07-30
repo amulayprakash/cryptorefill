@@ -402,86 +402,6 @@ export default function Home() {
           <div className="wrapper grow sm:pb-32">
             <main className="max-w-8xl mx-auto">
 
-                <TrendingProductsShowcase />
-
-                {/* Global Market Trending Section */}
-                <div className="mx-auto max-w-(--breakpoint-2xl) mb-10 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
-                  <div className="flex flex-col">
-                    <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
-                      🔥 Explore Categories
-                    </span>
-                    <h1 className="text-gray-700 dark:text-gray-400 mt-2 font-medium">
-                      Most Popular Products in Global
-                    </h1>
-                  </div>
-                  
-                  <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
-                    <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
-                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
-                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" fillRule="evenodd" /></svg>
-                      </button>
-                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 cursor-pointer opacity-100">
-                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" fillRule="evenodd" /></svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="relative w-full">
-                    <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-2">
-                      {[
-                        { name: "Beauty & Skincare", icon: "🧴", img: "/assets/global/kbeauty_serum.png", productsCount: "15 Products", discount: "Up to 20% Off" },
-                        { name: "Electronics & Smartphones", icon: "📱", img: "/assets/global/mid_range_smartphone.png", productsCount: "5 Products", discount: "Up to 15% Off" },
-                        { name: "Audio & Earbuds", icon: "🎧", img: "/assets/global/tws_earbuds.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Smart Wearables", icon: "⌚", img: "/assets/global/smartwatch_fitness.png", productsCount: "5 Products", discount: "Up to 15% Off" },
-                        { name: "Home & Kitchen", icon: "🍳", img: "/assets/global/air_fryer.png", productsCount: "10 Products", discount: "Up to 20% Off" },
-                        { name: "Fashion & Apparel", icon: "👗", img: "/assets/global/casual_dress.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Fitness & Wellness", icon: "💪", img: "/assets/global/resistance_bands.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Health Supplements", icon: "💊", img: "/assets/global/collagen_supplements.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Smart Home", icon: "🏠", img: "/assets/global/smart_home_devices.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Pet Care", icon: "🐾", img: "/assets/global/pet_accessories.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                        { name: "Eco-Friendly Living", icon: "🌱", img: "/assets/global/eco_friendly_products.png", productsCount: "5 Products", discount: "Up to 20% Off" },
-                      ].map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="relative flex w-[154px] shrink-0 cursor-pointer flex-col items-center last:mr-32 sm:w-[210px] lg:w-[245px] xl:w-[280px]"
-                          data-brand-item="true"
-                        >
-                          <a href="#">
-                            <div className="flex w-[154px] flex-col sm:w-[210px] lg:w-[245px] xl:w-[280px]">
-                              <div className="relative h-[98px] w-[154px] flex-none rounded-xl shadow-sm ring-1 ring-gray-200/60 transition duration-300 ease-in-out sm:h-[133px] sm:w-[210px] lg:h-[155px] lg:w-[245px] xl:h-[178px] xl:w-[280px] dark:ring-gray-600/60 group overflow-hidden bg-white dark:bg-gray-800">
-                                <img
-                                  alt={item.name}
-                                  className="rounded-xl object-cover transition duration-300 ease-in-out group-hover:scale-105"
-                                  src={item.img}
-                                  style={{
-                                    position: "absolute",
-                                    height: "100%",
-                                    width: "100%",
-                                    inset: 0,
-                                    color: "transparent",
-                                  }}
-                                  title={item.name}
-                                />
-                                {item.discount && (
-                                  <div className="absolute top-2 right-2 bg-red-600/90 backdrop-blur-xs text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
-                                    {item.discount}
-                                  </div>
-                                )}
-                              </div>
-                              <div className="mt-3 flex flex-row space-x-1.5 font-bold text-gray-900 dark:text-white items-center">
-                                <span>{item.icon}</span>
-                                <span className="truncate">{item.name}</span>
-                              </div>
-                              <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400 font-medium mt-0.5 ml-6">
-                                {item.productsCount}
-                              </span>
-                            </div>
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
               <div>
                 <div className="mx-auto max-w-(--breakpoint-2xl)">
                   <div className="mt-7 flex flex-row justify-between px-3 sm:mt-9 md:mr-32">
@@ -8901,6 +8821,88 @@ export default function Home() {
                 </div>
               </div>
               <div className="mx-auto max-w-(--breakpoint-2xl)">
+                {/* --- PHYSICAL GOODS MOVED TO BOTTOM --- */}
+
+                <TrendingProductsShowcase />
+
+                {/* Global Market Trending Section */}
+                <div className="mx-auto max-w-(--breakpoint-2xl) mb-10 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold sm:text-2xl flex items-center gap-2">
+                      🔥 Explore Categories
+                    </span>
+                    <h1 className="text-gray-700 dark:text-gray-400 mt-2 font-medium">
+                      Most Popular Products in Global
+                    </h1>
+                  </div>
+                  
+                  <div className="mx-auto hidden w-full max-w-(--breakpoint-2xl) md:block">
+                    <div className="flex-end -mt-12 flex justify-end space-x-3 pr-3 2xl:pr-0 pointer-events-none">
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 pointer-events-none cursor-auto opacity-0">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" fillRule="evenodd" /></svg>
+                      </button>
+                      <button className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 transition duration-200 ease-in-out dark:bg-gray-800 cursor-pointer opacity-100">
+                        <svg aria-hidden="true" className="h-10 w-10 text-gray-500 dark:text-gray-100" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" fillRule="evenodd" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="relative w-full">
+                    <div className="mt-4 no-scrollbar flex w-full gap-4 overflow-x-auto scroll-smooth pt-2 sm:gap-6 sm:pr-20 xl:gap-6 pb-2">
+                      {[
+                        { name: "Beauty & Skincare", icon: "🧴", img: "/assets/global/kbeauty_serum.png", productsCount: "15 Products", discount: "Up to 20% Off" },
+                        { name: "Electronics & Smartphones", icon: "📱", img: "/assets/global/mid_range_smartphone.png", productsCount: "5 Products", discount: "Up to 15% Off" },
+                        { name: "Audio & Earbuds", icon: "🎧", img: "/assets/global/tws_earbuds.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Smart Wearables", icon: "⌚", img: "/assets/global/smartwatch_fitness.png", productsCount: "5 Products", discount: "Up to 15% Off" },
+                        { name: "Home & Kitchen", icon: "🍳", img: "/assets/global/air_fryer.png", productsCount: "10 Products", discount: "Up to 20% Off" },
+                        { name: "Fashion & Apparel", icon: "👗", img: "/assets/global/casual_dress.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Fitness & Wellness", icon: "💪", img: "/assets/global/resistance_bands.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Health Supplements", icon: "💊", img: "/assets/global/collagen_supplements.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Smart Home", icon: "🏠", img: "/assets/global/smart_home_devices.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Pet Care", icon: "🐾", img: "/assets/global/pet_accessories.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                        { name: "Eco-Friendly Living", icon: "🌱", img: "/assets/global/eco_friendly_products.png", productsCount: "5 Products", discount: "Up to 20% Off" },
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="relative flex w-[154px] shrink-0 cursor-pointer flex-col items-center last:mr-32 sm:w-[210px] lg:w-[245px] xl:w-[280px]"
+                          data-brand-item="true"
+                        >
+                          <a href="#">
+                            <div className="flex w-[154px] flex-col sm:w-[210px] lg:w-[245px] xl:w-[280px]">
+                              <div className="relative h-[98px] w-[154px] flex-none rounded-xl shadow-sm ring-1 ring-gray-200/60 transition duration-300 ease-in-out sm:h-[133px] sm:w-[210px] lg:h-[155px] lg:w-[245px] xl:h-[178px] xl:w-[280px] dark:ring-gray-600/60 group overflow-hidden bg-white dark:bg-gray-800">
+                                <img
+                                  alt={item.name}
+                                  className="rounded-xl object-cover transition duration-300 ease-in-out group-hover:scale-105"
+                                  src={item.img}
+                                  style={{
+                                    position: "absolute",
+                                    height: "100%",
+                                    width: "100%",
+                                    inset: 0,
+                                    color: "transparent",
+                                  }}
+                                  title={item.name}
+                                />
+                                {item.discount && (
+                                  <div className="absolute top-2 right-2 bg-red-600/90 backdrop-blur-xs text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shadow-md z-10">
+                                    {item.discount}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="mt-3 flex flex-row space-x-1.5 font-bold text-gray-900 dark:text-white items-center">
+                                <span>{item.icon}</span>
+                                <span className="truncate">{item.name}</span>
+                              </div>
+                              <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400 font-medium mt-0.5 ml-6">
+                                {item.productsCount}
+                              </span>
+                            </div>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 <div className="mx-3 mt-9 flex flex-col justify-between sm:mt-9">
                   <h2 className="text-xl font-semibold sm:text-2xl">
                     Built for AI agents
