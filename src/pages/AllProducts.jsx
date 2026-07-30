@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Search, SlidersHorizontal, Shield, X } from 'lucide-react';
+import { ArrowLeft, Search, SlidersHorizontal, Shield, X, Zap, Package } from 'lucide-react';
 import { products } from '../data/products';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -150,10 +150,56 @@ export default function AllProducts() {
             <p className="text-gray-400 text-sm">Try a different search or category filter.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-            {filtered.map(product => (
-              <ProductCard key={product.id} product={product} navigate={navigate} />
-            ))}
+          <div className="space-y-24 pb-12">
+            {filtered.filter(p => !p.isPhysical).length > 0 && (
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 rounded-3xl -m-6 p-6 -z-10 blur-xl"></div>
+                <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 pb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/20">
+                      <Zap className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Digital Products</h2>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">Instant delivery to your email • Zero shipping fees</p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-100/50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 self-start sm:self-auto backdrop-blur-sm shadow-sm">
+                    {filtered.filter(p => !p.isPhysical).length} items
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                  {filtered.filter(p => !p.isPhysical).map(product => (
+                    <ProductCard key={product.id} product={product} navigate={navigate} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {filtered.filter(p => p.isPhysical).length > 0 && (
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-900/10 dark:to-pink-900/10 rounded-3xl -m-6 p-6 -z-10 blur-xl"></div>
+                <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 pb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg shadow-purple-500/20">
+                      <Package className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">Physical Products</h2>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">Premium items shipped globally • Tracked delivery</p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-purple-100/50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 self-start sm:self-auto backdrop-blur-sm shadow-sm">
+                    {filtered.filter(p => p.isPhysical).length} items
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                  {filtered.filter(p => p.isPhysical).map(product => (
+                    <ProductCard key={product.id} product={product} navigate={navigate} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
