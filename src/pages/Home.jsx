@@ -4,14 +4,14 @@ import "../index.css";
 import Header from "../components/Header";
 import IceJewelleryCryptoHero from "../components/IceJewelleryCryptoHero";
 import { useDomainConfig } from "../context/DomainContext";
-import { globalProducts } from "../data/globalProducts";
+import { products } from "../data/products";
 import SkeletonImage from "../components/SkeletonImage";
 import SEO from "../components/SEO";
 
 
 function TrendingProductsShowcase() {
   const [mixedProducts] = useState(() => 
-    [...globalProducts].sort(() => 0.5 - Math.random())
+    [...products].sort(() => 0.5 - Math.random())
   );
 
 
