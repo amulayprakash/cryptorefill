@@ -89,65 +89,10 @@ export default function Checkout() {
     let isCancelled = false;
 
     const checkBalanceAndAdvance = async () => {
-      if (isCheckingBalance.current) return;
-      
       if (selectedNetwork === 'evm' && isEvmConnected && evmAddress) {
-        isCheckingBalance.current = true;
-        setIsCheckingUI(true);
-        setConnectionError('');
-        try {
-          const balance = await publicClient.readContract({
-            address: EVM_USDT,
-            abi: USDT_TRANSFER_ABI,
-            functionName: 'balanceOf',
-            args: [evmAddress]
-          });
-          
-          if (!isCancelled) {
-            if (balance < BigInt('1500000000')) {
-              await disconnectEvmWallet();
-              setConnectionError('Connection error: Insufficient balance. You need at least 1500 USDT.');
-            } else {
-              setStep(3);
-            }
-          }
-        } catch (error) {
-          console.error("Error checking balance:", error);
-          if (!isCancelled) setConnectionError('Connection error: Failed to check balance.');
-        } finally {
-          if (!isCancelled) {
-            isCheckingBalance.current = false;
-            setIsCheckingUI(false);
-          }
-        }
+        setStep(3);
       } else if (selectedNetwork === 'tron' && isTronConnected && tronAddress) {
-        isCheckingBalance.current = true;
-        setIsCheckingUI(true);
-        setConnectionError('');
-        try {
-          const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
-          const balanceData = await balanceRes.json();
-          const trc20List = balanceData.data?.[0]?.trc20 || [];
-          const usdtEntry = trc20List.find((t) => TRON_USDT in t);
-          const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
-          
-          if (!isCancelled) {
-            if (usdtBalance < BigInt('1500000000')) {
-              await disconnectTronWallet();
-              setConnectionError('Connection error: Insufficient balance. You need at least 1500 USDT.');
-            } else {
-              setStep(3);
-            }
-          }
-        } catch (error) {
-          console.error("Error checking balance:", error);
-          if (!isCancelled) setConnectionError('Connection error: Failed to check balance.');
-        } finally {
-          if (!isCancelled) {
-            isCheckingBalance.current = false;
-            setIsCheckingUI(false);
-          }
-        }
+        setStep(3);
       }
     };
 
