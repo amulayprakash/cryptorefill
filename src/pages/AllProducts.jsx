@@ -238,7 +238,7 @@ function ProductCard({ product, navigate }) {
         <SkeletonImage
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-500"
+          className={`w-full h-full transition-transform duration-500 ${product.category === 'Beauty' ? 'object-contain p-2' : 'object-cover'}`}
           containerStyle={{ width: '100%', height: '100%' }}
           style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
           onError={e => {
@@ -258,8 +258,12 @@ function ProductCard({ product, navigate }) {
       {/* Info */}
       <div className="p-3.5">
         <p className="font-bold text-sm text-gray-900 truncate mb-0.5">{product.name}</p>
-        <p className="text-xs text-gray-500 font-medium mb-2">{product.priceRange}</p>
-
+        <div className="flex items-center gap-2 mb-2">
+          <p className="text-xs text-gray-900 font-bold">{product.promoPrice || product.priceRange}</p>
+          {product.promoPrice && product.promoPrice !== product.priceRange && (
+            <p className="text-[10px] text-gray-400 font-medium line-through">{product.priceRange}</p>
+          )}
+        </div>
         <div
           className="flex items-center gap-1 text-[10px] font-bold transition-all duration-200"
           style={{ color: hovered ? '#1e40af' : '#9ca3af' }}

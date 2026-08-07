@@ -10,9 +10,11 @@ import SEO from "../components/SEO";
 
 
 function TrendingProductsShowcase() {
-  const [mixedProducts] = useState(() => 
-    [...products].sort(() => 0.5 - Math.random())
-  );
+  const [mixedProducts] = useState(() => {
+    const beautyProducts = products.filter(p => p.category === 'Beauty');
+    const otherProducts = products.filter(p => p.category !== 'Beauty').sort(() => 0.5 - Math.random());
+    return [...beautyProducts, ...otherProducts];
+  });
 
 
   return (
@@ -58,7 +60,7 @@ function TrendingProductsShowcase() {
                     <SkeletonImage
                       alt={product.name}
                       src={product.imageUrl}
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                      className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${product.category === 'Beauty' ? 'object-contain p-2' : 'object-cover'}`}
                       containerStyle={{ width: '100%', height: '100%' }}
                       onError={(e) => {
                         e.target.onerror = null;

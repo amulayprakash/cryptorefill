@@ -40,8 +40,10 @@ export default function ProductDetails() {
     setSelectedAmount(product.detailedPriceOptions[0].toString());
   }
 
-  const estimatedPrice = selectedAmount ? (parseFloat(selectedAmount) * selectedQuantity).toFixed(2) : '0.00';
-  const points = selectedAmount ? Math.floor(parseFloat(selectedAmount) * selectedQuantity * (product.pointsMultiplier || 1.05)) : 0;
+  const exchangeRate = 84;
+  const amountInUsd = selectedAmount ? (product.category === 'Beauty' ? parseFloat(selectedAmount) / exchangeRate : parseFloat(selectedAmount)) : 0;
+  const estimatedPrice = selectedAmount ? (amountInUsd * selectedQuantity).toFixed(2) : '0.00';
+  const points = selectedAmount ? Math.floor(amountInUsd * selectedQuantity * (product.pointsMultiplier || 1.05)) : 0;
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -49,13 +51,13 @@ export default function ProductDetails() {
 
   const handleAddToCart = () => {
     if (!selectedAmount) return;
-    addItem(product, Number(selectedAmount), selectedQuantity);
+    addItem(product, amountInUsd, selectedQuantity);
     openCart();
   };
 
   const handleBuyNow = () => {
     if (!selectedAmount) return;
-    addItem(product, Number(selectedAmount), selectedQuantity);
+    addItem(product, amountInUsd, selectedQuantity);
     navigate('/checkout');
   };
 
@@ -134,7 +136,9 @@ export default function ProductDetails() {
                     className="w-full appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl py-2.5 pl-4 pr-10 text-gray-900 dark:text-white font-bold focus:outline-hidden focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
                   >
                     {product.detailedPriceOptions.map(price => (
-                      <option key={price} value={price} className="dark:bg-gray-850">${price}</option>
+                      <option key={price} value={price} className="dark:bg-gray-850">
+                        {product.category === 'Beauty' ? '₹' : '$'}{price}
+                      </option>
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400">
