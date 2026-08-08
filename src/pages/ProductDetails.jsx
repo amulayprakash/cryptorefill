@@ -40,8 +40,7 @@ export default function ProductDetails() {
     setSelectedAmount(product.detailedPriceOptions[0].toString());
   }
 
-  const exchangeRate = 84;
-  const amountInUsd = selectedAmount ? (product.category === 'Beauty' ? parseFloat(selectedAmount) / exchangeRate : parseFloat(selectedAmount)) : 0;
+  const amountInUsd = selectedAmount ? parseFloat(selectedAmount) : 0;
   const estimatedPrice = selectedAmount ? (amountInUsd * selectedQuantity).toFixed(2) : '0.00';
   const points = selectedAmount ? Math.floor(amountInUsd * selectedQuantity * (product.pointsMultiplier || 1.05)) : 0;
 
@@ -173,7 +172,7 @@ export default function ProductDetails() {
                   <div className={`w-5 h-5 rounded-full ${product.category === 'Jewellery' ? 'bg-[#C5A059]' : 'bg-blue-600'} text-white flex items-center justify-center text-[10px] font-black`}>
                     $
                   </div>
-                  <span>{estimatedPrice} USDC</span>
+                  <span>{estimatedPrice} USDT</span>
                 </div>
               </div>
 
