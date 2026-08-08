@@ -137,7 +137,7 @@ export default function ProductDetails() {
                   >
                     {product.detailedPriceOptions.map(price => (
                       <option key={price} value={price} className="dark:bg-gray-850">
-                        {product.category === 'Beauty' ? '₹' : '$'}{price}
+                        ${price}
                       </option>
                     ))}
                   </select>
